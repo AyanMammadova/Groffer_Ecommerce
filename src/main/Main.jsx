@@ -233,6 +233,156 @@ function Main() {
           </div>
         </div>
       </div>
+
+      {/* FRESHEST PRODUCTS */}
+      <div className='my-[100px] sm:mx-[50px]'>
+        <div className='flex flex-wrap justify-between p-[10px]  border-b-2 border-gray-300'>
+          <p className='font-bold text-[2em]'>Freshest products</p>
+          <div>
+            <button className='px-[20px] py-[10px] rounded-lg bg-[#136450] text-white font-[500]'>APPLES</button>
+            <button className='px-[20px] py-[10px] rounded-lg font-[500] '>BERRIES</button>
+            <button className='px-[20px] py-[10px] rounded-lg font-[500]'>CITRUS</button>
+          </div>
+        </div>
+        <div className='grid px-[20px] mt-[20px] gap-[20px] grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'>
+          <div className='w-[100%] relative transition-all duration-200 border-[1px] border-white hover:border-[#ffba41]  h-[400px]  rounded-tl-3xl rounded-br-3xl shadow-[0_0px_20px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.08)]'>
+            <img className='h-[50%] mt-[20px] mx-auto object-cover px-[7px] sm:px-[15px]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product25.jpg" alt="" />
+            <div>
+              <div className='flex p-[10px] '>
+                <FaRegStar /><FaRegStar /><FaRegStar /><FaRegStar /><FaRegStar />
+              </div>
+              <p className='px-[10px] text-[1.1em] font-bold'>Broccoli and Cauliflower Mix</p>
+              <p className='text-[#216D5A] px-[10px] font-bold pt-[20px]'>$12.00</p>
+              <p className='px-[10px] '>per Kilogram</p>
+            </div>
+            <div className='absolute group bg-[#ffba41] pl-[15px] transition-all duration-200 pb-[15px] p-[5px] rounded-bl-2xl top-0 right-0 hover:bg-[#136450] text-white'>
+              <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="15pt" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet"><g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" className='group-hover:fill-white ' stroke="none"> <path d="M2425 5114 c-312 -48 -544 -166 -745 -381 -144 -154 -238 -326 -287 -528 l-26 -103 -331 -4 c-311 -4 -335 -6 -396 -27 -161 -55 -289 -186 -334 -341 -15 -51 -306 -3129 -306 -3235 0 -163 117 -349 269 -429 135 -70 -31 -66 2291 -66 2290 0 2153 -3 2278 58 67 33 159 115 201 181 41 64 70 150 77 230 7 89 -279 3183 -302 3261 -47 160 -180 293 -344 346 -46 14 -107 18 -386 22 l-331 4 -26 103 c-108 440 -461 784 -907 886 -83 19 -327 33 -395 23z m369 -369 c243 -71 431 -224 540 -440 27 -55 76 -184 76 -202 0 -1 -383 -3 -851 -3 -736 0 -850 2 -846 14 3 8 11 34 17 58 21 77 89 202 154 283 132 165 334 281 546 315 96 16 265 4 364 -25z m-1444 -1262 c0 -239 2 -272 19 -308 22 -48 44 -69 96 -91 73 -30 162 2 203 74 21 38 22 49 22 316 l0 276 870 0 870 0 0 -276 c0 -267 1 -278 22 -316 41 -72 130 -104 203 -74 52 22 74 43 96 91 17 36 19 69 19 308 l0 267 304 0 c299 0 304 0 337 -23 45 -30 77 -80 84 -130 3 -23 68 -730 145 -1571 113 -1228 138 -1535 130 -1562 -16 -48 -48 -84 -94 -105 -39 -18 -117 -19 -2116 -19 -1999 0 -2077 1 -2116 19 -46 21 -78 57 -94 105 -8 27 17 334 130 1562 77 841 142 1548 145 1571 7 50 39 100 84 130 33 23 38 23 337 23 l304 0 0 -267z"></path></g></svg>
+            </div>
+          </div>
+          <div className='w-[100%] relative transition-all duration-200 border-[1px] border-white hover:border-[#ffba41]  h-[400px]  rounded-tl-3xl rounded-br-3xl shadow-[0_0px_20px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.08)]'>
+            <img className='h-[50%] mt-[20px] mx-auto object-cover px-[7px] sm:px-[15px]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product25.jpg" alt="" />
+            <div>
+              <div className='flex p-[10px] '>
+                <FaRegStar /><FaRegStar /><FaRegStar /><FaRegStar /><FaRegStar />
+              </div>
+              <p className='px-[10px] text-[1.1em] font-bold'>Broccoli and Cauliflower Mix</p>
+              <p className='text-[#216D5A] px-[10px] font-bold pt-[20px]'>$12.00</p>
+              <p className='px-[10px] '>per Kilogram</p>
+            </div>
+            <div className='absolute group bg-[#ffba41] pl-[15px] transition-all duration-200 pb-[15px] p-[5px] rounded-bl-2xl top-0 right-0 hover:bg-[#136450] text-white'>
+              <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="15pt" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet"><g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" className='group-hover:fill-white ' stroke="none"> <path d="M2425 5114 c-312 -48 -544 -166 -745 -381 -144 -154 -238 -326 -287 -528 l-26 -103 -331 -4 c-311 -4 -335 -6 -396 -27 -161 -55 -289 -186 -334 -341 -15 -51 -306 -3129 -306 -3235 0 -163 117 -349 269 -429 135 -70 -31 -66 2291 -66 2290 0 2153 -3 2278 58 67 33 159 115 201 181 41 64 70 150 77 230 7 89 -279 3183 -302 3261 -47 160 -180 293 -344 346 -46 14 -107 18 -386 22 l-331 4 -26 103 c-108 440 -461 784 -907 886 -83 19 -327 33 -395 23z m369 -369 c243 -71 431 -224 540 -440 27 -55 76 -184 76 -202 0 -1 -383 -3 -851 -3 -736 0 -850 2 -846 14 3 8 11 34 17 58 21 77 89 202 154 283 132 165 334 281 546 315 96 16 265 4 364 -25z m-1444 -1262 c0 -239 2 -272 19 -308 22 -48 44 -69 96 -91 73 -30 162 2 203 74 21 38 22 49 22 316 l0 276 870 0 870 0 0 -276 c0 -267 1 -278 22 -316 41 -72 130 -104 203 -74 52 22 74 43 96 91 17 36 19 69 19 308 l0 267 304 0 c299 0 304 0 337 -23 45 -30 77 -80 84 -130 3 -23 68 -730 145 -1571 113 -1228 138 -1535 130 -1562 -16 -48 -48 -84 -94 -105 -39 -18 -117 -19 -2116 -19 -1999 0 -2077 1 -2116 19 -46 21 -78 57 -94 105 -8 27 17 334 130 1562 77 841 142 1548 145 1571 7 50 39 100 84 130 33 23 38 23 337 23 l304 0 0 -267z"></path></g></svg>
+            </div>
+          </div>
+          <div className=' pt-[20px] mx-auto hidden lg:block lg:w-[100%] '>
+            <div className="bg-[url('https://groffer.modeltheme.com/wp-content/uploads/2023/01/Main-banners2.jpg')] gap-[6px] rounded-tl-3xl rounded-br-3xl bg-cover w-[100%] h-[80%] relative flex items-center justify-end text-white flex-col">
+              <p className='text-[1.2em] pb-[30px] z-10 px-[10px] font-[500]'>Patato Sacks for 10$ piece</p>
+              <div className='bg-gradient-to-t from-gray-900/50 z-0 rounded-tl-3xl rounded-br-3xl to-gray-500/15 inset-0 absolute'>
+
+              </div>
+            </div>
+          </div>
+          <div className='w-[100%] relative transition-all duration-200 border-[1px] border-white hover:border-[#ffba41]  h-[400px]  rounded-tl-3xl rounded-br-3xl shadow-[0_0px_20px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.08)]'>
+            <img className='h-[50%] mt-[20px] mx-auto object-cover px-[7px] sm:px-[15px]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product25.jpg" alt="" />
+            <div>
+              <div className='flex p-[10px] '>
+                <FaRegStar /><FaRegStar /><FaRegStar /><FaRegStar /><FaRegStar />
+              </div>
+              <p className='px-[10px] text-[1.1em] font-bold'>Broccoli and Cauliflower Mix</p>
+              <p className='text-[#216D5A] px-[10px] font-bold pt-[20px]'>$12.00</p>
+              <p className='px-[10px] '>per Kilogram</p>
+            </div>
+            <div className='absolute group bg-[#ffba41] pl-[15px] transition-all duration-200 pb-[15px] p-[5px] rounded-bl-2xl top-0 right-0 hover:bg-[#136450] text-white'>
+              <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="15pt" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet"><g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" className='group-hover:fill-white ' stroke="none"> <path d="M2425 5114 c-312 -48 -544 -166 -745 -381 -144 -154 -238 -326 -287 -528 l-26 -103 -331 -4 c-311 -4 -335 -6 -396 -27 -161 -55 -289 -186 -334 -341 -15 -51 -306 -3129 -306 -3235 0 -163 117 -349 269 -429 135 -70 -31 -66 2291 -66 2290 0 2153 -3 2278 58 67 33 159 115 201 181 41 64 70 150 77 230 7 89 -279 3183 -302 3261 -47 160 -180 293 -344 346 -46 14 -107 18 -386 22 l-331 4 -26 103 c-108 440 -461 784 -907 886 -83 19 -327 33 -395 23z m369 -369 c243 -71 431 -224 540 -440 27 -55 76 -184 76 -202 0 -1 -383 -3 -851 -3 -736 0 -850 2 -846 14 3 8 11 34 17 58 21 77 89 202 154 283 132 165 334 281 546 315 96 16 265 4 364 -25z m-1444 -1262 c0 -239 2 -272 19 -308 22 -48 44 -69 96 -91 73 -30 162 2 203 74 21 38 22 49 22 316 l0 276 870 0 870 0 0 -276 c0 -267 1 -278 22 -316 41 -72 130 -104 203 -74 52 22 74 43 96 91 17 36 19 69 19 308 l0 267 304 0 c299 0 304 0 337 -23 45 -30 77 -80 84 -130 3 -23 68 -730 145 -1571 113 -1228 138 -1535 130 -1562 -16 -48 -48 -84 -94 -105 -39 -18 -117 -19 -2116 -19 -1999 0 -2077 1 -2116 19 -46 21 -78 57 -94 105 -8 27 17 334 130 1562 77 841 142 1548 145 1571 7 50 39 100 84 130 33 23 38 23 337 23 l304 0 0 -267z"></path></g></svg>
+            </div>
+          </div>
+          <div className='w-[100%] relative transition-all duration-200 border-[1px] border-white hover:border-[#ffba41]  h-[400px]  rounded-tl-3xl rounded-br-3xl shadow-[0_0px_20px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.08)]'>
+            <img className='h-[50%] mt-[20px] mx-auto object-cover px-[7px] sm:px-[15px]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product25.jpg" alt="" />
+            <div>
+              <div className='flex p-[10px] '>
+                <FaRegStar /><FaRegStar /><FaRegStar /><FaRegStar /><FaRegStar />
+              </div>
+              <p className='px-[10px] text-[1.1em] font-bold'>Broccoli and Cauliflower Mix</p>
+              <p className='text-[#216D5A] px-[10px] font-bold pt-[20px]'>$12.00</p>
+              <p className='px-[10px] '>per Kilogram</p>
+            </div>
+            <div className='absolute group bg-[#ffba41] pl-[15px] transition-all duration-200 pb-[15px] p-[5px] rounded-bl-2xl top-0 right-0 hover:bg-[#136450] text-white'>
+              <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="15pt" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet"><g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" className='group-hover:fill-white ' stroke="none"> <path d="M2425 5114 c-312 -48 -544 -166 -745 -381 -144 -154 -238 -326 -287 -528 l-26 -103 -331 -4 c-311 -4 -335 -6 -396 -27 -161 -55 -289 -186 -334 -341 -15 -51 -306 -3129 -306 -3235 0 -163 117 -349 269 -429 135 -70 -31 -66 2291 -66 2290 0 2153 -3 2278 58 67 33 159 115 201 181 41 64 70 150 77 230 7 89 -279 3183 -302 3261 -47 160 -180 293 -344 346 -46 14 -107 18 -386 22 l-331 4 -26 103 c-108 440 -461 784 -907 886 -83 19 -327 33 -395 23z m369 -369 c243 -71 431 -224 540 -440 27 -55 76 -184 76 -202 0 -1 -383 -3 -851 -3 -736 0 -850 2 -846 14 3 8 11 34 17 58 21 77 89 202 154 283 132 165 334 281 546 315 96 16 265 4 364 -25z m-1444 -1262 c0 -239 2 -272 19 -308 22 -48 44 -69 96 -91 73 -30 162 2 203 74 21 38 22 49 22 316 l0 276 870 0 870 0 0 -276 c0 -267 1 -278 22 -316 41 -72 130 -104 203 -74 52 22 74 43 96 91 17 36 19 69 19 308 l0 267 304 0 c299 0 304 0 337 -23 45 -30 77 -80 84 -130 3 -23 68 -730 145 -1571 113 -1228 138 -1535 130 -1562 -16 -48 -48 -84 -94 -105 -39 -18 -117 -19 -2116 -19 -1999 0 -2077 1 -2116 19 -46 21 -78 57 -94 105 -8 27 17 334 130 1562 77 841 142 1548 145 1571 7 50 39 100 84 130 33 23 38 23 337 23 l304 0 0 -267z"></path></g></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* NESE */}
+      <div className="bg-[url('https://groffer.modeltheme.com/wp-content/uploads/2023/02/Main-services_bg1.jpg')] bg-center bg-cover min-h-[80vh] flex flex-col items-center justify-center my-[40px]">
+        <p className='text-center text-white font-bold text-[2em] md:text-[3em]'>Shop by Lifestyle</p>
+        <div className='grid grid-cols-2 w-[90%] mx-auto sm:grid-cols-3 lg:grid-cols-6 gap-[20px] justify-center'>
+          <div className='flex w-[100%] flex-col items-center bg-white rounded-xl px-[20px] py-[25px]'>
+            <img className='h-[70px]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Main-category1.svg" alt="" />
+            <p>Vegan</p>
+          </div>
+          <div className='flex w-[100%] flex-col items-center bg-white rounded-xl px-[20px] py-[25px]'>
+            <img className='h-[70px]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Main-category2.svg" alt="" />
+            <p>Gluten-free</p>
+          </div>
+          <div className='flex w-[100%] flex-col items-center bg-white rounded-xl px-[20px] py-[25px]'>
+            <img className='h-[70px]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Main-category3.svg" alt="" />
+            <p>Paleo</p>
+          </div>
+          <div className='flex w-[100%] flex-col items-center bg-white rounded-xl px-[20px] py-[25px]'>
+            <img className='h-[70px]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Main-category4.svg" alt="" />
+            <p>Keto</p>
+          </div>
+          <div className='flex w-[100%] flex-col items-center bg-white rounded-xl px-[20px] py-[25px]'>
+            <img className='h-[70px]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Main-category5.svg" alt="" />
+            <p>Flexitarian</p>
+          </div>
+          <div className='flex w-[100%] flex-col items-center bg-white rounded-xl px-[20px] py-[25px]'>
+            <img className='h-[70px]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Main-category6.svg" alt="" />
+            <p>Fasting</p>
+          </div>
+        </div>
+      </div>
+
+
+      {/* 2 DENE BALACA REKLAM */}
+      <div className='hidden sm:grid grid-cols-1 gap-[30px] w-[95%] mx-auto sm:grid-cols-2'>
+        <div className='relative  w-[100%]'>
+          <img className='inset-0' src="https://groffer.modeltheme.com/wp-content/uploads/2023/02/Main-banners01.png" alt="" />
+          <p className='text-gray-400 left-[20px] absolute top-[40px]'>10%  At Any Nearest Stores</p>
+          <p className='font-[500] w-[50%] left-[20px] text-[1.5em] md:text-[3em] top-[60px] absolute'>30% off on All veggies</p>
+        </div>
+        <div className='relative  w-[100%]'>
+          <img className='inset-0' src="https://groffer.modeltheme.com/wp-content/uploads/2023/02/Main-banner02.jpeg" alt="" />
+          <p className='text-gray-400 left-[20px] absolute top-[40px]'>10%  At Any Nearest Stores</p>
+          <p className='font-[500] w-[50%] left-[20px] text-[1.5em] md:text-[3em] top-[60px] absolute'>30% off on All veggies</p>
+        </div>
+      </div>
+
+
+
+      {/* DELIVERYLER */}
+      <div className=' -pt-100px md:flex gap-[30px] md:py-[50px] w-[90%] mx-auto font-space-grotesk justify-around'>
+        <div className='flex flex-col w-[80%] mx-auto  items-center justify-center text-center'>
+          <img className=' pt-[20px] hover:scale-105 transition-all duration-100' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Main_service1-150x150.png" alt="" />
+          <p className='font-bold pt-[10px]'>Local Pickup</p>
+          <p className='text-gray-500 pt-[10px]'>Get orders faster while avoiding shipping fees</p>
+        </div>
+        <div className='flex flex-col w-[80%] mx-auto items-center justify-center text-center'>
+          <img className=' hover:scale-105 transition-all duration-100' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Main_service2-150x150.png" alt="" />
+          <p className='font-bold pt-[10px]'>Local Delivery</p>
+          <p className='text-gray-500 pt-[10px]'>100% curbside recyclable boxes on demand</p>
+        </div>
+        <div className='flex flex-col w-[80%] mx-auto items-center justify-center text-center'>
+          <img className=' hover:scale-105 transition-all duration-100' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Main_service3-150x150.png" alt="" />
+          <p className='font-bold pt-[10px]'>Conscious Eaters</p>
+          <p className='text-gray-500 pt-[10px]'>We are supporting small farmers and producers</p>
+        </div>
+        <div className='flex flex-col w-[80%] mx-auto items-center justify-center text-center'>
+          <img className='hover:scale-105 transition-all duration-100' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Main_service4-150x150.png" alt="" />
+          <p className='font-bold pt-[10px]'>Delicious & New Food</p>
+          <p className='text-gray-500 pt-[10px]'>Feel great about what you eat every day</p>
+        </div>
+      </div>
     </>
   )
 }
