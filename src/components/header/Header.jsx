@@ -25,7 +25,7 @@ function Header() {
             <div
                 onClick={() => { setShowLogin(false) }}
                 className={`${showLogin ? 'fixed' : 'hidden'} w-[100%] h-[100vh]  flex justify-center items-center top-0 right-0 bg-black/80 z-50`}>
-                <div data-aos='fade-up' onClick={(e)=>{e.stopPropagation()}}>
+                <div data-aos='fade-up' onClick={(e) => { e.stopPropagation() }}>
                     <LoginPopUp />
                 </div>
             </div>
@@ -48,7 +48,10 @@ function Header() {
                                 type="text"
                                 placeholder='Search products...'
                                 className='focus:outline-none rounded-sm py-[10px] pl-[15px] p-[5px] w-[320px]' />
-                            <FaMagnifyingGlass className='absolute right-[10px] ' />
+
+                            <Link to={'/products'}>
+                                <FaMagnifyingGlass className='absolute right-[10px] ' />
+                            </Link>
                             <div className={` ${searchedValue.length > 0 ? 'absolute' : 'hidden'} z-40  p-[10px] top-[60px] overflow-y-hidden  h-[300px] w-[100%] bg-white shadow-lg mt-[10px] border-[1px] border-gray-100`}>
                                 {
                                     Array(10).fill('ayan').map((item, i) => {

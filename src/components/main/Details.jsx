@@ -10,7 +10,7 @@ function Details() {
   const [isRew, setIsRew] = useState(false)
   return (
     <>
-      <BreadCrumps />
+      <BreadCrumps page={'details'}/>
       <div className='md:flex'>
         <div className='w-[90%] flex mx-auto flex-col justify-center items-center lg:w-[50%] md:w-[40%]'>
           <img className='w-[100%] ' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product06.jpg" alt="" />
