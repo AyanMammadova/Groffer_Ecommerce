@@ -3,7 +3,8 @@
 .font-space-grotesk {
     font-family: 'Space Grotesk', sans-serif;
 }
-
+.bggreen{background-color: #136450;}
+.txtgreen{color: #136450;}
 * {
     font-family: 'Space Grotesk', sans-serif;
 }

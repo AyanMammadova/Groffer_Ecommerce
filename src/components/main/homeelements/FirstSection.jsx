@@ -14,14 +14,15 @@ function FirstSection() {
                         <p className='text-[.7em] md:text-[1em]'>Only this weekend for the remaining of the month</p>
                         <div className='relative h-[200px] w-[150px]'>
                             <button className='absolute top-[50px] bg-[#FFBA41] font-bold px-[25px] py-[10px] rounded-sm hover:text-[#136450] border-2 border-[#FFBA41] hover:border-[#136450]  transition-all duration-100 hover:bg-white'>
-                                <span data-aos="fade-left" data-aos-delay="">S</span>
+                                <span>Shop Now</span>
+                                {/* <span data-aos="fade-left" data-aos-delay="">S</span>
                                 <span data-aos="fade-left" data-aos-delay="100">h</span>
                                 <span data-aos="fade-left" data-aos-delay="150">o</span>
                                 <span data-aos="fade-left" data-aos-delay="200">p</span>
                                 <span data-aos="fade-left" data-aos-delay="250"> </span>
                                 <span data-aos="fade-left" data-aos-delay="300">N</span>
                                 <span data-aos="fade-left" data-aos-delay="350">o</span>
-                                <span data-aos="fade-left" data-aos-delay="400">w</span>
+                                <span data-aos="fade-left" data-aos-delay="400">w</span> */}
                             </button>
                             <div>
                                 <img className='w-[100px] absolute -right-[100px]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Main-slider1.png" alt="" />
