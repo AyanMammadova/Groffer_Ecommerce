@@ -7,9 +7,11 @@ import { TfiMenu } from 'react-icons/tfi'
 import 'aos/dist/aos.css';
 import { Link } from 'react-router-dom'
 import MobileMenu from './MobileMenu'
+import LoginPopUp from '../login/LoginPopUp'
 
 function Header() {
     const [showMobileMenu, setShowMobileMenu] = useState(false)
+    const [showLogin, setShowLogin] = useState(false)
     useEffect(() => {
         Aos.init();
     }, []);
@@ -20,6 +22,13 @@ function Header() {
     }
     return (
         <>
+            <div
+                onClick={() => { setShowLogin(false) }}
+                className={`${showLogin ? 'fixed' : 'hidden'} w-[100%] h-[100vh]  flex justify-center items-center top-0 right-0 bg-black/80 z-50`}>
+                <div data-aos='fade-up' onClick={(e)=>{e.stopPropagation()}}>
+                    <LoginPopUp />
+                </div>
+            </div>
             <div className='flex font-space-grotesk bg-white z-20 justify-between p-[10px] md:pl-[40px] md:pr-[70px] items-center'>
                 <div className='flex items-center  gap-[30px]'>
                     <Link to={'/'}>
@@ -57,7 +66,9 @@ function Header() {
                     </div>
                 </div>
                 <div className='flex gap-[20px] items-center'>
-                    <div className='md:flex hidden '>
+                    <div
+                        onClick={() => { setShowLogin(!showLogin) }}
+                        className='flex  '>
                         <div className='relative group bg-green-300 cursor-pointer'>
                             <div className='absolute -top-[10px] right-0'>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="29" viewBox="0 0 25 29" fill="none">
@@ -88,15 +99,16 @@ function Header() {
                             <p>€0.00</p>
                         </div>
                     </div>
+                    <div
+                        onClick={() => { setShowMobileMenu(!showMobileMenu) }}
+                        className='block md:hidden'>
+                        <RxHamburgerMenu className='text-[1.8em] mt-[4px]' />
+                    </div>
                 </div>
 
-                <div
-                    onClick={() => { setShowMobileMenu(!showMobileMenu) }}
-                    className='block md:hidden'>
-                    <RxHamburgerMenu className='text-[1.5em]' />
-                </div>
+
             </div>
-            <MobileMenu showMobileMenu={showMobileMenu}/>
+            <MobileMenu showMobileMenu={showMobileMenu} />
 
 
 
