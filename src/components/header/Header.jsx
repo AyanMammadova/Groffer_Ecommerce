@@ -8,6 +8,7 @@ import 'aos/dist/aos.css';
 import { Link } from 'react-router-dom'
 import MobileMenu from './MobileMenu'
 import LoginPopUp from '../login/LoginPopUp'
+import Categories from './Categories'
 
 function Header() {
     const [showMobileMenu, setShowMobileMenu] = useState(false)
@@ -118,10 +119,11 @@ function Header() {
             <div className='h-[1px] bg-gray-200  w-[100%]'></div>
             <div className='lg:flex hidden  font-space-grotesk justify-between h-[80px] p-[10px] md:px-[40px] items-center'>
                 <div className='flex gap-[20px] items-center'>
-                    <div className=' items-center hidden xl:flex  py-[10px] gap-[5px] cursor-pointer '>
+                    <div className='group relative items-center hidden xl:flex  py-[10px] gap-[5px] cursor-pointer '>
                         <TfiMenu className='text-[#136450]' />
-                        <p>Shop by Categories</p>
+                        <p className='text-[1.4em] font-[500]'>Shop by Categories</p>
                         <IoIosArrowDown className='text-[.8em]' />
+                        {/* <Categories/> */}
                     </div>
                     <div className='h-[20px] hidden xl:block w-[1px] bg-gray-300'></div>
 

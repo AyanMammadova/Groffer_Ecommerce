@@ -2,6 +2,7 @@ import React from 'react'
 import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa'
 import { IoLocationSharp } from 'react-icons/io5'
 import { MdOutlineEmail } from 'react-icons/md'
+import { Link } from 'react-router-dom'
 
 function Footer() {
   return (
@@ -10,9 +11,9 @@ function Footer() {
         <div className='sm:flex font-[500] mb-[30px] px-[10px] md:mx-[30px] py-[30px] border-b-[1px] border-gray-200 justify-between flex-wrap'>
           <ul className='sm:flex text-[1.3em] gap-[20px]'>
             <li>My Account</li>
-            <li>Bag</li>
+            <Link to={'/bag'}>Bag</Link>
             <li>Personal info</li>
-            <li>Wishlist</li>
+            <Link to={'/wishlist'}>Wishlist</Link>
           </ul>
           <ul className='flex gap-[10px]'>
             <li><FaFacebook /></li>
