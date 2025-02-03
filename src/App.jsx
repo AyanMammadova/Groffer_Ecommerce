@@ -6,6 +6,7 @@ import Details from './components/main/Details'
 import Products from './components/main/Products'
 import WishList from './components/main/WishList'
 import Bag from './components/main/Bag'
+import Contact from './components/main/Contact'
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path='/products' element={<Products/>}/>
         <Route path='/wishlist' element={<WishList/>}/>
         <Route path='/bag' element={<Bag/>}/>
+        <Route path='/contact' element={<Contact/>}/>
 
         </Route>
       </Routes>

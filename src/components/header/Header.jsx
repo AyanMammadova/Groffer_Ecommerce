@@ -1,5 +1,5 @@
 import Aos from 'aos'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FaMagnifyingGlass, FaPhone } from 'react-icons/fa6'
 import { IoIosArrowDown } from 'react-icons/io'
 import { RxHamburgerMenu } from 'react-icons/rx'
@@ -8,9 +8,11 @@ import 'aos/dist/aos.css';
 import { Link } from 'react-router-dom'
 import MobileMenu from './MobileMenu'
 import LoginPopUp from '../login/LoginPopUp'
-import Categories from './Categories'
+import QuickView from '../main/QuickView'
+import { DATA } from '../../context/DataContext'
 
 function Header() {
+    const { showQuick, setShowQuick } = useContext(DATA)
     const [showMobileMenu, setShowMobileMenu] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
     useEffect(() => {
@@ -26,8 +28,15 @@ function Header() {
             <div
                 onClick={() => { setShowLogin(false) }}
                 className={`${showLogin ? 'fixed' : 'hidden'} w-[100%] h-[100vh]  flex justify-center items-center top-0 right-0 bg-black/80 z-50`}>
-                <div data-aos='fade-up' onClick={(e) => { e.stopPropagation() }}>
+                <div onClick={(e) => { e.stopPropagation() }}>
                     <LoginPopUp />
+                </div>
+            </div>
+            <div
+                onClick={() => { setShowQuick(false) }}
+                className={`${showQuick ? 'fixed' : 'hidden'} w-[100%] h-[100vh]  flex justify-center items-center top-0 right-0 bg-black/80 z-50`}>
+                <div className=' w-[80%] h-[96vh] mx-auto  bg-white ' onClick={(e) => { e.stopPropagation() }}>
+                    <QuickView type={'quick'} />
                 </div>
             </div>
             <div className='flex font-space-grotesk bg-white z-20 justify-between p-[10px] md:pl-[40px] md:pr-[70px] items-center'>
@@ -143,7 +152,9 @@ function Header() {
                         <p>+ 0000 000</p>
                     </div>
                     <div className='w-[200px]'>
-                        <button className='bg-[#FFBA41] font-bold px-[35px] py-[10px] rounded-sm hover:text-[#136450] hover:border-2 border-[#136450] hover:scale-105 transition-all duration-100 hover:bg-white'>Get a Quote</button>
+                        <Link to={'/contact'} className='bg-[#FFBA41] font-bold px-[35px] py-[10px] rounded-sm hover:text-[#136450] hover:border-2 border-[#136450] hover:scale-105 transition-all duration-200 hover:bg-white'>
+                            Get a Quote
+                        </Link>
                     </div>
                 </div>
             </div>

@@ -4,21 +4,43 @@ import BreadCrumps from './BreadCrumps'
 import { TiHeartOutline } from 'react-icons/ti'
 import ProductCard from './ProductCard'
 
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
+import QuickView from './QuickView'
+
 function Details() {
   const [isDesc, setIsDesc] = useState(true)
   const [isAdd, setIsAdd] = useState(false)
   const [isRew, setIsRew] = useState(false)
   return (
     <>
-      <BreadCrumps page={'details'}/>
-      <div className='md:flex'>
+      <BreadCrumps page={'details'} />
+      {/* <div className='md:flex'>
         <div className='w-[90%] flex mx-auto flex-col justify-center items-center lg:w-[50%] md:w-[40%]'>
           <img className='w-[100%] ' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product06.jpg" alt="" />
-          <div className=' flex justify-center'>
-            <img className='w-[15%]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product10-300x300.jpg" alt="" />
-            <img className='w-[15%]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product14-300x300.jpg" alt="" />
-            <img className='w-[15%]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product19-200x200.jpg" alt="" />
-          </div>
+          <div className='  flex justify-center'>
+            <Zoom>
+              <img
+                alt="That Wanaka Tree, New Zealand by Laura Smetsers"
+                src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product10-300x300.jpg"
+                className='w-[100px]'
+              />
+            </Zoom>
+            <Zoom>
+              <img
+                alt="That Wanaka Tree, New Zealand by Laura Smetsers"
+                src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product14-300x300.jpg"
+                className='w-[100px]'
+              />
+            </Zoom>
+            <Zoom>
+              <img
+                alt="That Wanaka Tree, New Zealand by Laura Smetsers"
+                src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product19-200x200.jpg"
+                className='w-[100px]'
+              />
+            </Zoom>
+             </div>
         </div>
         <div className='lg:w-[50%] md:w-[60%] flex flex-col gap-[15px] p-[10px] md:p-[40px]'>
           <p className='text-[3em] font-bold'>Fresh For The Bold Ground</p>
@@ -52,7 +74,8 @@ function Details() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
+      <QuickView type={'details'}/>
       <div className='border-2 rounded-2xl border-gray-300  mt-[80px] md:mt-[50px] relative flex flex-col items-center justify-center w-[90%] mx-auto py-[50px]'>
         <div className='absolute -top-[80px] md:-top-[30px]  bg-[#F1F3F6] text-center rounded-lg md:flex justify-between mx-[auto] w-[80%]'>
           <p
@@ -77,8 +100,8 @@ function Details() {
             {
               isDesc ? ' More success is to get a massage once a week randomised words which Don’t important, major key, cloth talk  Mogul talk.Eliptical talk. The standard chunk of Lorem Ipsum used since the 1500s is reproduced below forthose interested. Sections 1.10.32 and  1.10.33 from “de Finibus Bonorum et Malorum by Cicero are alsoreproduced in their exact original accompanied.'
                 : isAdd ? 'additional infooo'
-                  : isRew ? 'tehre is no review'  : ''
-              }
+                  : isRew ? 'tehre is no review' : ''
+            }
           </p>
         </div>
 

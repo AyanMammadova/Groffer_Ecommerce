@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 function Footer() {
   return (
     <>
-      <footer className="bg-[url('https://groffer.modeltheme.com/wp-content/uploads/2023/01/Footer-BG.png')] bg-cover bg-start w-[100%] ">
+      <footer className="bg-[url('https://groffer.modeltheme.com/wp-content/uploads/2023/01/Footer-BG.png')] bg-cover bg-start  shadow-[0_0px_20px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.08)] w-[100%] ">
         <div className='sm:flex font-[500] mb-[30px] px-[10px] md:mx-[30px] py-[30px] border-b-[1px] border-gray-200 justify-between flex-wrap'>
           <ul className='sm:flex text-[1.3em] gap-[20px]'>
             <li>My Account</li>
