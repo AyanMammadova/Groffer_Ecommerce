@@ -15,7 +15,6 @@ function Header() {
     const { showQuick, setShowQuick, menuData } = useContext(DATA)
     const [showMobileMenu, setShowMobileMenu] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
-    console.log(menuData)
     useEffect(() => {
         Aos.init();
     }, []);

@@ -16,7 +16,12 @@ function Products() {
   }
   return (
     <>
-      <BreadCrumps page={'products'} />
+      <BreadCrumps page={[
+        {
+          name: 'Shop',
+          slug: 'shop'
+        }
+      ]} />
       <p className='text-[2em] font-[600] px-[10px] md:px-[40px]'>Search results: “”</p>
       <div className='h-[1px] w-[100%] my-[20px] bg-gray-200'></div>
 

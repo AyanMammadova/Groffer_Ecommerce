@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
-import { BsCheck } from 'react-icons/bs'
 import BreadCrumps from './BreadCrumps'
-import { TiHeartOutline } from 'react-icons/ti'
 import ProductCard from './ProductCard'
 
-import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 import QuickView from './QuickView'
 
@@ -14,7 +11,20 @@ function Details() {
   const [isRew, setIsRew] = useState(false)
   return (
     <>
-      <BreadCrumps page={'details'} />
+      <BreadCrumps page={[
+        {
+          name: 'Shop',
+          slug: 'shop'
+        },
+        {
+          name: 'Apples',
+          slug: 'shop'
+        },
+        {
+          name: 'Fruit name',
+          slug: 'shop'
+        }
+      ]} />
       {/* <div className='md:flex'>
         <div className='w-[90%] flex mx-auto flex-col justify-center items-center lg:w-[50%] md:w-[40%]'>
           <img className='w-[100%] ' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product06.jpg" alt="" />
