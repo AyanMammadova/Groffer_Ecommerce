@@ -12,9 +12,10 @@ import QuickView from '../main/QuickView'
 import { DATA } from '../../context/DataContext'
 
 function Header() {
-    const { showQuick, setShowQuick } = useContext(DATA)
+    const { showQuick, setShowQuick, menuData } = useContext(DATA)
     const [showMobileMenu, setShowMobileMenu] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
+    console.log(menuData)
     useEffect(() => {
         Aos.init();
     }, []);
@@ -59,7 +60,7 @@ function Header() {
                                 placeholder='Search products...'
                                 className='focus:outline-none rounded-sm py-[10px] pl-[15px] p-[5px] w-[320px]' />
 
-                            <Link to={'/products'}>
+                            <Link to={'/shop'}>
                                 <FaMagnifyingGlass className='absolute right-[10px] ' />
                             </Link>
                             <div className={` ${searchedValue.length > 0 ? 'absolute' : 'hidden'} z-40  p-[10px] top-[60px] overflow-y-hidden  h-[300px] w-[100%] bg-white shadow-lg mt-[10px] border-[1px] border-gray-100`}>
@@ -138,11 +139,24 @@ function Header() {
 
                     <div className='hidden md:block'>
                         <ul className='flex text-[1.2em] font-[500] gap-[30px] *:cursor-pointer'>
-                            <li>Home</li>
-                            <li>About</li>
-                            <li className='rel'>Shop</li>
-                            <li>Blog</li>
-                            <li>Pages</li>
+                            {
+                                menuData && menuData.map((item, i) => {
+                                    return <li key={i} className='relative z-50  group'>
+                                        <Link to={`/${item.slug}`}>{item.catname}</Link>
+                                        <div
+                                            className={`${item.Subcategory ? '' : 'hidden'} hidden pt-[40px]  rounded-sm absolute top-[0px] -z-50  scale-90 transition-all duration-700 group-hover:scale-110 group-hover:block w-[150px] bg-white`}>
+
+                                            <div className='shadow-lg'>
+                                                {
+                                                    item.Subcategory?.map((subitem, subi) => {
+                                                        return <Link to={`/${subitem.slug}`} className='hover:bg-gray-200 block py-[5px] px-[10px] w-[100%]' key={subi}>{subitem.name}</Link>
+                                                    })
+                                                }
+                                            </div>
+                                        </div>
+                                    </li>
+                                })
+                            }
                         </ul>
                     </div>
                 </div>

@@ -7,6 +7,14 @@
 .bggreen {
     background-color: #136450;
 }
+.scrollbar-hide {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 11 */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+}
 
 .txtgreen {
     color: #136450;
