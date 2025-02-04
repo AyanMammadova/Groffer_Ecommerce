@@ -140,7 +140,7 @@ function Header() {
                         <ul className='flex text-[1.2em] font-[500] gap-[30px] *:cursor-pointer'>
                             {
                                 menuData && menuData.map((item, i) => {
-                                    return <li key={i} className='relative z-50  group'>
+                                    return <li key={i} className='relative z-40  group'>
                                         <Link to={`/${item.slug}`}>{item.catname}</Link>
                                         <div
                                             className={`${item.Subcategory ? '' : 'hidden'} hidden pt-[40px]  rounded-sm absolute top-[0px] -z-50  scale-90 transition-all duration-700 group-hover:scale-110 group-hover:block w-[150px] bg-white`}>
