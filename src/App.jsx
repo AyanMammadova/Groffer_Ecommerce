@@ -10,6 +10,8 @@ import Contact from './components/main/Contact'
 import MediaPage from './components/main/MediaPage'
 import About from './components/main/About'
 import MyAccount from './components/login/MyAccount'
+import OrderTracking from './components/main/OrderTracking'
+import Blog from './components/main/Blog'
 
 
 function App() {
@@ -29,9 +31,11 @@ function App() {
         <Route path='/shop' element={<Products/>}/>
         <Route path='/wishlist' element={<WishList/>}/>
         <Route path='/cart' element={<Bag/>}/>
+        <Route path='/blog' element={<Blog/>}/>
         <Route path='/media/*' element={<MediaPage/>}/>
         <Route path='/contact' element={<Contact/>}/>
         <Route path='/about' element={<About/>}/>
+        <Route path='/order-tracking' element={<OrderTracking/>}/>
         <Route path='/my-account' element={<MyAccount/>}/>
 
         </Route>

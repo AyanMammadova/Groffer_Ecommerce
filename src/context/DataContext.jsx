@@ -27,8 +27,8 @@ function DataContext({children}) {
             catname: 'Blog',
             slug: '',
             Subcategory: [
-                { name: 'Blog Default', slug: '' },
-                { name: 'Single Article', slug: '' },
+                { name: 'Blog Default', slug: 'blog' },
+                { name: 'Single Article', slug: 'blog' },
             ],
         },
         {

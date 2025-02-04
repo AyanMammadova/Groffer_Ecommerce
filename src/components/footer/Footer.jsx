@@ -10,9 +10,9 @@ function Footer() {
       <footer className="bg-[url('https://groffer.modeltheme.com/wp-content/uploads/2023/01/Footer-BG.png')] bg-cover bg-start  shadow-[0_0px_20px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.08)] w-[100%] ">
         <div className='sm:flex font-[500] mb-[30px] px-[10px] md:mx-[30px] py-[30px] border-b-[1px] border-gray-200 justify-between flex-wrap'>
           <ul className='sm:flex text-[1.3em] gap-[20px]'>
-            <li>My Account</li>
+            <Link to={'/my-account'}>My Account</Link>
             <Link to={'/cart'}>Bag</Link>
-            <li>Personal info</li>
+            <Link to={'/my-account'}>Personal info</Link>
             <Link to={'/wishlist'}>Wishlist</Link>
           </ul>
           <ul className='flex gap-[10px]'>
@@ -32,31 +32,31 @@ function Footer() {
           </div>
           <div className='w-[95%] mx-auto lg:w-[15%] my-[20px]'>
             <p className='font-[500] text-[1.2em] pb-[20px]'>Quick Links</p>
-            <ul className='text-gray-600'>
-              <li>Our Services</li>
-              <li>About Company</li>
-              <li>Latest News</li>
-              <li>Meet The Team</li>
-              <li>Our Products</li>
+            <ul className='text-gray-600 flex flex-col'>
+              <Link to={'/about'}>Our Services</Link>
+              <Link to={'/about'}>About Company</Link>
+              <Link to={'/blog'}>Latest News</Link>
+              <Link to={'/about'}>Meet The Team</Link>
+              <Link to={'/shop'}>Our Products</Link>
             </ul>
           </div>
           <div className='w-[95%] mx-auto lg:w-[15%] my-[20px]'>
             <p className='font-[500] text-[1.2em] pb-[20px]'>Account</p>
-            <ul className='text-gray-600'>
-              <li>Your Account</li>
-              <li>Shipping rates</li>
-              <li>Refunds</li>
-              <li>Delivery info</li>
+            <ul className='text-gray-600 flex flex-col'>
+              <Link to={'/my-account'}>Your Account</Link>
+              <Link to={'/contact'}>Shipping rates</Link>
+              <Link to={'/contact'}>Refunds</Link>
+              <Link to={'/order-tracking'}>Delivery info</Link>
             </ul>
           </div>
           <div className='w-[95%] mx-auto lg:w-[15%] my-[20px]'>
             <p className='font-[500] text-[1.2em] pb-[20px]'>About Us</p>
-            <ul className='text-gray-600'>
-              <li>About Company</li>
-              <li>Our team</li>
-              <li>Contacts</li>
-              <li>News&Event</li>
-              <li>Prder Tracking</li>
+            <ul className='text-gray-600 flex flex-col'>
+              <Link to={'/about'}>About Company</Link>
+              <Link to={'/about'}>Our team</Link>
+              <Link to={'/contact'}>Contacts</Link>
+              <Link to={'/blog'}>News&Event</Link>
+              <Link to={'/order-tracking'}>Order Tracking</Link>
             </ul>
           </div>
           <div className='w-[95%] mx-auto lg:w-[25%] my-[20px]'>
