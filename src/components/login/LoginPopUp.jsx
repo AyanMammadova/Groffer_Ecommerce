@@ -9,7 +9,7 @@ function LoginPopUp() {
     const [forgot, setForgot] = useState(false)
     return (
         <>
-            <div className='w-[280px] sm:w-[500px] z-50 bg-white '>
+            <div className='w-[90%] mx-auto sm:w-[500px] z-50 bg-white '>
                 <div className='flex'>
                     <div
                         onClick={() => { setIsSignin(true),setForgot(false) }}

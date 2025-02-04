@@ -28,7 +28,7 @@ function Header() {
             <div
                 onClick={() => { setShowLogin(false) }}
                 className={`${showLogin ? 'fixed' : 'hidden'} w-[100%] h-[100vh]  flex justify-center items-center top-0 right-0 bg-black/80 z-50`}>
-                <div onClick={(e) => { e.stopPropagation() }}>
+                <div className='w-[100%] mx-auto' onClick={(e) => { e.stopPropagation() }}>
                     <LoginPopUp />
                 </div>
             </div>
