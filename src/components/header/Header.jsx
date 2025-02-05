@@ -5,19 +5,23 @@ import { IoIosArrowDown } from 'react-icons/io'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { TfiMenu } from 'react-icons/tfi'
 import 'aos/dist/aos.css';
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import MobileMenu from './MobileMenu'
 import LoginPopUp from '../login/LoginPopUp'
 import QuickView from '../main/QuickView'
 import { DATA } from '../../context/DataContext'
 
 function Header() {
+    const pathname=useLocation().pathname
     const { showQuick, setShowQuick, menuData } = useContext(DATA)
     const [showMobileMenu, setShowMobileMenu] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
     useEffect(() => {
         Aos.init();
     }, []);
+    useEffect(()=>{
+        setShowMobileMenu(false)
+    },[pathname])
     const [searchedValue, setSearchedValue] = useState('')
     function handleSearch(value) {
         const trimmedInput = value.replace(/ /g, "")
