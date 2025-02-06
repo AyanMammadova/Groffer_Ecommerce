@@ -10,18 +10,19 @@ import MobileMenu from './MobileMenu'
 import LoginPopUp from '../login/LoginPopUp'
 import QuickView from '../main/QuickView'
 import { DATA } from '../../context/DataContext'
+import { IoCloseSharp } from 'react-icons/io5'
 
 function Header() {
-    const pathname=useLocation().pathname
+    const pathname = useLocation().pathname
     const { showQuick, setShowQuick, menuData } = useContext(DATA)
     const [showMobileMenu, setShowMobileMenu] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
     useEffect(() => {
         Aos.init();
     }, []);
-    useEffect(()=>{
+    useEffect(() => {
         setShowMobileMenu(false)
-    },[pathname])
+    }, [pathname])
     const [searchedValue, setSearchedValue] = useState('')
     function handleSearch(value) {
         const trimmedInput = value.replace(/ /g, "")
@@ -66,7 +67,7 @@ function Header() {
                             <Link to={'/shop'}>
                                 <FaMagnifyingGlass className='absolute right-[10px] ' />
                             </Link>
-                            <div className={` ${searchedValue.length > 0 ? 'absolute' : 'hidden'} z-40  p-[10px] top-[60px] overflow-y-hidden  h-[300px] w-[100%] bg-white shadow-lg mt-[10px] border-[1px] border-gray-100`}>
+                            <div className={` ${searchedValue.length > 0 ? 'absolute' : 'hidden'} z-50  p-[10px] top-[60px] overflow-y-hidden  h-[300px] w-[100%] bg-white  shadow-lg mt-[10px] border-[1px] border-gray-100`}>
                                 {
                                     Array(10).fill('ayan').map((item, i) => {
                                         return <div key={i} className='flex items-center h-[40px] my-[10px] gap-[10px]'>
@@ -99,7 +100,7 @@ function Header() {
                             </div>
                         </div>
                     </div>
-                    <div className='md:flex hidden items-center gap-[10px]'>
+                    <div className='md:flex hidden relative group  items-center gap-[10px]'>
                         <div className='relative'>
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="31" viewBox="0 0 25 31" fill="none">
                                 <path d="M23.9336 8.84991H1.5664C1.25376 8.84991 1 9.10362 1 9.41626V26.0648C1 28.251 2.77842 30.0294 4.96468 30.0294H20.5354C22.7216 30.0294 24.5 28.251 24.5 26.0648V9.41626C24.5 9.10362 24.2462 8.84991 23.9336 8.84991ZM23.3673 26.0648C23.3673 27.6269 22.0974 28.8966 20.5354 28.8966H4.96468C3.40259 28.8966 2.1328 27.6268 2.1328 26.0648V9.98266H23.3673V26.0648Z" fill="#000" stroke="#000" strokeWidth="0.7" />
@@ -114,6 +115,33 @@ function Header() {
                         <div>
                             <p className='font-bold'>My Cart</p>
                             <p>€0.00</p>
+                        </div>
+                        <div className='bg-white border-[1px] border-gray-200  shadow-md w-[300px] py-[20px] right-0 flex flex-col justify-center items-center -z-10 top-[100px] opacity-0  absolute transition-all duration-400 group-hover:opacity-100  group-hover:top-[42px]   group-hover:z-50'>
+                            <div className='w-[100%]'>
+                                <div className=' border-b-[1px] py-[10px] border-gray-200  px-[10px] flex gap-[10px] justify-between w-[100%]'>
+                                    <div className='flex '>
+                                        <div className='h-[100px]'>
+                                            <img className='h-[100px]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product28.jpg" alt="" />
+                                        </div>
+                                        <div className='flex flex-col'>
+                                            <Link to={'/details'} className=' text-black text-[1.1em]  hover:text-[#136450]'>Name of the product</Link>
+                                            <p className=' text-black '>4 x 12.00</p>
+                                        </div>
+                                    </div>
+                                    <IoCloseSharp  className='text-[1.5em]'/>
+                                </div>
+                                <p className='text-center font-[500] py-[10px]'>SUBTOTAL : 135.00 $</p>
+                            </div>
+                            <Link
+                                to={'/cart'}
+                                className='bg-[#136450] px-[100px] py-[10px]  font-bold  rounded-sm   border-2 border-[#136450] hover:scale-105 hover:text-[#136450] text-white transition-all duration-200 hover:bg-white'>
+                                Go to Bag
+                            </Link>
+                            <Link
+                                to={'/cart'}
+                                className='bg-[#136450] mt-[20px] px-[100px] py-[10px]  font-bold  rounded-sm   border-2 border-[#136450] hover:scale-105 hover:text-[#136450] text-white transition-all duration-200 hover:bg-white'>
+                                Checkout
+                            </Link>
                         </div>
                     </div>
                     <div

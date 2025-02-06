@@ -9,7 +9,7 @@ function Footer() {
     <>
       <footer className="bg-[url('https://groffer.modeltheme.com/wp-content/uploads/2023/01/Footer-BG.png')] bg-cover bg-start  shadow-[0_0px_20px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.08)] w-[100%] ">
         <div className='sm:flex font-[500] mb-[30px] px-[10px] md:mx-[30px] py-[30px] border-b-[1px] border-gray-200 justify-between flex-wrap'>
-          <ul className='sm:flex text-[1.3em] gap-[20px]'>
+          <ul className='sm:flex flex-col sm:flex-row text-[1.3em] gap-[20px]'>
             <Link to={'/my-account'}>My Account</Link>
             <Link to={'/cart'}>Bag</Link>
             <Link to={'/my-account'}>Personal info</Link>
@@ -60,7 +60,7 @@ function Footer() {
             </ul>
           </div>
           <div className='w-[95%] mx-auto lg:w-[25%] my-[20px]'>
-            <p className='text-[500] text-[1.3em] font-[500] pb-[20px]'>Don’t hesitate to contact us or call !</p>
+            <p className='text-[500] text-[1.2em] sm:text-[1.3em] font-[500] pb-[20px]'>Don’t hesitate to contact us or call !</p>
             <p className='flex gap-[10px] text-gray-600 py-[10px]'>
               <IoLocationSharp className='text-[#136450] text-[1.5em] '/> 4 Grand Central Terminal New York, NY 10 City name, CA 90896 United State USA.
             </p>

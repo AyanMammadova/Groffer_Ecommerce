@@ -12,6 +12,7 @@ import About from './components/main/About'
 import MyAccount from './components/login/MyAccount'
 import OrderTracking from './components/main/OrderTracking'
 import Blog from './components/main/Blog'
+import CheckOut from './components/main/CheckOut'
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path='/media/*' element={<MediaPage/>}/>
         <Route path='/contact' element={<Contact/>}/>
         <Route path='/about' element={<About/>}/>
+        <Route path='/checkout' element={<CheckOut/>}/>
         <Route path='/order-tracking' element={<OrderTracking/>}/>
         <Route path='/my-account' element={<MyAccount/>}/>
 
