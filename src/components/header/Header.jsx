@@ -11,8 +11,11 @@ import LoginPopUp from '../login/LoginPopUp'
 import QuickView from '../main/QuickView'
 import { DATA } from '../../context/DataContext'
 import { IoCloseSharp } from 'react-icons/io5'
+import { BASKET } from '../../context/BasketContext'
+import { ImEye } from 'react-icons/im'
 
 function Header() {
+    const { basketData } = useContext(BASKET)
     const pathname = useLocation().pathname
     const { showQuick, setShowQuick, menuData } = useContext(DATA)
     const [showMobileMenu, setShowMobileMenu] = useState(false)
@@ -117,21 +120,27 @@ function Header() {
                             <p>€0.00</p>
                         </div>
                         <div className='bg-white border-[1px] border-gray-200  shadow-md w-[300px] py-[20px] right-0 flex flex-col justify-center items-center -z-10 top-[100px] opacity-0  absolute transition-all duration-400 group-hover:opacity-100  group-hover:top-[42px]   group-hover:z-50'>
-                            <div className='w-[100%]'>
-                                <div className=' border-b-[1px] py-[10px] border-gray-200  px-[10px] flex gap-[10px] justify-between w-[100%]'>
-                                    <div className='flex '>
-                                        <div className='h-[100px]'>
-                                            <img className='h-[100px]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product28.jpg" alt="" />
+                            {
+                                basketData && basketData.map((item, i) => {
+                                    return <Link key={i} to={'/details'} className='w-[100%] bg-green-300 group relative'>
+                                        <div className=' border-b-[1px] py-[10px] border-gray-200  px-[10px] flex gap-[10px] justify-between w-[100%]'>
+                                            <div className='flex '>
+                                                <div className='h-[100px] relative'>
+                                                    <div className='absolute group-hover:flex top-0 right-0 h-[100%] w-[100%] bg-white/20 hidden items-center justify-center'><ImEye /></div>
+                                                    <img className='h-[100px] object-cover' src={item.img} alt="" />
+                                                </div>
+                                                <div className='flex flex-col'>
+                                                    <p className=' text-black text-[1.1em]  hover:text-[#136450]'>{item.name}</p>
+                                                    <p className=' text-black '>{item.count}x{item.price.toFixed(2)} $</p>
+                                                </div>
+                                            </div>
+                                            <IoCloseSharp className='text-[1.5em]' />
                                         </div>
-                                        <div className='flex flex-col'>
-                                            <Link to={'/details'} className=' text-black text-[1.1em]  hover:text-[#136450]'>Name of the product</Link>
-                                            <p className=' text-black '>4 x 12.00</p>
-                                        </div>
-                                    </div>
-                                    <IoCloseSharp  className='text-[1.5em]'/>
-                                </div>
-                                <p className='text-center font-[500] py-[10px]'>SUBTOTAL : 135.00 $</p>
-                            </div>
+
+                                    </Link>
+                                })
+                            }
+                            <p className='text-center font-[500] py-[10px]'>SUBTOTAL : 135.00 $</p>
                             <Link
                                 to={'/cart'}
                                 className='bg-[#136450] px-[100px] py-[10px]  font-bold  rounded-sm   border-2 border-[#136450] hover:scale-105 hover:text-[#136450] text-white transition-all duration-200 hover:bg-white'>

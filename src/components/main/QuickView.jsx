@@ -4,15 +4,23 @@ import { TiHeartOutline } from 'react-icons/ti'
 
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
+import ReactImageZoom from 'react-image-zoom';
 
-function QuickView({type}) {
+function QuickView({ type }) {
+
   return (
     <>
-      
+
       <div className={`md:flex w-[100%] h-[100%] `}>
-        <div className={` flex mx-auto flex-col justify-center items-center ${type=='quick' ? 'w-[0%] lg:w-[90%]' : 'lg:w-[50%] md:w-[40%]'} `}>
-          <img className={`w-[100%]  object-cover ${type=='quick' ? 'hidden lg:block h-[80vh]' : 'block '}`} src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product06.jpg" alt="" />
-          <div className={`${type=='details' ? 'flex' : 'hidden'}  justify-center`}>
+        <div className={` flex mx-auto flex-col justify-center items-center ${type == 'quick' ? 'w-[0%] lg:w-[90%]' : 'lg:w-[50%] md:w-[40%]'} `}>
+
+          <div className='h-['>
+            <img
+              className={`scale-100 hover:scale-110 h-[100%] w-[100%] ease-in duration-500 ${type == 'quick' ? 'hidden lg:block h-[80vh]' : 'block '}`}
+              src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product06.jpg" alt="" />
+
+          </div>
+          <div className={`${type == 'details' ? 'flex' : 'hidden'}  justify-center`}>
             <Zoom>
               <img
                 alt="That Wanaka Tree, New Zealand by Laura Smetsers"
@@ -39,7 +47,7 @@ function QuickView({type}) {
             <img className='w-[15%]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product19-200x200.jpg" alt="" /> */}
           </div>
         </div>
-        <div className={`${type=='quick' ? 'w-[100%] gap-[8px]' : 'lg:w-[50%] md:w-[60%] gap-[15px]'} flex flex-col p-[10px] md:p-[40px]`}>
+        <div className={`${type == 'quick' ? 'w-[100%] gap-[8px]' : 'lg:w-[50%] md:w-[60%] gap-[15px]'} flex flex-col p-[10px] md:p-[40px]`}>
           <p className='text-[2.5em] font-bold'>Fresh For The Bold Ground</p>
           <p className='txtgreen text-[2em] font-[500]'>€43.00</p>
           <p className='text-gray-500 text-[1.2em]'>Mushrooms is grown in favorable climates from tropical temperat region worldwide is berry wit</p>
