@@ -4,6 +4,7 @@ import { LoginFormSchemas } from '../../schemas/LoginFormSchemas';
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import { DATA } from '../../context/DataContext';
+import apiInstance from '../../services/axiosInstance';
 
 function LoginElement({ type }) {
     const {role,setRole}=useContext(DATA)
@@ -23,8 +24,8 @@ function LoginElement({ type }) {
         const formData = new FormData();
         formData.append('emailorusername', values.emailorusername);
         formData.append('password', values.password);
-        axios.post(
-            'http://hikmat059-001-site1.ptempurl.com/api/Auth/login',
+        apiInstance.post(
+            'Auth/login',
             formData,
             {
                 headers: {
