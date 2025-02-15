@@ -87,9 +87,9 @@ function LoginElement({ type }) {
                         className={`${type == 'page' ? 'w-[50%]' : 'w-[90%] '} mx-[5%]  font-[500] text-[1.4em] text-center py-[10px]  rounded-md border-2 transition-all duration-200 bg-[#136450] text-white border-[#136450] hover:text-[#136450] cursor-pointer hover:bg-white`}>
                         Log in
                     </button>
-                    <p className='flex text-center text-red-500 items-center justify-center gap-[10px] mx-[5%]'>
+                    <p className='flex text-center text-[1.3em] text-red-500 items-center justify-center gap-[10px] mx-[5%]'>
                         {
-                            role =='Admin' ? '' : 'Your not admin'
+                             role =='Admin' ? '' : role=='Member' ? 'Your not admin' :''
                         }
                     </p>
                 </div>
