@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import MainLayout from './layout/MainLayout'
 import Main from './components/main/Main'
@@ -17,6 +17,8 @@ import AdminLayout from './layout/AdminLayout'
 import Product from './Admin/Product'
 import Category from './Admin/Category'
 import Tag from './Admin/Tag'
+import { ToastContainer, toast } from 'react-toastify';
+import SubCategory from './Admin/SubCategory'
 
 
 function App() {
@@ -47,9 +49,10 @@ function App() {
         </Route>
 
         <Route path='/admin' element={<AdminLayout />}>
-        <Route index element={<Product />} />
-        <Route path='/admin/category' element={<Category />} />
-        <Route path='/admin/tag' element={<Tag />} />
+          <Route index element={<Product />} />
+          <Route path='/admin/category' element={<Category />} />
+          <Route path='/admin/subcategory' element={<SubCategory />} />
+          <Route path='/admin/tag' element={<Tag />} />
         </Route>
       </Routes>
     </>

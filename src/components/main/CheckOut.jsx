@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import BreadCrumps from './BreadCrumps'
 import { FaTableColumns } from 'react-icons/fa6'
+import { BASKET } from '../../context/BasketContext'
 
 function CheckOut() {
+    const { basketData } = useContext(BASKET)
     return (
         <>
             <BreadCrumps page={[
@@ -21,14 +23,14 @@ function CheckOut() {
             <div className='p-[10px] w-[100%] sm:p-[30px] '>
                 <table className='p-[10px] border-collapse w-[100%]  border-[1px] border-gray-200'>
                     <tbody>
-                        <tr>
-                            <td className='border-[2px] p-[10px] border-gray-200'>Name x 1</td>
-                            <td className='border-[2px] p-[10px] border-gray-200'>12.00 $</td>
-                        </tr>
-                        <tr>
-                            <td className='border-[2px] p-[10px] border-gray-200'>Name x 1</td>
-                            <td className='border-[2px] p-[10px] border-gray-200'>12.00 $</td>
-                        </tr>
+                        {
+                            basketData && basketData.map((item, i) => {
+                                return <tr>
+                                    <td className='border-[2px] p-[10px] border-gray-200'>{item.name} x {item.count}</td>
+                                    <td className='border-[2px] p-[10px] border-gray-200'>{item.price.toFixed(2)} $</td>
+                                </tr>
+                            })
+                        }
                         <tr>
                             <td className='border-[2px] p-[10px] font-[500] text-end border-gray-200'>Subtotal</td>
                             <td className='border-[2px] p-[10px]  border-gray-200'>1200.00 $</td>

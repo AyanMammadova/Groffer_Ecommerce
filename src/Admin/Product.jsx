@@ -94,25 +94,26 @@ function Product() {
       </button>
       <table className='w-[96%]  mx-auto border-2 border-black mt-[30px]'>
         <thead>
-          <th className='py-[10px] border-2 border-black'>#</th>
-          <th className='py-[10px] border-2 border-black'>Title</th>
-          <th className='py-[10px] border-2 border-black'>Category</th>
-          <th className='py-[10px] border-2 border-black'>Tags</th>
-          <th className='py-[10px] border-2 border-black'>Price</th>
-          <th className='py-[10px] border-2 border-black'>Discount</th>
-          <th className='py-[10px] border-2 border-black'>Action</th>
+          <tr>
+            <th className='py-[10px] border-2 border-white'>#</th>
+            <th className='py-[10px] border-2 border-white'>Title</th>
+            <th className='py-[10px] border-2 border-white'>Category</th>
+            <th className='py-[10px] border-2 border-white'>Tags</th>
+            <th className='py-[10px] border-2 border-white'>Price</th>
+            <th className='py-[10px] border-2 border-white'>Discount</th>
+            <th className='py-[10px] border-2 border-white'>Action</th></tr>
         </thead>
         <tbody>
           {
             Array(10).fill('ayan').map((item, i) => {
-              return <tr>
-                <td className='py-[10px] border-2 px-[10px] border-black font-[500]'>{i + 1}</td>
-                <td className='py-[10px] border-2 px-[10px] border-black font-[500]'>Apple</td>
-                <td className='py-[10px] border-2 px-[10px] border-black font-[500]'>Fruit</td>
-                <td className='py-[10px] border-2 px-[10px] border-black font-[500]'>Healthy,Nature,Organic</td>
-                <td className='py-[10px] border-2 px-[10px] border-black font-[500]'>10</td>
-                <td className='py-[10px] border-2 px-[10px] border-black font-[500]'>45</td>
-                <td className='py-[10px] border-2 text-center border-black font-[500]'>
+              return <tr key={i}>
+                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{i + 1}</td>
+                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>Apple</td>
+                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>Fruit</td>
+                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>Healthy,Nature,Organic</td>
+                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>10</td>
+                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>45</td>
+                <td className='py-[10px] border-2 text-center border-white font-[500]'>
                   <button className='mx-[10px] bg-green-500 py-[4px] rounded-md border-2 cursor-pointer border-green-400 px-[10px]'>Edit</button>
                   <button className='mx-[10px] bg-red-600 py-[4px] rounded-md border-2 cursor-pointer border-red-600 px-[10px]'>Delete</button>
                 </td>

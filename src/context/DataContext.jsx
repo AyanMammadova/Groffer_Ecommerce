@@ -1,12 +1,12 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { getAllProducts } from '../services/api';
 export const DATA = createContext('')
 function DataContext({children}) {
+    const [role,setRole]=useState('')
     const [allData,setAllData]=useState(null)
     const [showQuick, setShowQuick] = useState(false)
-    useEffect(()=>{
-        getAllProducts().then(res=>setAllData(res?.data.data))
-    },[])
+    // useEffect(()=>{
+    //     getAllCategories
+    // },[])
    
     const menuData = [
         {
@@ -28,14 +28,14 @@ function DataContext({children}) {
                 { name: 'Checkout', slug: 'checkout' },
             ],
         },
-        // {
-        //     catname: 'Blog',
-        //     slug: '',
-        //     Subcategory: [
-        //         { name: 'Blog Default', slug: 'blog' },
-        //         { name: 'Single Article', slug: 'blog' },
-        //     ],
-        // },
+        {
+            catname: 'Blog',
+            slug: '',
+            Subcategory: [
+                { name: 'Blog Default', slug: 'blog' },
+                { name: 'Single Article', slug: 'blog' },
+            ],
+        },
         {
             catname: 'Media',
             slug: 'media/3-columns',
@@ -77,7 +77,9 @@ function DataContext({children}) {
                 showQuick,
                 setShowQuick,
                 menuData,
-                mediaImgs
+                mediaImgs,
+                role,
+                setRole
             }}
         >
             {children}
