@@ -13,6 +13,12 @@ function RegisterElement({ type }) {
     const [mainError,setMainError]=useState('')
     const [confirmeye, setConfirmEye] = useState(false)
     function submit(values, action) {
+        const userData = {
+            username: values.username,
+            firstname: values.firstname,
+            lastname: values.lastname,
+            email: values.email
+        };
         const formData = new FormData();
         formData.append('username', values.username);
         formData.append('firstname', values.firstname);
@@ -33,6 +39,7 @@ function RegisterElement({ type }) {
             .then(res => {
                 localStorage.setItem("registerstatus", res.status)
                 localStorage.setItem("registeredemail", values.email)
+                localStorage.setItem("userData", JSON.stringify(userData));
                 navigate('/submit')
             })
             .catch(err =>{

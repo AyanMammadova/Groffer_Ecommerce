@@ -19,7 +19,7 @@ function Header() {
     const role = localStorage.getItem('role')
     const user = localStorage.getItem('confirmeduser')
     const loginfinished = localStorage.getItem('loginfinished')
-    console.log(user ? 'true' : 'false')
+    // console.log(loginfinished + 'isfinished')
     const { basketData } = useContext(BASKET)
     const pathname = useLocation().pathname
     const { showQuick, setShowQuick, menuData } = useContext(DATA)
@@ -31,6 +31,7 @@ function Header() {
         Aos.init();
     }, []);
     useEffect(() => {
+        console.log('showlogin' +showLogin)
         setShowLogin(false)
         setShowMobileMenu(false)
     }, [pathname])
@@ -41,15 +42,13 @@ function Header() {
     }
     return (
         <>
-            {/* <div className={`${loginisover ? 'hidden' : 'block'} fixed top-0  z-50 w-[100%] h-[100vh]`}> */}
-                <div
-                    onClick={() => { setShowLogin(false) }}
-                    className={`${showLogin || registeredstatus ? 'fixed' : 'hidden'} w-[100%] h-[100vh]  flex justify-center items-center top-0 right-0 bg-black/80 z-50`}>
-                    <div className='w-[100%] mx-auto' >
-                        <LoginPopUp />
-                    </div>
+            <div
+                onClick={() => { setShowLogin(false) }}
+                className={`${showLogin ? 'fixed' : 'hidden'} w-[100%] h-[100vh]  flex justify-center items-center top-0 right-0 bg-black/80 z-50`}>
+                <div className='w-[100%] mx-auto' >
+                    <LoginPopUp />
                 </div>
-            {/* </div> */}
+            </div>
             <div
                 onClick={() => { setShowQuick(false) }}
                 className={`${showQuick ? 'fixed' : 'hidden'} w-[100%] h-[100vh]  flex justify-center items-center top-0 right-0 bg-black/80 z-50`}>
@@ -98,17 +97,21 @@ function Header() {
                 </div>
                 <div className='flex gap-[20px] items-center'>
                     <div
-                        onClick={() => { setShowLogin(!showLogin) }}
+                        
                         className='flex  '>
                         <div className='relative group bg-green-300 cursor-pointer'>
-                            <div className='absolute -top-[10px] right-0'>
+                            <div
+                            onClick={() => { 
+                                loginfinished ? ' ' : setShowLogin(true)
+                             }}
+                             className='absolute -top-[10px] right-0'>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="29" viewBox="0 0 25 29" fill="none">
                                     <path d="M12.5335 15.2032C12.5627 15.2032 12.5919 15.2032 12.627 15.2032C12.6387 15.2032 12.6503 15.2032 12.662 15.2032C12.6796 15.2032 12.7029 15.2032 12.7205 15.2032C14.4324 15.174 15.8172 14.5722 16.8397 13.4211C19.0892 10.8853 18.7153 6.5382 18.6744 6.12335C18.5283 3.00909 17.0559 1.51915 15.8406 0.823848C14.9349 0.303831 13.8773 0.0233716 12.6971 0H12.6562C12.6503 0 12.6386 0 12.6328 0H12.5978C11.9492 0 10.6754 0.105172 9.45427 0.800476C8.22727 1.49578 6.73149 2.98572 6.58541 6.12335C6.54451 6.5382 6.17057 10.8853 8.42008 13.4211C9.43675 14.5722 10.8215 15.174 12.5335 15.2032ZM8.14547 6.26942C8.14547 6.2519 8.15131 6.23437 8.15131 6.22268C8.34412 2.03333 11.3182 1.58342 12.5919 1.58342H12.6153C12.627 1.58342 12.6445 1.58342 12.662 1.58342C14.2396 1.61848 16.9215 2.2612 17.1026 6.22268C17.1026 6.24021 17.1026 6.25774 17.1085 6.26942C17.1143 6.31032 17.5233 10.2835 15.6653 12.3752C14.9291 13.2049 13.9475 13.6139 12.6562 13.6256C12.6445 13.6256 12.6387 13.6256 12.627 13.6256C12.6153 13.6256 12.6094 13.6256 12.5978 13.6256C11.3123 13.6139 10.3249 13.2049 9.5945 12.3752C7.74231 10.2952 8.13962 6.30448 8.14547 6.26942Z" fill="#000" />
                                     <path d="M24.6343 22.4133C24.6343 22.4075 24.6343 22.4016 24.6343 22.3958C24.6343 22.349 24.6285 22.3023 24.6285 22.2497C24.5935 21.0928 24.5175 18.3876 21.9817 17.5228C21.9641 17.517 21.9408 17.5111 21.9232 17.5053C19.2881 16.8334 17.097 15.3142 17.0736 15.2967C16.7172 15.0454 16.2264 15.1331 15.9752 15.4895C15.7239 15.8459 15.8116 16.3367 16.168 16.588C16.2673 16.6581 18.5928 18.2765 21.5026 19.0244C22.864 19.5094 23.0159 20.9643 23.0568 22.2965C23.0568 22.349 23.0568 22.3958 23.0626 22.4425C23.0685 22.9684 23.0334 23.7806 22.9399 24.248C21.9934 24.7855 18.2831 26.6436 12.6389 26.6436C7.01802 26.6436 3.28441 24.7797 2.33202 24.2421C2.23853 23.7747 2.19763 22.9625 2.20932 22.4367C2.20932 22.3899 2.21516 22.3432 2.21516 22.2906C2.25606 20.9584 2.40797 19.5036 3.76937 19.0186C6.67913 18.2707 9.0046 16.6464 9.10393 16.5821C9.46035 16.3309 9.54799 15.8401 9.29675 15.4836C9.0455 15.1272 8.5547 15.0396 8.19828 15.2908C8.17491 15.3084 5.99551 16.8275 3.34868 17.4994C3.32531 17.5053 3.30778 17.5111 3.29025 17.517C0.754435 18.3876 0.678477 21.0928 0.64342 22.2439C0.64342 22.2965 0.643419 22.3432 0.637577 22.3899C0.637577 22.3958 0.637577 22.4016 0.637577 22.4075C0.631734 22.7113 0.625891 24.2714 0.935564 25.0543C0.993993 25.2062 1.09917 25.3348 1.2394 25.4224C1.41468 25.5393 5.61572 28.2153 12.6447 28.2153C19.6737 28.2153 23.8748 25.5334 24.0501 25.4224C24.1844 25.3348 24.2955 25.2062 24.3539 25.0543C24.646 24.2772 24.6402 22.7171 24.6343 22.4133Z" fill="#000" />
                                 </svg>
                             </div>
-                            <div className='absolute top-[20px] bg-white px-[20px] -right-[20px] z-20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-2 rounded-md shadow-xl'>
-                                <p>My Account</p>
+                            <div className='absolute min-w-[150px] top-[20px] bg-white px-[20px] -right-[20px] z-20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-2 rounded-md shadow-xl'>
+                                <Link to={'/my-account'}>My Account</Link>
                                 {/* <p>Login|Register</p> */}
                             </div>
                         </div>

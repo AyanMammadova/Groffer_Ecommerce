@@ -4,8 +4,7 @@ import RegisterElement from './RegisterElement'
 import ForgotPasswordElement from './ForgotPasswordElement'
 
 function LoginPopUp() {
-    
-    localStorage.clear()
+    // localStorage.clear()
     const registeredstat=Number(localStorage.getItem("registeredemail"))
     const registeredstatus=registeredstat==201 ? true : false
     console.log('regsier' + registeredstatus)
@@ -41,7 +40,7 @@ function LoginPopUp() {
                         <div
                             onClick={() => { setForgot(true), setIsSignin(true) }}
                             className='absolute text-center w-[100%] cursor-pointer text-white -bottom-[30px]'>
-                            <p>Forgot Your Password</p>
+                            {/* <p>Forgot Your Password</p> */}
                         </div>
                     </div>
                     <div className={`${forgot ? 'block' : 'hidden'} relative`}>

@@ -21,6 +21,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import SubCategory from './Admin/SubCategory'
 import SubmitPgae from './components/login/SubmitPgae'
 import NotFound from './NotFound'
+import LoginPage from './components/login/LoginPage'
 
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
           <Route path='/admin/tag' element={<Tag />} />
         </Route>
         <Route path='/submit' element={<SubmitPgae />} />
+        <Route path='/loginpage' element={<LoginPage />} />
       </Routes>
     </>
   )

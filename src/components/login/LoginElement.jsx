@@ -19,10 +19,10 @@ function LoginElement({ type }) {
         if (token) {
             const decodedToken=jwtDecode(token)
             const rol=(decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]);
-            localStorage.setItem("role",role)
-            console.log('refresh: ' + refreshtoken)
-            console.log('acces: ' + token)
-            console.log('role: ' + rol)
+            localStorage.setItem("role",rol)
+            // console.log('refresh: ' + refreshtoken)
+            // console.log('acces: ' + token)
+            localStorage.setItem('loginfinished',true)
         }
     }, [token]);
     function submit(values, action) {

@@ -35,8 +35,9 @@ function SubmitPgae() {
                 localStorage.setItem("confirmeduser", true)
                 console.log('Success: ', res);
                 console.log('Success.data: ', res.data);
-                navigate('/')
+                navigate('/loginpage')
                 setToken(res.data);
+
             })
             .catch(err => {
                 localStorage.setItem("confirmeduser", false)
