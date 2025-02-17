@@ -34,17 +34,16 @@ function LoginElement({ type }) {
             formData,
             {
                 headers: {
-                    // 'Authorization': `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data',
                 },
             }
         )
             .then(res => {
                 navigate('/my-account')
-                localStorage.setItem("username" ,)
                 console.log('Success:', res.data)
                 setToken(res.data.accessToken);
                 localStorage.setItem("refreshToken",res.data.refreshToken)
+                localStorage.setItem("loginisover",true)
                 setMainError('')
             })
             .catch(err => 

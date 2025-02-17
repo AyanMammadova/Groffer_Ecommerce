@@ -9,6 +9,7 @@ function RegisterElement({ type }) {
     const registeredEmail = localStorage.getItem("registeredemail")
     const [isRegistered, setIsregistered] = useState(localStorage.getItem("registerstatus"))
     const [eye, setEye] = useState(false)
+    const [mainError,setMainError]=useState('')
     const [confirmeye, setConfirmEye] = useState(false)
     function submit(values, action) {
         const formData = new FormData();
@@ -33,9 +34,11 @@ function RegisterElement({ type }) {
                 localStorage.setItem("registeredemail", values.email)
                 navigate('/submit')
             })
-            .catch(err => 
+            .catch(err =>{
+                setMainError('User already exist,go to sign in'),
+                console.log(mainError),
                 console.error('Error:', err)
-        );
+        });
     }
     const { values, errors, handleSubmit, handleChange, handleReset } = useFormik({
         initialValues: {
@@ -145,7 +148,7 @@ function RegisterElement({ type }) {
                         className={`${confirmeye ? 'hidden' : 'absolute'} right-[10px]`} src="https://groffer.modeltheme.com/wp-content/plugins/ajax-login-and-registration-modal-popup/assets/img/iconmonstr-eye-8.svg?v3" alt="" />
                 </div>
                 {errors.confirmpassword && <p className='text-red-500 font-[500] mx-[5%] text-[.8em] -mt-[10px]'>{errors.confirmpassword}</p>}
-
+                <p className='text-center text-red-500 text-[1.3em]'>{mainError}</p>
                 <button
                     type='submit'
                     className={`${type == 'page' ? 'w-[50%]' : 'w-[90%] '} mx-[5%] font-[500] text-[1.4em] text-center py-[10px]  rounded-md border-2 transition-all duration-200 bg-[#136450] text-white border-[#136450] hover:text-[#136450] cursor-pointer hover:bg-white`}>

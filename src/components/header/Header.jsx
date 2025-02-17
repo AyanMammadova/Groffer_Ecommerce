@@ -15,21 +15,23 @@ import { BASKET } from '../../context/BasketContext'
 import { ImEye } from 'react-icons/im'
 
 function Header() {
-    const  role=localStorage.getItem('role')
-    const user=localStorage.getItem('confirmeduser')
-    const loginfinished=localStorage.getItem('loginfinished')
-    console.log(user ? 'true' :'false')
+    const registeredstatus = localStorage.getItem("registerstatus")
+    const role = localStorage.getItem('role')
+    const user = localStorage.getItem('confirmeduser')
+    const loginfinished = localStorage.getItem('loginfinished')
+    console.log(user ? 'true' : 'false')
     const { basketData } = useContext(BASKET)
     const pathname = useLocation().pathname
     const { showQuick, setShowQuick, menuData } = useContext(DATA)
     const [showMobileMenu, setShowMobileMenu] = useState(false)
-    const [showLogin, setShowLogin] = useState(true)
-    
+    const [showLogin, setShowLogin] = useState(false)
+    const loginisover = localStorage.getItem("loginisover")
+
     useEffect(() => {
         Aos.init();
     }, []);
     useEffect(() => {
-     pathname == '/my-account' ? console.log('he') : console.log('yox')
+        setShowLogin(false)
         setShowMobileMenu(false)
     }, [pathname])
     const [searchedValue, setSearchedValue] = useState('')
@@ -39,13 +41,15 @@ function Header() {
     }
     return (
         <>
-            <div
-                // onClick={() => { setShowLogin(false) }}
-                className={`${role ? 'hidden' : 'fixed'} w-[100%] h-[100vh]  flex justify-center items-center top-0 right-0 bg-black/80 z-50`}>
-                <div className='w-[100%] mx-auto' >
-                    <LoginPopUp />
+            {/* <div className={`${loginisover ? 'hidden' : 'block'} fixed top-0  z-50 w-[100%] h-[100vh]`}> */}
+                <div
+                    onClick={() => { setShowLogin(false) }}
+                    className={`${showLogin || registeredstatus ? 'fixed' : 'hidden'} w-[100%] h-[100vh]  flex justify-center items-center top-0 right-0 bg-black/80 z-50`}>
+                    <div className='w-[100%] mx-auto' >
+                        <LoginPopUp />
+                    </div>
                 </div>
-            </div>
+            {/* </div> */}
             <div
                 onClick={() => { setShowQuick(false) }}
                 className={`${showQuick ? 'fixed' : 'hidden'} w-[100%] h-[100vh]  flex justify-center items-center top-0 right-0 bg-black/80 z-50`}>
@@ -93,8 +97,8 @@ function Header() {
                     </div>
                 </div>
                 <div className='flex gap-[20px] items-center'>
-                    <Link to={'/my-account'}
-                        // onClick={() => { setShowLogin(!showLogin) }}
+                    <div
+                        onClick={() => { setShowLogin(!showLogin) }}
                         className='flex  '>
                         <div className='relative group bg-green-300 cursor-pointer'>
                             <div className='absolute -top-[10px] right-0'>
@@ -108,7 +112,7 @@ function Header() {
                                 {/* <p>Login|Register</p> */}
                             </div>
                         </div>
-                    </Link>
+                    </div>
                     <div className='md:flex hidden relative group  items-center gap-[10px]'>
                         <div className='relative'>
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="31" viewBox="0 0 25 31" fill="none">

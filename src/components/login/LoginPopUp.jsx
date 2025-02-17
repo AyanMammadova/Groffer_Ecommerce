@@ -4,20 +4,26 @@ import RegisterElement from './RegisterElement'
 import ForgotPasswordElement from './ForgotPasswordElement'
 
 function LoginPopUp() {
+    
     localStorage.clear()
+    const registeredstat=Number(localStorage.getItem("registeredemail"))
+    const registeredstatus=registeredstat==201 ? true : false
+    console.log('regsier' + registeredstatus)
     const confirmeduser=localStorage.getItem("confirmeduser")
+    
     const [isSignin, setIsSignin] = useState(confirmeduser ? true :false)
     const [forgot, setForgot] = useState(false)
-    console.log(confirmeduser)
+
+    console.log('confirmed user: ' + confirmeduser)
     return (    
         <>
             <div onClick={(e) => { e.stopPropagation() }} className='w-[90%] mx-auto sm:w-[500px] z-50 bg-white '>
                
                 <div>
-                    {/* <div className='flex'>
+                    <div className='flex'>
                         <div
                             onClick={() => { setIsSignin(true), setForgot(false) }}
-                            className={`${isSignin ? '' : 'bg-[#136450] text-white'} cursor-pointer w-[50%] py-[20px] text-center font-bold`}>
+                            className={`${isSignin || registeredstatus ? '' : 'bg-[#136450] text-white'} cursor-pointer w-[50%] py-[20px] text-center font-bold`}>
                             Sign in
 
                         </div>
@@ -27,10 +33,10 @@ function LoginPopUp() {
                             New Account
 
                         </div>
-                    </div> */}
+                    </div>
 
-                    <div className={`${isSignin && !forgot ? 'block' : 'hidden'} relative`}>
-                        <p className='p-[20px] text-[1.5em] font-[500]'>Login</p>
+                    <div className={`${(isSignin || registeredstatus) && (!forgot || registeredstatus) ? 'block' : 'hidden'} relative`}>
+                        {/* <p className='p-[20px] text-[1.5em] font-[500]'>Login</p> */}
                         <LoginElement type={'popup'} />
                         <div
                             onClick={() => { setForgot(true), setIsSignin(true) }}
@@ -48,7 +54,7 @@ function LoginPopUp() {
                     </div>
 
                     <div className={`${isSignin || forgot ? 'hidden' : 'block'}`}>
-                    <p className='p-[20px] text-[1.5em] font-[500]'>Register for best experience</p>
+                    {/* <p className='p-[20px] text-[1.5em] font-[500]'>Register for best experience</p> */}
                         <RegisterElement type={'popup'} />
                     </div>
                 </div>
