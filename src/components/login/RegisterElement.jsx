@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import { RegisterFormSchemas } from '../../schemas/RegisterFormSchemas';
 import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
+import apiInstance from '../../services/axiosInstance';
 
 function RegisterElement({ type }) {
     const navigate=useNavigate()
@@ -20,8 +21,8 @@ function RegisterElement({ type }) {
         formData.append('password', values.password);
         formData.append('confirmpassword', values.confirmpassword);
         console.log(formData)
-        axios.post(
-            'http://hikmat059-001-site1.ptempurl.com/api/Auth/register',
+        apiInstance.post(
+            'Auth/register',
             formData,
             {
                 headers: {
