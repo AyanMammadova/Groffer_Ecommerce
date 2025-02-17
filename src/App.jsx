@@ -19,9 +19,12 @@ import Category from './Admin/Category'
 import Tag from './Admin/Tag'
 import { ToastContainer, toast } from 'react-toastify';
 import SubCategory from './Admin/SubCategory'
+import SubmitPgae from './components/login/SubmitPgae'
+import NotFound from './NotFound'
 
 
 function App() {
+  const  role=localStorage.getItem('role')
   const location = useLocation().pathname
   useEffect(() => {
     window.scrollTo({
@@ -48,12 +51,13 @@ function App() {
 
         </Route>
 
-        <Route path='/admin' element={<AdminLayout />}>
+        <Route path='/admin' element={role=='Admin' ? <AdminLayout /> : <NotFound/>}>
           <Route index element={<Product />} />
           <Route path='/admin/category' element={<Category />} />
           <Route path='/admin/subcategory' element={<SubCategory />} />
           <Route path='/admin/tag' element={<Tag />} />
         </Route>
+        <Route path='/submit' element={<SubmitPgae />} />
       </Routes>
     </>
   )

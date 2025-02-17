@@ -15,15 +15,21 @@ import { BASKET } from '../../context/BasketContext'
 import { ImEye } from 'react-icons/im'
 
 function Header() {
+    const  role=localStorage.getItem('role')
+    const user=localStorage.getItem('confirmeduser')
+    const loginfinished=localStorage.getItem('loginfinished')
+    console.log(user ? 'true' :'false')
     const { basketData } = useContext(BASKET)
     const pathname = useLocation().pathname
     const { showQuick, setShowQuick, menuData } = useContext(DATA)
     const [showMobileMenu, setShowMobileMenu] = useState(false)
-    const [showLogin, setShowLogin] = useState(false)
+    const [showLogin, setShowLogin] = useState(true)
+    
     useEffect(() => {
         Aos.init();
     }, []);
     useEffect(() => {
+     pathname == '/my-account' ? console.log('he') : console.log('yox')
         setShowMobileMenu(false)
     }, [pathname])
     const [searchedValue, setSearchedValue] = useState('')
@@ -34,8 +40,8 @@ function Header() {
     return (
         <>
             <div
-                onClick={() => { setShowLogin(false) }}
-                className={`${showLogin ? 'fixed' : 'hidden'} w-[100%] h-[100vh]  flex justify-center items-center top-0 right-0 bg-black/80 z-50`}>
+                // onClick={() => { setShowLogin(false) }}
+                className={`${role ? 'hidden' : 'fixed'} w-[100%] h-[100vh]  flex justify-center items-center top-0 right-0 bg-black/80 z-50`}>
                 <div className='w-[100%] mx-auto' >
                     <LoginPopUp />
                 </div>
@@ -87,8 +93,8 @@ function Header() {
                     </div>
                 </div>
                 <div className='flex gap-[20px] items-center'>
-                    <div
-                        onClick={() => { setShowLogin(!showLogin) }}
+                    <Link to={'/my-account'}
+                        // onClick={() => { setShowLogin(!showLogin) }}
                         className='flex  '>
                         <div className='relative group bg-green-300 cursor-pointer'>
                             <div className='absolute -top-[10px] right-0'>
@@ -99,10 +105,10 @@ function Header() {
                             </div>
                             <div className='absolute top-[20px] bg-white px-[20px] -right-[20px] z-20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-2 rounded-md shadow-xl'>
                                 <p>My Account</p>
-                                <p>Login|Register</p>
+                                {/* <p>Login|Register</p> */}
                             </div>
                         </div>
-                    </div>
+                    </Link>
                     <div className='md:flex hidden relative group  items-center gap-[10px]'>
                         <div className='relative'>
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="31" viewBox="0 0 25 31" fill="none">

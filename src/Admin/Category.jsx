@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { IoIosClose } from 'react-icons/io'
 import apiInstance from '../services/axiosInstance';
 import { useFormik } from 'formik';
 import { CategorySchemas } from '../schemas/AdminSchemas';
+import { DATA } from '../context/DataContext';
 
 function Category() {
+  const {categoryData}=useContext(DATA)
   const [actionId, setActionId] = useState(null)
   const [editingCat, setEditingCat] = useState('')
   const [action, setAction] = useState('')
-  const [categoryData, setCategoryData] = useState(null)
   const [showForm, setShowForm] = useState(false);
-  function getAllCategory() {
-    apiInstance.get('Categories')
-      .then(res => setCategoryData(res.data))
-      .catch(err => console.error('Error:', err));
-  }
+  
   useEffect(() => {
-    
-    getAllCategory()
+    if(categoryData) {
+      console.log(categoryData)
+    }
   }, [showForm])
   function handleActions(action, id) {
     setAction(action)

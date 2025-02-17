@@ -2,14 +2,15 @@ import React, { useState } from 'react'
 import { useFormik } from 'formik';
 import { RegisterFormSchemas } from '../../schemas/RegisterFormSchemas';
 import axios from 'axios';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function RegisterElement({ type }) {
+    const navigate=useNavigate()
+    const registeredEmail = localStorage.getItem("registeredemail")
+    const [isRegistered, setIsregistered] = useState(localStorage.getItem("registerstatus"))
     const [eye, setEye] = useState(false)
     const [confirmeye, setConfirmEye] = useState(false)
     function submit(values, action) {
-        // setTimeout(() => {
-        //     action.resetForm()
-        // }, 1000);
         const formData = new FormData();
         formData.append('username', values.username);
         formData.append('firstname', values.firstname);
@@ -23,17 +24,18 @@ function RegisterElement({ type }) {
             formData,
             {
                 headers: {
-                    // 'Authorization': `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data',
                 },
             }
         )
             .then(res => {
-                console.log('Success:', res.data)
-                console.log("Token:", res.data.token);
-                console.log("User Role:", res.data.role);
+                localStorage.setItem("registerstatus", res.status)
+                localStorage.setItem("registeredemail", values.email)
+                navigate('/submit')
             })
-            .catch(err => console.error('Errorum:', err));
+            .catch(err => 
+                console.error('Error:', err)
+        );
     }
     const { values, errors, handleSubmit, handleChange, handleReset } = useFormik({
         initialValues: {

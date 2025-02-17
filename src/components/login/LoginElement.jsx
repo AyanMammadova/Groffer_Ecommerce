@@ -5,22 +5,27 @@ import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import { DATA } from '../../context/DataContext';
 import apiInstance from '../../services/axiosInstance';
+import { useNavigate } from 'react-router-dom';
 
 function LoginElement({ type }) {
-    const {role,setRole}=useContext(DATA)
+    const navigate=useNavigate()
+    const [mainError,setMainError]=useState('')
+    const  refreshtoken=localStorage.getItem('refreshToken')
+    const  role=localStorage.getItem('role')
     const [token,setToken]=useState('')
     
     const [eye, setEye] = useState(false)
     useEffect(() => {
         if (token) {
             const decodedToken=jwtDecode(token)
-            setRole(decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']);
+            const rol=(decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]);
+            localStorage.setItem("role",role)
+            console.log('refresh: ' + refreshtoken)
+            console.log('acces: ' + token)
+            console.log('role: ' + rol)
         }
     }, [token]);
     function submit(values, action) {
-        // setTimeout(() => {
-        //     action.resetForm()
-        // }, 1000);
         const formData = new FormData();
         formData.append('emailorusername', values.emailorusername);
         formData.append('password', values.password);
@@ -35,10 +40,17 @@ function LoginElement({ type }) {
             }
         )
             .then(res => {
-                // console.log('Success:', res)
-                setToken(res.data);
+                navigate('/my-account')
+                localStorage.setItem("username" ,)
+                console.log('Success:', res.data)
+                setToken(res.data.accessToken);
+                localStorage.setItem("refreshToken",res.data.refreshToken)
+                setMainError('')
             })
-            .catch(err => console.error('Errorum:', err));
+            .catch(err => 
+                console.error('Errorum:', err),
+                setMainError('Username or password is wrong')
+            );
     }
     const { values, errors, handleSubmit, handleChange } = useFormik({
         initialValues: {
@@ -81,18 +93,14 @@ function LoginElement({ type }) {
                         className={`${eye ? 'hidden' : 'absolute'} right-[10px]`} src="https://groffer.modeltheme.com/wp-content/plugins/ajax-login-and-registration-modal-popup/assets/img/iconmonstr-eye-8.svg?v3" alt="" />
                 </div>
                 {errors.password && <p className='text-red-500 font-[500] mx-[5%] text-[.8em] -mt-[10px]'>{errors.password}</p>}
-
+                <p className='text-[1.3em] text-red-500 text-center'>{mainError}</p>
                 <div className={`${type == 'page' ? 'flex' : 'block'}`}>
                     <button
                         type='submit'
                         className={`${type == 'page' ? 'w-[50%]' : 'w-[90%] '} mx-[5%]  font-[500] text-[1.4em] text-center py-[10px]  rounded-md border-2 transition-all duration-200 bg-[#136450] text-white border-[#136450] hover:text-[#136450] cursor-pointer hover:bg-white`}>
                         Log in
                     </button>
-                    <p className='flex text-center text-[1.3em] text-red-500 items-center justify-center gap-[10px] mx-[5%]'>
-                        {
-                             role =='Admin' ? '' : role=='Member' ? 'Your not admin' :''
-                        }
-                    </p>
+                   
                 </div>
 
 

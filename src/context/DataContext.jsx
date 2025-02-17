@@ -1,12 +1,16 @@
 import React, { createContext, useEffect, useState } from 'react'
+import { getAllCategories, getAllSubCategories } from '../services/api'
 export const DATA = createContext('')
 function DataContext({children}) {
     const [role,setRole]=useState('')
+    const [categoryData,setCategoryData]=useState(null)
+    const [subCategoryData,setSubCategoryData]=useState(null)
     const [allData,setAllData]=useState(null)
     const [showQuick, setShowQuick] = useState(false)
-    // useEffect(()=>{
-    //     getAllCategories
-    // },[])
+    useEffect(()=>{
+        getAllCategories().then(res=>setCategoryData(res.data))
+        getAllSubCategories().then(res=>setSubCategoryData(res.data))
+    },[])
    
     const menuData = [
         {
@@ -79,7 +83,9 @@ function DataContext({children}) {
                 menuData,
                 mediaImgs,
                 role,
-                setRole
+                setRole,
+                categoryData,
+                subCategoryData
             }}
         >
             {children}
