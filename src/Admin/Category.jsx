@@ -3,19 +3,16 @@ import { IoIosClose } from 'react-icons/io'
 import apiInstance from '../services/axiosInstance';
 import { useFormik } from 'formik';
 import { CategorySchemas } from '../schemas/AdminSchemas';
-import { DATA } from '../context/DataContext';
+import { getAllCategories } from '../services/api';
 
 function Category() {
-  const {categoryData}=useContext(DATA)
+  const [categoryData,setCategoryData]=useState(null)
   const [actionId, setActionId] = useState(null)
   const [editingCat, setEditingCat] = useState('')
   const [action, setAction] = useState('')
   const [showForm, setShowForm] = useState(false);
-  
   useEffect(() => {
-    if(categoryData) {
-      console.log(categoryData)
-    }
+    getAllCategories().then(res=>setCategoryData(res.data))
   }, [showForm])
   function handleActions(action, id) {
     setAction(action)
@@ -57,8 +54,7 @@ function Category() {
           .then(res => {
             console.log('Category updated:', res.data);
             setShowForm(false);
-            formik.resetForm();
-            getAllCategory(); 
+            formik.resetForm()
           })
           .catch(err => console.error('Error:', err))
       }
@@ -68,10 +64,11 @@ function Category() {
     apiInstance.delete(`Categories/${id}`)
       .then(res => {
         console.log('Category deleted:', res.data);
-        setShowForm(false);
-        getAllCategory()
+        setShowForm(false)
+        getAllCategories().then(res=>setCategoryData(res.data))
       })
       .catch(err => console.error('Error:', err));
+      
   }
 
 
@@ -118,6 +115,7 @@ function Category() {
       </div>
       <p className='text-[2em] text-center  pt-[30px] font-bold underline'>Category Data</p>
       <button
+      type='button'
         onClick={() => {
           handleActions('post', '')
         }}

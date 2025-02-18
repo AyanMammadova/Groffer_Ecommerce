@@ -3,6 +3,7 @@ import { getAllCategories, getAllSubCategories } from '../services/api'
 export const DATA = createContext('')
 function DataContext({children}) {
     const [role,setRole]=useState('')
+    const [token,setToken]=useState(localStorage.getItem('accessToken'))
     const [categoryData,setCategoryData]=useState(null)
     const [subCategoryData,setSubCategoryData]=useState(null)
     const [allData,setAllData]=useState(null)
@@ -85,7 +86,7 @@ function DataContext({children}) {
                 role,
                 setRole,
                 categoryData,
-                subCategoryData
+                subCategoryData,token,setToken
             }}
         >
             {children}

@@ -3,19 +3,21 @@ import { IoIosClose } from 'react-icons/io'
 import apiInstance from '../services/axiosInstance';
 import { useFormik } from 'formik';
 import { CategorySchemas } from '../schemas/AdminSchemas';
-import { DATA } from '../context/DataContext';
+import { getAllCategories, getAllSubCategories } from '../services/api';
 
 function SubCategory() {
-  const { categoryData,subCategoryData } = useContext(DATA)
+  const [categoryData, setCategoryData] = useState(null)
+  const [subCategoryData, setSubCategoryData] = useState(null)
   const [catid, setCatId] = useState()
   const [actionId, setActionId] = useState(null)
   const [editingSubCat, setEditingSubCat] = useState('')
   const [action, setAction] = useState('')
   const [showForm, setShowForm] = useState(false);
-  
+
+
   useEffect(() => {
-    console.log(subCategoryData)
-    // getAllSubCategory()
+    getAllCategories().then(res => setCategoryData(res.data))
+    getAllSubCategories().then(res => setSubCategoryData(res.data))
   }, [])
   function handleActions(action, id) {
     setAction(action)
@@ -25,12 +27,14 @@ function SubCategory() {
       apiInstance.get(`SubCategories/${id}`)
         .then(res => {
           const subCategoryName = res.data.name;
+          const categoryId = res.data.categoryId;
           setEditingSubCat(subCategoryName);
-          formik.setFieldValue('subcategory', subCategoryName); 
+          setCatId(categoryId);
+          console.log(categoryId)
+          formik.setFieldValue('subcategory', subCategoryName);
         })
         .catch(err => console.error('Error:', err));
     }
-    // formik.handleSubmit()
   }
   useEffect(() => {
     if (categoryData && categoryData.length > 0) {
@@ -74,7 +78,7 @@ function SubCategory() {
       .then(res => {
         console.log('SubCategory deleted:', res.data);
         setShowForm(false);
-        getAllSubCategory()
+        getAllSubCategories()
       })
       .catch(err => console.error('Error:', err));
   }
@@ -111,7 +115,10 @@ function SubCategory() {
             {formik.errors.subcategory && (
               <div className="text-red-500 text-sm">{formik.errors.subcategory}</div>
             )}
-            <select onChange={(e) => { setCatId(e.target.value) }} className='bg-white w-[100%] p-[10px] my-[10px] rounded-sm  text-black'>
+            <select
+              onChange={(e) => { setCatId(e.target.value) }}
+              value={catid} // Add this line to ensure the correct category is selected
+              className='bg-white w-[100%] p-[10px] my-[10px] rounded-sm text-black'>
               {
                 categoryData && categoryData.map((item, i) => {
                   return <option key={i} value={item.id}>{item.name}</option>

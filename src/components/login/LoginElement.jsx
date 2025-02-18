@@ -1,27 +1,33 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useFormik } from 'formik';
 import { LoginFormSchemas } from '../../schemas/LoginFormSchemas';
-import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import { DATA } from '../../context/DataContext';
 import apiInstance from '../../services/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 
 function LoginElement({ type }) {
+    const {token}=useContext(DATA)
     const navigate=useNavigate()
     const [mainError,setMainError]=useState('')
     const  refreshtoken=localStorage.getItem('refreshToken')
     const  role=localStorage.getItem('role')
-    const [token,setToken]=useState('')
     
+    const [focusedField, setFocusedField] = useState(null)
+    const [expire,setExpire]=useState('')
     const [eye, setEye] = useState(false)
+    console.log(expire + 'expiree')
     useEffect(() => {
         if (token) {
             const decodedToken=jwtDecode(token)
+            setExpire(decodedToken.exp)
+            localStorage.setItem("userName",decodedToken.name)
+            console.log('decodedname : ' + decodedToken.name)
+            console.log('exp date' + expire)
             const rol=(decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]);
             localStorage.setItem("role",rol)
-            // console.log('refresh: ' + refreshtoken)
-            // console.log('acces: ' + token)
+            console.log('refresh: ' + refreshtoken)
+            console.log('acces: ' + token)
             localStorage.setItem('loginfinished',true)
         }
     }, [token]);
@@ -41,14 +47,16 @@ function LoginElement({ type }) {
             .then(res => {
                 navigate('/my-account')
                 console.log('Success:', res.data)
-                setToken(res.data.accessToken);
                 localStorage.setItem("refreshToken",res.data.refreshToken)
+                localStorage.setItem("accessToken",res.data.accessToken)
                 localStorage.setItem("loginisover",true)
                 setMainError('')
             })
             .catch(err => 
                 console.error('Errorum:', err),
-                setMainError('Username or password is wrong')
+                setTimeout(() => {
+                    setMainError('Username or password is wrong');
+                }, 300)
             );
     }
     const { values, errors, handleSubmit, handleChange } = useFormik({
@@ -67,6 +75,8 @@ function LoginElement({ type }) {
                     <input
                         value={values.emailorusername}
                         onChange={handleChange}
+                        onFocus={() => setFocusedField('emailorusername')} // Set focused field
+                        onBlur={() => setFocusedField(null)}
                         type="text"
                         name='emailorusername'
                         className='focus:outline-hidden pl-[10px] w-[100%]'
@@ -79,6 +89,8 @@ function LoginElement({ type }) {
                     <input
                         value={values.password}
                         onChange={handleChange}
+                        onFocus={() => setFocusedField('password')} // Set focused field
+                        onBlur={() => setFocusedField(null)}
                         type={eye ? 'text' : 'password'}
                         name='password'
                         className='focus:outline-hidden pl-[10px] w-[100%]'
@@ -91,7 +103,9 @@ function LoginElement({ type }) {
                         onClick={() => { setEye(!eye) }}
                         className={`${eye ? 'hidden' : 'absolute'} right-[10px]`} src="https://groffer.modeltheme.com/wp-content/plugins/ajax-login-and-registration-modal-popup/assets/img/iconmonstr-eye-8.svg?v3" alt="" />
                 </div>
-                {errors.password && <p className='text-red-500 font-[500] mx-[5%] text-[.8em] -mt-[10px]'>{errors.password}</p>}
+                {focusedField === 'password' && errors.password && (
+                    <p className='text-red-500 font-[500] mx-[5%] text-[.8em] -mt-[10px]'>{errors.password}</p>
+                )}
                 <p className='text-[1.3em] text-red-500 text-center'>{mainError}</p>
                 <div className={`${type == 'page' ? 'flex' : 'block'}`}>
                     <button

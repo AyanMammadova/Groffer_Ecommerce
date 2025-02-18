@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BreadCrumps from '../main/BreadCrumps'
 
 import LoginElement from './LoginElement'
@@ -8,8 +8,10 @@ import apiInstance from '../../services/axiosInstance'
 function MyAccount() {
   const userData = JSON.parse(localStorage.getItem("userData"));
   console.log(userData);
+  const [fullName,setFullName]=useState('')
+  const userName = localStorage.getItem("userName");
   const role = localStorage.getItem('role')
-  console.log('rolum: '+role)
+  console.log('rolum: ' + role)
   const loginfinished = localStorage.getItem('loginfinished')
   const [forgot, setForgot] = useState(false)
   const handleLogout = () => {
@@ -31,6 +33,16 @@ function MyAccount() {
         alert('Logout failed. Please try again.');
       });
   };
+  useEffect(() => {
+    const storedUserData = localStorage.getItem("userData");
+    if (storedUserData) {
+      const userData = JSON.parse(storedUserData);
+      userData ? setFullName(userData?.firstname + userData?.lastname) : setFullName(userName)
+      console.log(userData); 
+    } else {
+      console.log("No user data found");
+    }
+  }, [])
   return (
     <>
       <BreadCrumps page={[
@@ -42,12 +54,12 @@ function MyAccount() {
       <p className='p-[10px] sm:px-[40px] text-[2em] font-[500] border-b-[1px] border-gray-200'>My Account</p>
       {
         role ? <p className='text-[1.4em] p-[25px]'>
-          Hello  (not you?
+          Hello {role=='Admin' ? 'Admin ' : fullName }
           <button
             className='underline text-red-500 cursor-pointer'
             onClick={handleLogout}>
             Logout
-          </button>)
+          </button>
         </p> : ''
       }
 
