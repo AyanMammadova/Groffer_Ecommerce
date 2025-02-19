@@ -127,6 +127,7 @@ function Category() {
           <tr>
             <th className='py-[10px] border-2 border-white'>#</th>
             <th className='py-[10px] border-2 border-white'>Category name</th>
+            <th className='py-[10px] border-2 border-white'>slug</th>
             {/* <th className='py-[10px] border-2 border-white'>Subcategory</th> */}
             <th className='py-[10px] border-2 border-white'>Action</th>
           </tr>
@@ -137,6 +138,7 @@ function Category() {
               return <tr key={i}>
                 <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{i + 1}</td>
                 <td className='py-[10px] border-2 px-[10px] border-white font-[500] capitalize'>{item.name}</td>
+                <td className='py-[10px] border-2 px-[10px] border-white font-[500] '>{item.slug}</td>
                 {/* <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>Berries,Blues</td> */}
                 <td className='py-[10px] border-2 text-center border-white font-[500]'>
                   <button

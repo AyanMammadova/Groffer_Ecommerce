@@ -67,7 +67,6 @@ function SubCategory() {
             console.log('SubCategory updated:', res.data);
             setShowForm(false);
             formik.resetForm();
-            getAllSubCategory();
           })
           .catch(err => console.error('Error:', err))
       }
@@ -78,7 +77,7 @@ function SubCategory() {
       .then(res => {
         console.log('SubCategory deleted:', res.data);
         setShowForm(false);
-        getAllSubCategories()
+        getAllSubCategories().then(res=>setSubCategoryData(res.data))
       })
       .catch(err => console.error('Error:', err));
   }
@@ -130,6 +129,7 @@ function SubCategory() {
             <button
               className='w-[100%] font-bold cursor-pointer p-[10px] my-[10px] rounded-sm text-black bg-white '
               type='submit'
+              // onClick={()=>{handleActions(action,actionId)}}
             >
               {action == 'post' ? 'Add new SubCategory' : 'Edit SubCategory'}
             </button>
@@ -149,6 +149,7 @@ function SubCategory() {
           <tr>
             <th className='py-[10px] border-2 border-white'>#</th>
             <th className='py-[10px] border-2 border-white'>SubCategory name</th>
+            <th className='py-[10px] border-2 border-white'>Slug </th>
             <th className='py-[10px] border-2 border-white'>Action</th>
           </tr>
         </thead>
@@ -158,6 +159,7 @@ function SubCategory() {
               return <tr key={i}>
                 <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{i + 1}</td>
                 <td className='py-[10px] border-2 px-[10px] border-white font-[500] capitalize'>{item.name}</td>
+                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.slug}</td>
                 <td className='py-[10px] border-2 text-center border-white font-[500]'>
                   <button
                     type='button'
