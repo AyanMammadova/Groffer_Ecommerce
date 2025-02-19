@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsCheck } from 'react-icons/bs'
 import { TiHeartOutline } from 'react-icons/ti'
 
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
-import ReactImageZoom from 'react-image-zoom';
+import { getProductById } from '../../services/api'
 
-function QuickView({ type }) {
+function QuickView({ type, proid }) {
+  console.log(proid)
+  const [singleProduct, setSinglePorduct] = useState('')
+  useEffect(() => {
+    console.log()
+    getProductById(proid).then(res => setSinglePorduct(res.data))
+  }, [proid])
 
   return (
     <>
@@ -17,40 +23,29 @@ function QuickView({ type }) {
           <div className='h-['>
             <img
               className={`scale-100 hover:scale-110 h-[100%] w-[100%] ease-in duration-500 ${type == 'quick' ? 'hidden lg:block h-[80vh]' : 'block '}`}
-              src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product06.jpg" alt="" />
+              src={`https://supermarket777.blob.core.windows.net/product/${singleProduct.primaryImageUrl}`} alt={singleProduct.slug} />
 
           </div>
           <div className={`${type == 'details' ? 'flex' : 'hidden'}  justify-center`}>
-            <Zoom>
-              <img
-                alt="That Wanaka Tree, New Zealand by Laura Smetsers"
-                src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product10-300x300.jpg"
-                className='w-[100px]'
-              />
-            </Zoom>
-            <Zoom>
-              <img
-                alt="That Wanaka Tree, New Zealand by Laura Smetsers"
-                src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product14-300x300.jpg"
-                className='w-[100px]'
-              />
-            </Zoom>
-            <Zoom>
-              <img
-                alt="That Wanaka Tree, New Zealand by Laura Smetsers"
-                src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product19-200x200.jpg"
-                className='w-[100px]'
-              />
-            </Zoom>
-            {/* <img className='w-[15%]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product10-300x300.jpg" alt="" />
-            <img className='w-[15%]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product14-300x300.jpg" alt="" />
-            <img className='w-[15%]' src="https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product19-200x200.jpg" alt="" /> */}
+            {
+              singleProduct?.subImageUrls?.map((item, i) => {
+                <Zoom>
+                  <img
+                  key={i}
+                    alt={singleProduct.slug}
+                    src={`https://supermarket777.blob.core.windows.net/product/${item}`}
+                    className='w-[100px]'
+                  />
+                </Zoom>
+              })
+            }
+
           </div>
         </div>
         <div className={`${type == 'quick' ? 'w-[100%] gap-[8px]' : 'lg:w-[50%] md:w-[60%] gap-[15px]'} flex flex-col p-[10px] md:p-[40px]`}>
-          <p className='text-[2.5em] font-bold'>Fresh For The Bold Ground</p>
-          <p className='txtgreen text-[2em] font-[500]'>€43.00</p>
-          <p className='text-gray-500 text-[1.2em]'>Mushrooms is grown in favorable climates from tropical temperat region worldwide is berry wit</p>
+          <p className='text-[2.5em] font-bold'>{singleProduct?.name}</p>
+          <p className='txtgreen text-[2em] font-[500]'>€{singleProduct?.discountedPrice?.toFixed(2)}</p>
+          <p className='text-gray-500 text-[1.2em]'>{singleProduct?.description}</p>
           <ul className='list-disc  pl-[20px] text-[1.3em]'>
             <li>Vitamin A</li>
             <li>Vitamin B</li>

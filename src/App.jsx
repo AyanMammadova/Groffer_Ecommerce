@@ -80,7 +80,7 @@ function App() {
       <Routes>
         <Route path='/' element={<MainLayout />}>
           <Route index element={<Main />} />
-          <Route path='/details' element={<Details />} />
+          <Route path='/details/:proid' element={<Details />} />
           <Route path='/shop' element={<Products />} />
           <Route path='/wishlist' element={<WishList />} />
           <Route path='/cart' element={<Bag />} />

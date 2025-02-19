@@ -1,14 +1,15 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { getAllCategories, getAllSubCategories } from '../services/api'
+import { getAllCategories, getAllProducts, getAllSubCategories } from '../services/api'
 export const DATA = createContext('')
 function DataContext({children}) {
     const [role,setRole]=useState('')
     const [token,setToken]=useState(localStorage.getItem('accessToken'))
     const [categoryData,setCategoryData]=useState(null)
     const [subCategoryData,setSubCategoryData]=useState(null)
-    const [allData,setAllData]=useState(null)
+    const [allProducts,setAllProducts]=useState(null)
     const [showQuick, setShowQuick] = useState(false)
     useEffect(()=>{
+        getAllProducts().then(res=>setAllProducts(res.data))
         getAllCategories().then(res=>setCategoryData(res.data))
         getAllSubCategories().then(res=>setSubCategoryData(res.data))
     },[])
@@ -86,7 +87,10 @@ function DataContext({children}) {
                 role,
                 setRole,
                 categoryData,
-                subCategoryData,token,setToken
+                allProducts,
+                subCategoryData,
+                token,
+                setToken
             }}
         >
             {children}

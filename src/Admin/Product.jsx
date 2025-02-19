@@ -11,7 +11,7 @@ function Product() {
   const [selectedSub, setSelectedSub] = useState('default')
   const [selectedTags, setSelectedTags] = useState([])
   const [allTags, setAllTags] = useState(null)
-  const [allProducts, setallProducts] = useState(null)
+  const [allProducts, setallProducts] = useState([])
   const [catsWithSubsData, setCatsWithSubsData] = useState(null)
   const [showForm, setShowForm] = useState(false)
   const [imageFiles, setImageFiles] = useState([]);
@@ -110,6 +110,7 @@ function Product() {
           .catch(err => {
             console.error('Error:', err);
           });
+          getAllProducts().then(res=>console.log(res))
       })
       .catch(err => {
         const newErrors = {};
@@ -127,6 +128,7 @@ function Product() {
     apiInstance
       .delete(`Products/${id}`)
       .then(() => {
+        getAllProducts().then(res=>setallProducts(res))
         // console.log(`Product ${id} deleted successfully`);
       })
       .catch((err) => {
@@ -294,8 +296,8 @@ function Product() {
                   type="number"
                   name="price"
                   id="price"
-                  
                   placeholder='0'
+                  step="0.01"
                   className='w-[100%] p-[5px] my-[7px] rounded-sm text-black bg-white '
                 />
                 {errors.price && <p className="text-red-500">{errors.price}</p>}
@@ -323,7 +325,7 @@ function Product() {
       <p className='text-[2em] text-center  pt-[30px] font-bold underline'>Product Data</p>
       <button
         onClick={() => { setShowForm(true) }}
-        className='ml-[30px] cursor-pointer hover:bg-gray-300 transition-all duration-300 border-2 border-black p-[5px]  rounded-md text-[1.2em] font-[500]'>
+        className='ml-[30px] cursor-pointer hover:bg-white hover:text-black transition-all border-white duration-300 border-2  p-[5px]  rounded-md text-[1.2em] font-[500]'>
         Add new Product
       </button>
       <table className='w-[96%]  mx-auto border-2 border-black mt-[30px]'>
@@ -340,7 +342,7 @@ function Product() {
         </thead>
         <tbody>
           {
-            allProducts && allProducts.map((item, i) => {
+            allProducts?.length>1 && allProducts?.map((item, i) => {
               return <tr key={i}>
                 <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{i + 1}</td>
                 <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.name}</td>
@@ -353,7 +355,7 @@ function Product() {
                     })
                   }
                 </td>
-                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.discountedPrice}€</td>
+                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.discountedPrice.toFixed(2)}€</td>
                 <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.discount} %</td>
                 <td className='py-[10px] border-2 text-center border-white font-[500]'>
                   <button

@@ -16,18 +16,18 @@ function LoginElement({ type }) {
     const [focusedField, setFocusedField] = useState(null)
     const [expire,setExpire]=useState('')
     const [eye, setEye] = useState(false)
-    console.log(expire + 'expiree')
+    // console.log(expire + 'expiree')
     useEffect(() => {
         if (token) {
             const decodedToken=jwtDecode(token)
             setExpire(decodedToken.exp)
             localStorage.setItem("userName",decodedToken.name)
-            console.log('decodedname : ' + decodedToken.name)
-            console.log('exp date' + expire)
+            // console.log('decodedname : ' + decodedToken.name)
+            // console.log('exp date' + expire)
             const rol=(decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]);
             localStorage.setItem("role",rol)
-            console.log('refresh: ' + refreshtoken)
-            console.log('acces: ' + token)
+            // console.log('refresh: ' + refreshtoken)
+            // console.log('acces: ' + token)
             localStorage.setItem('loginfinished',true)
         }
     }, [token]);
@@ -46,7 +46,7 @@ function LoginElement({ type }) {
         )
             .then(res => {
                 navigate('/my-account')
-                console.log('Success:', res.data)
+                // console.log('Success:', res.data)
                 localStorage.setItem("refreshToken",res.data.refreshToken)
                 localStorage.setItem("accessToken",res.data.accessToken)
                 localStorage.setItem("loginisover",true)

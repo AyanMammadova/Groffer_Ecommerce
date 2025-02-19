@@ -7,13 +7,13 @@ function LoginPopUp() {
     // localStorage.clear()
     const registeredstat=Number(localStorage.getItem("registeredemail"))
     const registeredstatus=registeredstat==201 ? true : false
-    console.log('regsier' + registeredstatus)
+    // console.log('regsier' + registeredstatus)
     const confirmeduser=localStorage.getItem("confirmeduser")
     
     const [isSignin, setIsSignin] = useState(confirmeduser ? true :false)
     const [forgot, setForgot] = useState(false)
 
-    console.log('confirmed user: ' + confirmeduser)
+    // console.log('confirmed user: ' + confirmeduser)
     return (    
         <>
             <div onClick={(e) => { e.stopPropagation() }} className='w-[90%] mx-auto sm:w-[500px] z-50 bg-white '>

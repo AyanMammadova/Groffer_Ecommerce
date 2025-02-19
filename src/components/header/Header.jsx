@@ -31,7 +31,7 @@ function Header() {
         Aos.init();
     }, []);
     useEffect(() => {
-        console.log('showlogin' +showLogin)
+        // console.log('showlogin' +showLogin)
         setShowLogin(false)
         setShowMobileMenu(false)
     }, [pathname])

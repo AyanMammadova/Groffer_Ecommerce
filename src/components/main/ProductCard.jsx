@@ -5,7 +5,8 @@ import { IoHeartOutline } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 import { DATA } from '../../context/DataContext'
 
-function ProductCard() {
+function ProductCard(img,name,price) {
+    // console.log("Props received:", { img, name, price })
     function nese(){
         console.log('asckbasckdskvjds')
     }
@@ -24,7 +25,7 @@ function ProductCard() {
                     <div className='flex p-[10px] '>
                         <FaRegStar /><FaRegStar /><FaRegStar /><FaRegStar /><FaRegStar />
                     </div>
-                    <p className='px-[10px] text-[1.1em] font-bold'>Broccoli and Cauliflower Mix</p>
+                    <p className='px-[10px] text-[1.1em] font-bold'></p>
                     <p className='text-[#216D5A] px-[10px] font-bold pt-[20px]'>$12.00</p>
                     <p className='px-[10px] '>per Kilogram</p>
                 </div>

@@ -9,6 +9,10 @@ async function getAllProducts() {
     const res = await apiInstance.get('Products/all-products')
     return res;
 }
+async function getProductById(id) {
+    const res = await apiInstance.get(`Products/single-product/${id}`)
+    return res;
+}
 
 async function getAllSubCategories() {
     const res = await apiInstance.get('SubCategories')
@@ -26,6 +30,7 @@ async function getAllCatsWithSubs() {
 
 export{
     getAllCategories,
+    getProductById,
     getAllTags,
     getAllProducts,
     getAllSubCategories,
