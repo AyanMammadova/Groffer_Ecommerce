@@ -2,35 +2,46 @@ import React, { useEffect, useState } from 'react'
 import { IoIosClose } from 'react-icons/io'
 import { getAllCategories, getAllCatsWithSubs, getAllProducts, getAllSubCategories, getAllTags } from '../services/api'
 import apiInstance from '../services/axiosInstance'
+import { ProductSchemas } from '../schemas/AdminSchemas';
 
 function Product() {
+  const [sku, setSku] = useState("");
   const [description, setDescription] = useState('')
-  const [selectedCat, setSelectedCat] = useState('')
-  const [selectedSub, setSelectedSub] = useState('')
+  const [selectedCat, setSelectedCat] = useState('default')
+  const [selectedSub, setSelectedSub] = useState('default')
   const [selectedTags, setSelectedTags] = useState([])
   const [allTags, setAllTags] = useState(null)
   const [allProducts, setallProducts] = useState(null)
   const [catsWithSubsData, setCatsWithSubsData] = useState(null)
   const [showForm, setShowForm] = useState(false)
   const [imageFiles, setImageFiles] = useState([]);
-  console.log(allProducts)
+  const [errors, setErrors] = useState([])
+
+
+  function generateSKU() {
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const numbers = "0123456789";
+
+    const randomLetters = Array.from({ length: 3 }, () => letters[Math.floor(Math.random() * letters.length)]).join("");
+    const randomNumbers = Array.from({ length: 3 }, () => numbers[Math.floor(Math.random() * numbers.length)]).join("");
+
+    setSku(`${randomLetters}-${randomNumbers}`)
+  };
 
   function handleImageUpload(event) {
     const files = Array.from(event.target.files);
     setImageFiles((prevFiles) => [...prevFiles, ...files]);
-    console.log(imageFiles)
   }
   function removeImage(index) {
     setImageFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
   }
   useEffect(() => {
+    generateSKU()
     getAllCatsWithSubs().then(res => {
       setCatsWithSubsData(res.data.categories)
-      setSelectedCat(res.data.categories[0].categoryId)
     })
     getAllTags().then(res => setAllTags(res.data))
     getAllProducts().then(res => setallProducts(res.data))
-
   }, [])
 
 
@@ -41,46 +52,87 @@ function Product() {
     }
   }
 
+
+
   function handleSubmit(e) {
     e.preventDefault();
-    const title = e.target.title.value;
-    const formData = new FormData();
 
-    formData.append('Name', e.target.title.value); 
-    formData.append('Price', e.target.price.value);
-    formData.append('Discount', e.target.discount.value);
-    formData.append('CategoryId', selectedCat);
-    formData.append('SubCategoryId', selectedSub);
-    formData.append('Description', e.target.description.value); 
-    
-    formData.append('Slug', title.toLowerCase().replace(/\s+/g, '-')); 
-  
-    formData.append('SKU', 'rdm345');  
-    
-    selectedTags.forEach(tag => {
-      formData.append('TagIds', tag.id);
-    });
-  
-    imageFiles.forEach((file, index) => {
-      formData.append('Images', file);  
-      if (index === 0) {
-        formData.append('PrimaryImage', file);  
-      }
-    });
-  
-    // Send the request using your apiInstance
-    apiInstance.post('Products', formData)
-      .then(res => {
-        setShowForm(false);        // Hide the form after success
-        formik.resetForm();        // Reset the form if you're using Formik
-        console.log('Product added:', res.data);  // Optional: Log response data
+    const formData = new FormData();
+    const title = e.target.title.value;
+    const description = e.target.description.value;
+    const price = e.target.price.value;
+    const discount = e.target.discount.value;
+    const category = selectedCat;
+    const subcategory = selectedSub;
+    const tags = selectedTags;
+    const images = imageFiles;
+
+    // Create a plain object with all form data
+    const formValues = {
+      title,
+      description,
+      price,
+      discount,
+      category,
+      subcategory,
+      tags,
+      images,
+    };
+
+    ProductSchemas.validate(formValues, { abortEarly: false })
+      .then(() => {
+        const formData = new FormData();
+        formData.append('Name', title);
+        formData.append('Price', price);
+        formData.append('Discount', discount);
+        formData.append('CategoryId', category);
+        formData.append('SubCategoryId', subcategory);
+        formData.append('Description', description);
+        formData.append('Slug', title.toLowerCase().replace(/\s+/g, '-'));
+        formData.append('SKU', sku);
+
+        selectedTags.forEach(tag => {
+          formData.append('TagIds', tag.id);
+        });
+
+        imageFiles.forEach((file, index) => {
+          formData.append('Images', file);
+          if (index === 0) {
+            formData.append('PrimaryImage', file);
+          }
+        });
+
+        apiInstance.post('Products', formData)
+          .then(res => {
+            setShowForm(false);
+            console.log('Product added:', res.data);
+          })
+          .catch(err => {
+            console.error('Error:', err);
+          });
       })
       .catch(err => {
-        console.error('Error:', err);  // Log errors if any
+        const newErrors = {};
+        err.inner.forEach(error => {
+          console.log(error.message)
+          newErrors[error.path] = error.message;
+        });
+        setErrors(newErrors);
       });
   }
-  
 
+  console.log(allProducts)
+
+  function handleDelete(id) {
+    apiInstance
+      .delete(`Products/${id}`)
+      .then(() => {
+        // console.log(`Product ${id} deleted successfully`);
+      })
+      .catch((err) => {
+        console.error('Error deleting product:', err);
+      });
+  }
 
 
   return (
@@ -90,13 +142,13 @@ function Product() {
         className={`${showForm ? 'flex fixed' : 'hidden'}   top-0 z-10  justify-center items-center bg-black/80 h-[100vh] w-[100%]`}>
         <div
           onClick={(e) => { e.stopPropagation() }}
-          className='w-[80%] z-20 h-[100vh] relative bg-black rounded-sm'>
+          className='w-[80%] z-20 h-[100vh] relative bg-blue-900 rounded-sm'>
           <IoIosClose
             onClick={() => { setShowForm(false) }}
             className='text-[3em] cursor-pointer absolute top-[10px] right-[10px] text-white' />
           <form
             onSubmit={(e) => { handleSubmit(e) }}
-            className='text-white text-[1.2em] pt-[40px] w-[90%] mx-auto'>
+            className='text-white text-[1.2em]  w-[90%] mx-auto'>
             <label htmlFor="title">ProductTitle</label>
             <input
               type="text"
@@ -105,32 +157,42 @@ function Product() {
               placeholder='ProductTitle'
               className='w-[100%] p-[5px] my-[7px] rounded-sm text-black bg-white '
             />
-            <label htmlFor="title">ProductTitle</label>
+            {errors.title && <p className="text-red-500 font-[500] text-[.8em]">{errors.title}</p>}
+
+
+            <label htmlFor="title">Product Description</label>
             <textarea
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => { setDescription(e.target.value) }}
               name="description"
               placeholder="Description"
+              value={description}
               className="w-[100%] p-[5px] my-[7px] rounded-sm text-black bg-white"
             />
+            {errors.description && <p className="text-red-500">{errors.description}</p>}
+
 
 
             <div className='flex justify-between'>
               <div className='w-[45%]'>
                 <label htmlFor="category">Select Product Category</label>
                 <select
-                  onChange={(e) => { setSelectedCat(e.target.value) }}
+                  onChange={(e) => { setSelectedCat(e.target.value); }}
                   name="category"
+                  value={selectedCat}
                   id="category"
-                  className='w-[100%] p-[5px] my-[7px] rounded-sm text-black bg-white '
+                  className="w-[100%] p-[5px] my-[7px] rounded-sm text-black bg-white "
                 >
-                  {
-                    catsWithSubsData && catsWithSubsData.map((item, i) => {
-                      return <option key={i} value={item.categoryId}>
+                  <option value="default" disabled>Select Category</option>
+                  {catsWithSubsData && catsWithSubsData.map((item, i) => {
+                    return (
+                      <option key={i} value={item.categoryId}>
                         {item.categoryName}
                       </option>
-                    })
-                  }
+                    );
+                  })}
                 </select>
+                {errors.category && <p className="text-red-500">{errors.category}</p>}
+
               </div>
 
 
@@ -140,9 +202,11 @@ function Product() {
                 <select
                   onChange={(e) => { setSelectedSub(e.target.value) }}
                   name="subcategory"
+                  value={selectedSub}
                   id="subcategory"
                   className='w-[100%] p-[5px] my-[7px] rounded-sm text-black bg-white '
                 >
+                  <option value="default" disabled>Select SubCategory</option>
                   {catsWithSubsData &&
                     catsWithSubsData
                       .find((item) => item.categoryId === selectedCat)
@@ -152,6 +216,8 @@ function Product() {
                         </option>
                       ))}
                 </select>
+                {errors.subcategory && <p className="text-red-500">{errors.subcategory}</p>}
+
               </div>
             </div>
 
@@ -173,6 +239,7 @@ function Product() {
                   }
 
                 </select>
+                {errors.tags && <p className="text-red-500">{errors.tags}</p>}
               </div>
               <div className='w-[60%]'>
                 <div>Selected Tags:</div>
@@ -181,7 +248,7 @@ function Product() {
                 ><span className='text-white'>l</span>
                   {
                     selectedTags && selectedTags.map((item, i) => {
-                      return <span className='lowercase'> {item.name}, </span>
+                      return <span key={i} className='lowercase'> {item.name}, </span>
                     })
                   }
 
@@ -216,6 +283,7 @@ function Product() {
                     </div>
                   ))}
                 </div>
+                {errors.images && <p className="text-red-500">{errors.images}</p>}
               </div>
             </div>
 
@@ -226,9 +294,11 @@ function Product() {
                   type="number"
                   name="price"
                   id="price"
-                  placeholder='Price'
+                  
+                  placeholder='0'
                   className='w-[100%] p-[5px] my-[7px] rounded-sm text-black bg-white '
                 />
+                {errors.price && <p className="text-red-500">{errors.price}</p>}
               </div>
               <div>
                 <label htmlFor="discount">Discount (%)</label>
@@ -236,9 +306,10 @@ function Product() {
                   type="number"
                   name="discount"
                   id="discount"
-                  placeholder='Discount'
+                  placeholder='0'
                   className='w-[100%] p-[5px] my-[7px] rounded-sm text-black bg-white '
                 />
+                {errors.discount && <p className="text-red-500">{errors.discount}</p>}
               </div>
             </div>
             <button
@@ -261,6 +332,7 @@ function Product() {
             <th className='py-[10px] border-2 border-white'>#</th>
             <th className='py-[10px] border-2 border-white'>Title</th>
             <th className='py-[10px] border-2 border-white'>Category</th>
+            <th className='py-[10px] border-2 border-white'>SubCategory</th>
             <th className='py-[10px] border-2 border-white'>Tags</th>
             <th className='py-[10px] border-2 border-white'>Price</th>
             <th className='py-[10px] border-2 border-white'>Discount</th>
@@ -268,17 +340,31 @@ function Product() {
         </thead>
         <tbody>
           {
-            Array(10).fill('ayan').map((item, i) => {
+            allProducts && allProducts.map((item, i) => {
               return <tr key={i}>
                 <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{i + 1}</td>
-                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>Apple</td>
-                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>Fruit</td>
-                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>Healthy,Nature,Organic</td>
-                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>10</td>
-                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>45</td>
+                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.name}</td>
+                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.categoryName}</td>
+                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.subCategoryName}</td>
+                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>
+                  {
+                    item?.tagNames?.map((item, i) => {
+                      return <p key={i}>{item}</p>
+                    })
+                  }
+                </td>
+                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.discountedPrice}€</td>
+                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.discount} %</td>
                 <td className='py-[10px] border-2 text-center border-white font-[500]'>
-                  <button className='mx-[10px] bg-green-500 py-[4px] rounded-md border-2 cursor-pointer border-green-400 px-[10px]'>Edit</button>
-                  <button className='mx-[10px] bg-red-600 py-[4px] rounded-md border-2 cursor-pointer border-red-600 px-[10px]'>Delete</button>
+                  <button
+                    className='mx-[10px] bg-green-500 py-[4px] rounded-md border-2 cursor-pointer border-green-400 px-[10px]'>
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => { handleDelete(item.id) }}
+                    className='mx-[10px] bg-red-600 py-[4px] rounded-md border-2 cursor-pointer border-red-600 px-[10px]'>
+                    Delete
+                  </button>
                 </td>
               </tr>
             })
