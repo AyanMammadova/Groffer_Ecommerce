@@ -20,9 +20,10 @@ export const ProductSchemas = yup.object().shape({
     title: yup
         .string()
         .required('Title cannot be empty')
-        .min(3, 'Title must be at least 3 characters long'), 
+        .min(3, 'Title must be at least 3 characters long')
+        .matches(/^[a-zA-Z0-9\s\-,.]+$/, 'Title can only contain letters, numbers, spaces, and hyphens'),
 
-    description: yup  
+    description: yup
         .string()
         .required('Description cannot be empty')
         .min(10, 'Description must be at least 10 characters long'),
@@ -33,7 +34,7 @@ export const ProductSchemas = yup.object().shape({
         .positive('Price must be a positive number'),
     discount: yup
         .number()
-        .required('Discount cannot be empty') 
+        .required('Discount cannot be empty')
         .typeError('Must be number')
         .min(0, 'Discount cannot be negative')
         .max(100, 'Discount cannot be greater than 100%'),
@@ -45,11 +46,11 @@ export const ProductSchemas = yup.object().shape({
         .string()
         .required('Subcategory is required')
         .notOneOf(['default'], 'Please select a valid subcategory'),
-    tags: yup 
+    tags: yup
         .array()
         .required('Tags are reuired')
         .min(1, 'At least one tag is required'),
-    images: yup  
+    images: yup
         .array()
         .min(1, 'At least one image is required'),
 });
