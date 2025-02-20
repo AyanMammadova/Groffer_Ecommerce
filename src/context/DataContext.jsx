@@ -1,19 +1,56 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { getAllCategories, getAllProducts, getAllSubCategories } from '../services/api'
+import { getAllCategories, getAllProducts, getAllSubCategories, getFavorites } from '../services/api'
+import apiInstance from '../services/axiosInstance'
 export const DATA = createContext('')
-function DataContext({children}) {
-    const [role,setRole]=useState('')
-    const [token,setToken]=useState(localStorage.getItem('accessToken'))
-    const [categoryData,setCategoryData]=useState(null)
-    const [subCategoryData,setSubCategoryData]=useState(null)
-    const [allProducts,setAllProducts]=useState(null)
+function DataContext({ children }) {
+    const [role, setRole] = useState('')
+    const [token, setToken] = useState(localStorage.getItem('accessToken'))
+    const [categoryData, setCategoryData] = useState(null)
+    const [subCategoryData, setSubCategoryData] = useState(null)
+    const [allProducts, setAllProducts] = useState(null)
     const [showQuick, setShowQuick] = useState(false)
-    useEffect(()=>{
-        getAllProducts().then(res=>setAllProducts(res.data))
-        getAllCategories().then(res=>setCategoryData(res.data))
-        getAllSubCategories().then(res=>setSubCategoryData(res.data))
-    },[])
-   
+    const [favoriteData, setFavoriteData] = useState([])
+    const [shopType, setShopType] = useState('all')
+
+    useEffect(() => {
+        getFavorites().then(res => { setFavoriteData(res.data) })
+        getAllProducts().then(res => setAllProducts(res.data))
+        getAllCategories().then(res => setCategoryData(res.data))
+        getAllSubCategories().then(res => setSubCategoryData(res.data))
+    }, [])
+
+    function handleWishlist(id, isFav) {
+        console.log('datada id : ' + id)
+        isFav
+            ? apiInstance.delete(
+                `Wishlist/remove-from-wishlist/${id}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            )
+                .then(() => {
+                    console.log('delted')
+                })
+                .catch(error => console.error('Error:', error))
+        : apiInstance.post(
+                    `Wishlist/add-to-wishlist/${id}`,
+                    {},
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                )
+            .then(() => {
+                console.log('added')
+            })
+            .catch(error => console.error('Error:', error));
+            getFavorites().then(res => setFavoriteData(res.data))
+    }
+
+
     const menuData = [
         {
             catname: 'Home',
@@ -60,9 +97,9 @@ function DataContext({children}) {
             ],
         },
     ];
-    
-    
-    const mediaImgs=[
+
+
+    const mediaImgs = [
         'https://groffer.modeltheme.com/wp-content/uploads/2020/09/groffer_blog1-scaled-1024x790.jpg',
         'https://groffer.modeltheme.com/wp-content/uploads/2019/07/groffer_blog5-scaled-1024x683.jpg',
         'https://groffer.modeltheme.com/wp-content/uploads/2019/04/groffer_blog9-scaled-1024x683.jpg',
@@ -75,7 +112,7 @@ function DataContext({children}) {
         'https://groffer.modeltheme.com/wp-content/uploads/2019/07/groffer_blog5-scaled-1024x683.jpg',
         'https://groffer.modeltheme.com/wp-content/uploads/2019/04/groffer_blog9-scaled-1024x683.jpg',
         'https://groffer.modeltheme.com/wp-content/uploads/2023/01/groffer_blog8-scaled-1024x704.jpg',
-        
+
     ]
     return (
         <DATA.Provider
@@ -90,7 +127,12 @@ function DataContext({children}) {
                 allProducts,
                 subCategoryData,
                 token,
-                setToken
+                setToken,
+                handleWishlist,
+                favoriteData,
+                setFavoriteData,
+                shopType,
+                setShopType
             }}
         >
             {children}

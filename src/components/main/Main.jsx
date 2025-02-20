@@ -21,7 +21,7 @@ function Main() {
 
             <FruitBox />
 
-            <FreshestProducts />
+            {/* <FreshestProducts /> */}
 
             <Categories />
 

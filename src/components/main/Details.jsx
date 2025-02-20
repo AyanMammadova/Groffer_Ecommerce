@@ -10,14 +10,14 @@ import { FaRegStar } from 'react-icons/fa'
 import { DATA } from '../../context/DataContext'
 import { IoHeartOutline } from 'react-icons/io5'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
+import ReviewForm from './ReviewForm'
 
 function Details() {
-  const {allProducts}=useContext(DATA)
+  const { allProducts } = useContext(DATA)
   const { proid } = useParams()
   // console.log(proid)
   const [singleProduct, setSinglePorduct] = useState('')
   const [isDesc, setIsDesc] = useState(true)
-  const [isAdd, setIsAdd] = useState(false)
   const [isRew, setIsRew] = useState(false)
   useEffect(() => {
     getProductById(proid).then(res => setSinglePorduct(res.data))
@@ -44,33 +44,35 @@ function Details() {
       <div className='border-2 rounded-2xl border-gray-300  mt-[80px] md:mt-[50px] relative flex flex-col items-center justify-center w-[90%] mx-auto py-[50px]'>
         <div className='absolute -top-[80px] md:-top-[30px]  bg-[#F1F3F6] text-center rounded-lg md:flex justify-between mx-[auto] w-[80%]'>
           <p
-            onClick={() => { setIsDesc(true), setIsAdd(false), setIsRew(false) }}
-            className={`md:p-[20px] p-[10px] font-[600] text-[1.5em] ${isDesc ? 'txtgreen' : 'text-black'}`}>
+            onClick={() => { setIsDesc(true), setIsRew(false) }}
+            className={`md:p-[20px] p-[10px] cursor-pointer  font-[600] text-[1.5em] ${isDesc ? 'txtgreen' : 'text-black'}`}>
             Description
           </p>
+
           <p
-            onClick={() => { setIsAdd(true), setIsDesc(false), setIsRew(false) }}
-            className={`md:p-[20px] p-[10px] font-[600]  text-[1.5em] ${isAdd ? 'txtgreen' : 'text-black'}`}>
-            Additional Info
-          </p>
-          <p
-            onClick={() => { setIsRew(true), setIsAdd(false), setIsDesc(false) }}
-            className={`md:p-[20px] p-[10px] font-[600]  text-[1.5em] ${isRew ? 'txtgreen' : 'text-black'}`}>
+            onClick={() => { setIsRew(true), setIsDesc(false) }}
+            className={`md:p-[20px] p-[10px]  cursor-pointer font-[600]  text-[1.5em] ${isRew ? 'txtgreen' : 'text-black'}`}>
             Reviews(0)
           </p>
         </div>
         <div className='relative pt-[20px] w-full'>
-          <p
+          <div
             className='text-[1.4em] p-[5px] md:p-[20px]'>
             {
-              isDesc ? ' More success is to get a massage once a week randomised words which Don’t important, major key, cloth talk  Mogul talk.Eliptical talk. The standard chunk of Lorem Ipsum used since the 1500s is reproduced below forthose interested. Sections 1.10.32 and  1.10.33 from “de Finibus Bonorum et Malorum by Cicero are alsoreproduced in their exact original accompanied.'
-                : isAdd ? 'additional infooo'
-                  : isRew ? 'tehre is no review' : ''
-            }
-          </p>
-        </div>
+              isDesc ? <>
+              <p className='text-gray-500 text-[1em]'>{singleProduct?.description}</p>
+              </>
 
-      </div>
+                : (
+                  <>
+                    <ReviewForm />
+                  </>
+                )
+            }
+          </div >
+        </div >
+
+      </div >
 
       <div>
         <p className='text-[2em] font-[500] text-center'>Related Products</p>
@@ -78,6 +80,7 @@ function Details() {
           {
             allProducts && allProducts.map((item, i) => {
               return <Link
+              key={i}
                 to={`/details/${item.id}`}
                 className='w-[100%] group relative transition-all duration-200 border-[1px] border-white hover:border-[#ffba41]  h-[400px]  rounded-tl-3xl rounded-br-3xl shadow-[0_0px_20px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.08)]'>
                 <div className='h-[50%] group relative '>

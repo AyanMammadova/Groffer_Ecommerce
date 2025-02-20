@@ -1,19 +1,28 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import BreadCrumps from './BreadCrumps'
 import ProductCard from './ProductCard'
 import { CiGrid2H } from 'react-icons/ci'
 import { BsGrid } from 'react-icons/bs'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { FaRegStar } from 'react-icons/fa'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
-import { GoHeart } from 'react-icons/go'
 import { TiHeart } from 'react-icons/ti'
+import { DATA } from '../../context/DataContext'
 
 function Products() {
+  const {shopType,allProducts}=useContext(DATA)
+  const [currentData,setCurrentData]=useState([])
   const [isRows, setIsRows] = useState(false)
+  const {filterid}=useParams()
   function handleSearch(value) {
-    console.log(value)
+    
   }
+  useEffect(()=>{
+    if (shopType=='all'){
+      setCurrentData(allProducts)
+    }
+    console.log(shopType)
+  },[filterid])
   return (
     <>
       <BreadCrumps page={[
@@ -60,14 +69,11 @@ function Products() {
             </div>
           </div>
           <div className={`${isRows ? 'hidden' : 'block'} gap-[10px] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4`}>
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            {
+              currentData && currentData.map((item,i)=>{
+                return <ProductCard id={item?.id}/> 
+              })
+            }
           </div>
           <div className={`${isRows ? 'block' : 'hidden'} gap-[10px] grid grid-cols-1`}>
             <Link

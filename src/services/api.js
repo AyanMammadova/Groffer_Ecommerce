@@ -26,11 +26,16 @@ async function getAllCatsWithSubs() {
     const res = await apiInstance.get('Categories/WithSubcategories')
     return res;
 }
+async function getFavorites() {
+    const res = await apiInstance.get('Wishlist/get-all-wishlists')
+    return res;
+}
 
 
 export{
     getAllCategories,
     getProductById,
+    getFavorites,
     getAllTags,
     getAllProducts,
     getAllSubCategories,
