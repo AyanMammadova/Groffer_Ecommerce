@@ -8,18 +8,22 @@ function DataContext({ children }) {
     const [categoryData, setCategoryData] = useState(null)
     const [subCategoryData, setSubCategoryData] = useState(null)
     const [allProducts, setAllProducts] = useState(null)
+    const [loadingWishlist, setLoadingWislist] = useState(true)
     const [showQuick, setShowQuick] = useState(false)
+    const [quickId,setQuickId]=useState(null)
     const [favoriteData, setFavoriteData] = useState([])
+    const [loadingHeart,setLoadingHeart]=useState(false)
     const [shopType, setShopType] = useState('all')
 
     useEffect(() => {
-        getFavorites().then(res => { setFavoriteData(res.data) })
+        getFavorites().then(res => { setFavoriteData(res.data),setLoadingWislist(false) })
         getAllProducts().then(res => setAllProducts(res.data))
         getAllCategories().then(res => setCategoryData(res.data))
         getAllSubCategories().then(res => setSubCategoryData(res.data))
     }, [])
 
     function handleWishlist(id, isFav) {
+        setLoadingHeart(true);
         console.log('datada id : ' + id)
         isFav
             ? apiInstance.delete(
@@ -31,9 +35,10 @@ function DataContext({ children }) {
                 }
             )
                 .then(() => {
-                    console.log('delted')
+                    getFavorites().then(res => setFavoriteData(res.data))
                 })
                 .catch(error => console.error('Error:', error))
+                .finally(() => setLoadingHeart(false))
         : apiInstance.post(
                     `Wishlist/add-to-wishlist/${id}`,
                     {},
@@ -44,10 +49,11 @@ function DataContext({ children }) {
                     }
                 )
             .then(() => {
-                console.log('added')
+                getFavorites().then(res => setFavoriteData(res.data))
             })
-            .catch(error => console.error('Error:', error));
-            getFavorites().then(res => setFavoriteData(res.data))
+            .catch(error => console.error('Error:', error))
+            .finally(() => setLoadingHeart(false))
+            
     }
 
 
@@ -132,7 +138,11 @@ function DataContext({ children }) {
                 favoriteData,
                 setFavoriteData,
                 shopType,
-                setShopType
+                setShopType,
+                loadingHeart,
+                setLoadingHeart,
+                loadingWishlist, 
+                setLoadingWislist
             }}
         >
             {children}

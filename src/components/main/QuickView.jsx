@@ -9,9 +9,10 @@ import { DATA } from '../../context/DataContext'
 import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
 import { Link } from 'react-router-dom'
+import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io'
 
 function QuickView({ type, proid }) {
-  const { handleWishlist, favoriteData } = useContext(DATA)
+  const { handleWishlist, favoriteData,loadingHeart } = useContext(DATA)
   const [singleProduct, setSingleProduct] = useState('')
   const [isFavorite, setIsFavorite] = useState(false)
   const [count, setCount] = useState(1)
@@ -29,7 +30,7 @@ function QuickView({ type, proid }) {
   }, [favoriteData, proid]);
 
   function toggleWishlist() {
-    handleWishlist(singleProduct.id,isFavorite)
+    handleWishlist(singleProduct.id, isFavorite)
   }
   return (
     <>
@@ -66,11 +67,11 @@ function QuickView({ type, proid }) {
           <p className='txtgreen text-[2em] font-[500]'>€{singleProduct?.discountedPrice?.toFixed(2)}</p>
           <p className='text-gray-500 text-[1.2em]'>{singleProduct?.description}</p>
           <div className='flex flex-wrap'>
-          Tags:{
-            singleProduct.tagNames?.map((item,i)=>{
-              return <Link to={`/shop/${item}`} key={i} className='hover:underline mx-[5px] cursor-pointer'>#{item}</Link>
-            })
-          }
+            Tags:{
+              singleProduct.tagNames?.map((item, i) => {
+                return <Link to={`/shop/${item}`} key={i} className='hover:underline mx-[5px] cursor-pointer'>#{item}</Link>
+              })
+            }
           </div>
 
 
@@ -79,10 +80,10 @@ function QuickView({ type, proid }) {
             <div className='bg-[#F2F2F2] *:p-[5px] *:px-[10px] items-center flex rounded-xl p-[4px]'>
               <span
                 onClick={() => {
-                  count ==1 ? '': setCount(count - 1)
+                  count == 1 ? '' : setCount(count - 1)
                 }}
-                className={`cursor-pointer ${count==1 ? 'text-gray-400' : 'text-black'}`}>
-                <FaMinus/>
+                className={`cursor-pointer ${count == 1 ? 'text-gray-400' : 'text-black'}`}>
+                <FaMinus />
               </span>
               <span
                 className='cursor-text'>
@@ -93,7 +94,7 @@ function QuickView({ type, proid }) {
                   setCount(count + 1)
                 }}
                 className='cursor-pointer'>
-                <FaPlus/>
+                <FaPlus />
               </span>
             </div>
             <div className='bg-[#136450] cursor-pointer text-white hover:bg-white border-2 border-[#136450] duration-200 transition-all hover:text-[#136450] text-[1.1em] font-[500] px-[20px] py-[10px] rounded-lg '>
@@ -105,7 +106,13 @@ function QuickView({ type, proid }) {
               }}
               className='p-[10px] text-[1.3em]  txtgreen cursor-pointer flex items-center justify-center border-2 border-[#136450] rounded-lg'>
               {
-                isFavorite ? <TiHeartFullOutline /> : <TiHeartOutline />
+                loadingHeart ? (
+                  <div className=" animate-spin border-2 border-gray-400 border-t-transparent rounded-full w-[24px] h-[24px]"></div>
+                ) : (
+                  isFavorite
+                    ? <IoIosHeart onClick={() => handleWishlist(singleProduct.id, isFavorite)} className=" text-[1.3em] text-[#136450] cursor-pointer " />
+                    : <IoIosHeartEmpty onClick={() => handleWishlist(singleProduct.id, isFavorite)} className=" text-[1.3em] text-gray-700 cursor-pointer hover:text-black " />
+                )
               }
 
             </div>

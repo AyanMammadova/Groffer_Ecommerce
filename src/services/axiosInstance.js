@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '../config/config';
 
 const apiInstance = axios.create({
-  baseURL: config.apiBaseUrl, // Base URL
+  baseURL: config.apiBaseUrl,
   headers: {
     'Content-Type': 'multipart/form-data', 
   },
@@ -11,13 +11,13 @@ const apiInstance = axios.create({
   
 apiInstance.interceptors.request.use((config) => {
   // console.log(localStorage.getItem('accessToken'))
-  const accessToken = localStorage.getItem('accessToken'); // Get refresh token from localStorage
+  const accessToken = localStorage.getItem('accessToken'); 
   if (accessToken) {
-    config.headers['Authorization'] = `Bearer ${accessToken}`; // Set Authorization header
+    config.headers['Authorization'] = `Bearer ${accessToken}`;
   }
   return config;
 }, (error) => {
-  return Promise.reject(error); // Handle request error
+  return Promise.reject(error); 
 });
 
 export default apiInstance;
