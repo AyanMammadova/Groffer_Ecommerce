@@ -8,7 +8,6 @@ function WishList() {
 
     function toggleWishlist(id) {
         handleWishlist(id, true)
-        // console.log(id)
     }
     return (
         <>
@@ -38,7 +37,10 @@ function WishList() {
                                                 <p className='block py-[5px] md:hidden'>{item.name}</p>
                                                 <p className='block py-[5px] md:hidden'>{item.discountedPrice.toFixed(2)}</p>
                                             </div>
-                                            <img className='h-[100px]' src={`https://supermarket777.blob.core.windows.net/product/${item.primaryImageUrl}`} alt="" />
+                                            {
+                                                item?.primaryImageUrl ? <img className='h-[100px]' src={`https://supermarket777.blob.core.windows.net/product/${item.primaryImageUrl}`} alt="" />
+                                                    : ''
+                                            }
                                         </div>
                                         <p className='hidden md:block'>{item.name}</p>
                                         <p className='hidden md:block'>{item.discountedPrice.toFixed(2)}</p>

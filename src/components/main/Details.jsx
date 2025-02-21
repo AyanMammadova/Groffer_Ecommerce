@@ -79,7 +79,7 @@ function Details() {
         <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-[10px] md:gap-[40px] mx-[10px] md:mx-[40px]'>
           {
             allProducts && allProducts.map((item, i) => {
-              return <ProductCard id={item?.id}/>
+              return <ProductCard key={i} id={item?.id}/>
             })
           }
         </div>

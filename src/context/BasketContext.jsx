@@ -1,25 +1,39 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
+import { getCartData } from '../services/api'
+import apiInstance from '../services/axiosInstance'
 export const BASKET=createContext('')
 function BasketContext({children}) {
-    const [basketData,setBasketData]=useState([
-        {
-            id:1,
-            img:'https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product28-300x300.jpg',
-            name: 'Broccoli and Cauliflower Mix',
-            count:3,
-            price:12,
-        },
-        {
-            id:2,
-            img:'https://groffer.modeltheme.com/wp-content/uploads/2023/01/Angro-Product25-300x300.jpg',
-            name: 'Cadbury Crunchie Chocolate Bar',
-            count:2,
-            price:8,
-        }
-    ])
+    const [basketData,setBasketData]=useState(null)
+    useEffect(()=>{
+      getCartData().then(res=>console.log(res.data))
+    },[])
+
+
+    function addToBasket(id, count) {
+      console.log('Product ID:', id);
+      console.log('Quantity:', count);
+  
+      const formData = new FormData();
+      formData.append('quantity', count);
+  
+      apiInstance.post(`Cart/add-to-cart/${id}`, formData, {
+          headers: {
+              'Content-Type': 'multipart/form-data',
+          },
+      })
+      .then(response => {
+          console.log('Product added to cart:', response.data);
+      })
+      .catch(error => {
+          console.error('Error adding product to cart:', error);
+      });
+      
+  }
+  
   return (
     <BASKET.Provider value={{
-        basketData
+        basketData,
+        addToBasket
     }}>
       {children}
     </BASKET.Provider>

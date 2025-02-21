@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { IoIosClose } from 'react-icons/io'
 import { getAllCategories, getAllCatsWithSubs, getAllProducts, getAllSubCategories, getAllTags } from '../services/api'
 import apiInstance from '../services/axiosInstance'
@@ -16,6 +16,9 @@ function Product() {
   const [showForm, setShowForm] = useState(false)
   const [imageFiles, setImageFiles] = useState([]);
   const [errors, setErrors] = useState([])
+  const [randomNumber, setRandomNumber] = useState(
+    Math.floor(Math.random() * 200) + 1
+  );
 
 
   function generateSKU() {
@@ -66,6 +69,7 @@ function Product() {
     const subcategory = selectedSub;
     const tags = selectedTags;
     const images = imageFiles;
+    console.log(randomNumber)
 
     // Create a plain object with all form data
     const formValues = {
@@ -77,14 +81,14 @@ function Product() {
       subcategory,
       tags,
       images,
-    };
-
+    }
     ProductSchemas.validate(formValues, { abortEarly: false })
       .then(() => {
         const formData = new FormData();
         formData.append('Name', title);
         formData.append('Price', price);
         formData.append('Discount', discount);
+        formData.append('StockQuantity', randomNumber);
         formData.append('CategoryId', category);
         formData.append('SubCategoryId', subcategory);
         formData.append('Description', description);
@@ -101,16 +105,18 @@ function Product() {
             formData.append('PrimaryImage', file);
           }
         });
-
         apiInstance.post('Products', formData)
           .then(res => {
             setShowForm(false);
-            console.log('Product added:', res.data);
+            console.log('Product added:');
+            setSelectedTags([]);
+            setImageFiles([]);
+            setErrors({});
           })
           .catch(err => {
             console.error('Error:', err);
           });
-          getAllProducts().then(res=>console.log(res))
+        getAllProducts().then(res => console.log(res))
       })
       .catch(err => {
         const newErrors = {};
@@ -120,16 +126,16 @@ function Product() {
         });
         setErrors(newErrors);
       });
+    getAllProducts().then(res => setallProducts(res.data))
   }
 
-  console.log(allProducts)
+  // console.log(allProducts)
 
   function handleDelete(id) {
     apiInstance
       .delete(`Products/${id}`)
       .then(() => {
-        getAllProducts().then(res=>setallProducts(res))
-        // console.log(`Product ${id} deleted successfully`);
+        getAllProducts().then(res => setallProducts(res))
       })
       .catch((err) => {
         console.error('Error deleting product:', err);
@@ -144,7 +150,7 @@ function Product() {
         className={`${showForm ? 'flex fixed' : 'hidden'}   top-0 z-10  justify-center items-center bg-black/80 h-[100vh] w-[100%]`}>
         <div
           onClick={(e) => { e.stopPropagation() }}
-          className='w-[80%] z-20 h-[100vh] relative bg-blue-900 rounded-sm'>
+          className='w-[80%] z-20 overflow-y-scroll scrollable-content py-[20px] max-h-[100vh]  relative bg-blue-900 rounded-sm'>
           <IoIosClose
             onClick={() => { setShowForm(false) }}
             className='text-[3em] cursor-pointer absolute top-[10px] right-[10px] text-white' />
@@ -232,6 +238,7 @@ function Product() {
                   name="tags"
                   id="tags"
                   className='w-[100%] p-[5px] my-[7px] rounded-sm text-black bg-white '>
+                  <option selected value="default" disabled>Select Tag</option>
                   {
                     allTags && allTags
                       .filter(item => !selectedTags.find(tag => tag.id === item.id))
@@ -342,10 +349,10 @@ function Product() {
         </thead>
         <tbody>
           {
-            allProducts?.length>1 && allProducts?.map((item, i) => {
+            allProducts?.length > 1 && allProducts?.map((item, i) => {
               return <tr key={i}>
                 <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{i + 1}</td>
-                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.name}</td>
+                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.name} <br />{item.slug}</td>
                 <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.categoryName}</td>
                 <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.subCategoryName}</td>
                 <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>

@@ -45,12 +45,12 @@ function LoginElement({ type }) {
             }
         )
             .then(res => {
-                navigate('/my-account')
-                // console.log('Success:', res.data)
+                navigate('/')
                 localStorage.setItem("refreshToken",res.data.refreshToken)
                 localStorage.setItem("accessToken",res.data.accessToken)
                 localStorage.setItem("loginisover",true)
                 setMainError('')
+                window.location.reload();
             })
             .catch(err => 
                 console.error('Errorum:', err),

@@ -20,9 +20,7 @@ export const ProductSchemas = yup.object().shape({
     title: yup
         .string()
         .required('Title cannot be empty')
-        .min(3, 'Title must be at least 3 characters long')
-        .matches(/^[a-zA-Z0-9\s\-,.]+$/, 'Title can only contain letters, numbers, spaces, and hyphens'),
-
+        .min(3, 'Title must be at least 3 characters long'),
     description: yup
         .string()
         .required('Description cannot be empty')

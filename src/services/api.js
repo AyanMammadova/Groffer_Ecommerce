@@ -13,6 +13,10 @@ async function getProductById(id) {
     const res = await apiInstance.get(`Products/single-product/${id}`)
     return res;
 }
+async function getCartData() {
+    const res = await apiInstance.get(`Cart/cart`)
+    return res;
+}
 
 async function getAllSubCategories() {
     const res = await apiInstance.get('SubCategories')
@@ -39,5 +43,6 @@ export{
     getAllTags,
     getAllProducts,
     getAllSubCategories,
-    getAllCatsWithSubs
+    getAllCatsWithSubs,
+    getCartData
 }

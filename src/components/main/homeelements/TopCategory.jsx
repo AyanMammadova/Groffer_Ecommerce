@@ -1,10 +1,6 @@
 import React, { useContext } from 'react'
 import ProductCard from '../ProductCard'
 import { DATA } from '../../../context/DataContext'
-import { IoHeartOutline } from 'react-icons/io5';
-import { FaMagnifyingGlass } from 'react-icons/fa6';
-import { FaRegStar } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 
 function TopCategory() {
     const { allProducts } = useContext(DATA)

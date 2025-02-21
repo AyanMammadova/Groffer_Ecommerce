@@ -142,7 +142,8 @@ function DataContext({ children }) {
                 loadingHeart,
                 setLoadingHeart,
                 loadingWishlist, 
-                setLoadingWislist
+                setLoadingWislist,
+                quickId,setQuickId
             }}
         >
             {children}

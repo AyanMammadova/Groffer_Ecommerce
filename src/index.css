@@ -7,13 +7,31 @@
 .bggreen {
     background-color: #136450;
 }
+
 .scrollbar-hide {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 11 */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer 11 */
+}
+
+.scrollable-content::-webkit-scrollbar {
+    width: 8px;
+    /* Thinner scrollbar */
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+    background-color: #3b82f6;
+}
+
+.scrollable-content::-webkit-scrollbar-track {
+    background-color: #f3f4f6;
+    /* Light gray track */
 }
 
 .scrollbar-hide::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Edge */
+    display: none;
+    /* Chrome, Safari, Edge */
 }
 
 .txtgreen {
@@ -28,6 +46,7 @@
     background-color: #136450;
     color: #ffffff;
 }
+
 input:focus {
     outline: none;
 }

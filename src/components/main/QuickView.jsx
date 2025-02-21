@@ -10,18 +10,24 @@ import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
 import { Link } from 'react-router-dom'
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io'
+import toast from 'react-hot-toast'
+import { BASKET } from '../../context/BasketContext'
 
 function QuickView({ type, proid }) {
-  const { handleWishlist, favoriteData,loadingHeart } = useContext(DATA)
+  const { handleWishlist, favoriteData, loadingHeart, quickId, setQuickId, token } = useContext(DATA)
+  const { addToBasket } = useContext(BASKET)
   const [singleProduct, setSingleProduct] = useState('')
   const [isFavorite, setIsFavorite] = useState(false)
   const [count, setCount] = useState(1)
 
   useEffect(() => {
+    console.log(quickId)
     if (proid) {
       getProductById(proid).then(res => setSingleProduct(res.data))
+    } else if (quickId) {
+      getProductById(quickId).then(res => setSingleProduct(res.data))
     }
-  }, [proid])
+  }, [proid, quickId])
 
 
   useEffect(() => {
@@ -30,8 +36,19 @@ function QuickView({ type, proid }) {
   }, [favoriteData, proid]);
 
   function toggleWishlist() {
-    handleWishlist(singleProduct.id, isFavorite)
+    token ? handleWishlist(singleProduct.id, isFavorite)
+      : toast.error('Sign in to use Wishlist!')
   }
+
+  async function handleAddToBasket() {
+    if (!token) {
+      toast.error('Sign in to use Cart!');
+      return;
+    }
+  
+    await addToBasket(singleProduct.id, count); 
+    toast.success('Product added to basket successfully!');
+  };
   return (
     <>
 
@@ -97,7 +114,9 @@ function QuickView({ type, proid }) {
                 <FaPlus />
               </span>
             </div>
-            <div className='bg-[#136450] cursor-pointer text-white hover:bg-white border-2 border-[#136450] duration-200 transition-all hover:text-[#136450] text-[1.1em] font-[500] px-[20px] py-[10px] rounded-lg '>
+            <div
+              onClick={() => { handleAddToBasket() }}
+              className='bg-[#136450] cursor-pointer text-white hover:bg-white border-2 border-[#136450] duration-200 transition-all hover:text-[#136450] text-[1.1em] font-[500] px-[20px] py-[10px] rounded-lg '>
               Add to Cart
             </div>
             <div

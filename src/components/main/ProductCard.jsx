@@ -5,10 +5,11 @@ import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 import { Link } from 'react-router-dom'
 import { DATA } from '../../context/DataContext'
 import { getProductById } from '../../services/api'
+import toast from 'react-hot-toast';
 
 function ProductCard({ id }) {
 
-    const { favoriteData, handleWishlist, loadingHeart } = useContext(DATA)
+    const { favoriteData, handleWishlist, loadingHeart,token,quickId,setQuickId } = useContext(DATA)
     const [singlePro, setSinglePro] = useState('')
     const [isFav, setIsFav] = useState(false)
     useEffect(() => {
@@ -19,6 +20,10 @@ function ProductCard({ id }) {
             });
         }
     }, [id, favoriteData]);
+    function toggleHeart(){
+        token ? handleWishlist(singlePro.id,isFav)
+        :toast.error('Sign in to use Wishlist!')
+    }
 
 
     const { setShowQuick } = useContext(DATA)
@@ -59,15 +64,16 @@ function ProductCard({ id }) {
                             <div className="absolute top-[50px] right-[5px] animate-spin border-2 border-gray-400 border-t-transparent rounded-full w-[16px] h-[16px]"></div>
                         ) : (
                             isFav
-                                ? <IoIosHeart onClick={() => handleWishlist(singlePro.id, isFav)} className="absolute  text-[1.3em] text-red-700 cursor-pointer top-[50px] right-[5px]" />
-                                : <IoIosHeartEmpty onClick={() => handleWishlist(singlePro.id, isFav)} className="absolute  text-[1.3em] text-gray-700 cursor-pointer hover:text-black top-[50px] right-[5px]" />
+                                ? <IoIosHeart onClick={() => toggleHeart()} className="absolute  text-[1.3em] text-red-700 cursor-pointer top-[50px] right-[5px]" />
+                                : <IoIosHeartEmpty onClick={() => toggleHeart()} className="absolute  text-[1.3em] text-gray-700 cursor-pointer hover:text-black top-[50px] right-[5px]" />
                         )
                     }
 
                     <FaMagnifyingGlass
                         onClick={(e) => {
                             setShowQuick(true),
-                                e.preventDefault()
+                                e.preventDefault(),
+                                setQuickId(singlePro.id)
                         }}
                         className='absolute bg-white  rounded-xl top-[70px]  right-[5px] text-gray-700 hover:text-black' />
                 </div>

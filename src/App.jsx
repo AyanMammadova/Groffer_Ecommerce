@@ -24,6 +24,7 @@ import NotFound from './NotFound'
 import LoginPage from './components/login/LoginPage'
 import { jwtDecode } from 'jwt-decode'
 import apiInstance from './services/axiosInstance'
+import { Toaster } from 'react-hot-toast'
 
 
 function App() {
@@ -77,6 +78,10 @@ function App() {
   }, [location, role])
   return (
     <>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+      />
       <Routes>
         <Route path='/' element={<MainLayout />}>
           <Route index element={<Main />} />
