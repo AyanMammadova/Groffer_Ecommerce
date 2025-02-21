@@ -15,9 +15,10 @@ import { BASKET } from '../../context/BasketContext'
 
 function QuickView({ type, proid }) {
   const { handleWishlist, favoriteData, loadingHeart, quickId, setQuickId, token } = useContext(DATA)
-  const { addToBasket } = useContext(BASKET)
+  const { addToBasket,basketData } = useContext(BASKET)
   const [singleProduct, setSingleProduct] = useState('')
   const [isFavorite, setIsFavorite] = useState(false)
+  const [isInBasket, setIsIn] = useState(false)
   const [count, setCount] = useState(1)
 
   useEffect(() => {
