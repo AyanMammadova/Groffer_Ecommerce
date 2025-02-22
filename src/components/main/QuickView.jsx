@@ -15,27 +15,29 @@ import { BASKET } from '../../context/BasketContext'
 
 function QuickView({ type, proid }) {
   const { handleWishlist, favoriteData, loadingHeart, quickId, setQuickId, token } = useContext(DATA)
-  const { addToBasket,basketData } = useContext(BASKET)
+  const { addToBasket, basketData } = useContext(BASKET)
   const [singleProduct, setSingleProduct] = useState('')
   const [isFavorite, setIsFavorite] = useState(false)
-  const [isInBasket, setIsIn] = useState(false)
+  const [isInBasket, setIsInBasket] = useState(false)
   const [count, setCount] = useState(1)
 
   useEffect(() => {
     console.log(quickId)
     if (proid) {
-      getProductById(proid).then(res => setSingleProduct(res.data))
+      getProductById(proid).then(res => {
+        setSingleProduct(res.data)
+        setIsFavorite(favoriteData.some(item => item.id == res.data.id));
+      })
     } else if (quickId) {
-      getProductById(quickId).then(res => setSingleProduct(res.data))
+      getProductById(quickId).then(res => {
+        setSingleProduct(res.data);
+        setIsFavorite(favoriteData.some(item => item.id == res.data.id));
+      })
     }
-  }, [proid, quickId])
+  }, [proid, quickId, favoriteData, proid])
 
 
-  useEffect(() => {
-    const ifFav = favoriteData?.some(item => item.id === singleProduct.id);
-    setIsFavorite(ifFav)
-  }, [favoriteData, proid]);
-
+  
   function toggleWishlist() {
     token ? handleWishlist(singleProduct.id, isFavorite)
       : toast.error('Sign in to use Wishlist!')
@@ -46,8 +48,7 @@ function QuickView({ type, proid }) {
       toast.error('Sign in to use Cart!');
       return;
     }
-  
-    await addToBasket(singleProduct.id, count); 
+    await addToBasket(singleProduct.id, count);
     toast.success('Product added to basket successfully!');
   };
   return (
@@ -87,7 +88,7 @@ function QuickView({ type, proid }) {
           <div className='flex flex-wrap'>
             Tags:{
               singleProduct.tagNames?.map((item, i) => {
-                return <Link to={`/shop/${item}`} key={i} className='hover:underline mx-[5px] cursor-pointer'>#{item}</Link>
+                return <Link to={`/${item}`} key={i} className='hover:underline mx-[5px] cursor-pointer'>#{item}</Link>
               })
             }
           </div>

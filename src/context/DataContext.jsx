@@ -38,7 +38,9 @@ function DataContext({ children }) {
                     getFavorites().then(res => setFavoriteData(res.data))
                 })
                 .catch(error => console.error('Error:', error))
-                .finally(() => setLoadingHeart(false))
+                .finally(() => {
+                    setTimeout(() => setLoadingHeart(false), 700)
+                  })
         : apiInstance.post(
                     `Wishlist/add-to-wishlist/${id}`,
                     {},
@@ -52,7 +54,9 @@ function DataContext({ children }) {
                 getFavorites().then(res => setFavoriteData(res.data))
             })
             .catch(error => console.error('Error:', error))
-            .finally(() => setLoadingHeart(false))
+            .finally(() => {
+                setTimeout(() => setLoadingHeart(false), 700)
+              })
             
     }
 
@@ -70,7 +74,7 @@ function DataContext({ children }) {
             catname: 'Shop',
             slug: 'shop',
             Subcategory: [
-                { name: 'Main Shop', slug: 'shop/searched' },
+                { name: 'Main Shop', slug: 'shop' },
                 { name: 'Single Product', slug: 'details' },
                 { name: 'My Account', slug: 'my-account' },
                 { name: 'My Basket', slug: 'cart' },

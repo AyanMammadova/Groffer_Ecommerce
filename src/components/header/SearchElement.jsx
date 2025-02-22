@@ -18,7 +18,7 @@ function SearchElement() {
                         placeholder='Search products...'
                         className='focus:outline-none rounded-sm py-[10px] pl-[15px] p-[5px] w-[320px]' />
 
-                    <Link to={'/shop/searched'}>
+                    <Link to={'/shop'}>
                         <FaMagnifyingGlass className='absolute right-[10px] ' />
                     </Link>
                     <div className={` ${searchedValue.length > 0 ? 'absolute' : 'hidden'} z-50  p-[10px] top-[60px] overflow-y-hidden  h-[300px] w-[100%] bg-white  shadow-lg mt-[10px] border-[1px] border-gray-100`}>

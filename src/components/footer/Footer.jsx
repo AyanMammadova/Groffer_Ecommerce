@@ -37,7 +37,7 @@ function Footer() {
               <Link to={'/about'}>About Company</Link>
               <Link to={'/blog'}>Latest News</Link>
               <Link to={'/about'}>Meet The Team</Link>
-              <Link to={'/shop/all'}>Our Products</Link>
+              <Link to={'/shop'}>Our Products</Link>
             </ul>
           </div>
           <div className='w-[95%] mx-auto lg:w-[15%] my-[20px]'>

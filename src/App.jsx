@@ -86,7 +86,7 @@ function App() {
         <Route path='/' element={<MainLayout />}>
           <Route index element={<Main />} />
           <Route path='/details/:proid' element={<Details />} />
-          <Route path='/shop/:filterid' element={<Products />} />
+          <Route path='/shop' element={<Products />} />
           <Route path='/wishlist' element={<WishList />} />
           <Route path='/cart' element={<Bag />} />
           <Route path='/blog' element={<Blog />} />

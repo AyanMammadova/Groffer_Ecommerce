@@ -13,16 +13,12 @@ function Products() {
   const {shopType,allProducts}=useContext(DATA)
   const [currentData,setCurrentData]=useState([])
   const [isRows, setIsRows] = useState(false)
-  const {filterid}=useParams()
   function handleSearch(value) {
     
   }
   useEffect(()=>{
-    if (shopType=='all'){
-      setCurrentData(allProducts)
-    }
-    console.log(shopType)
-  },[filterid])
+    setCurrentData(allProducts)
+  },[])
   return (
     <>
       <BreadCrumps page={[
@@ -49,7 +45,7 @@ function Products() {
         </div>
         <div className='lg:w-[70%] w-[100%]'>
           <div className='text-[1.2em] mb-[20px] sm:flex justify-between'>
-            <div className='flex mb-[20px] rounded-md'>
+            {/* <div className='flex mb-[20px] rounded-md'>
               <BsGrid
                 onClick={() => { setIsRows(!isRows) }}
                 className={` ${isRows ? 'text-[#136450] bg-white ' : 'bg-[#136450] text-white'} rounded-tl-md p-[4px] rounded-bl-md  text-[2em] cursor-pointer`} />
@@ -57,7 +53,7 @@ function Products() {
                 onClick={() => { setIsRows(!isRows) }}
                 className={` ${isRows ? 'bg-[#136450] text-white ' : 'text-[#136450] bg-white'} rounded-tr-md p-[4px] rounded-br-md  text-[2em] cursor-pointer`} />
               <p className='px-[10px]'>Showing 1–12 of 34 results</p>
-            </div>
+            </div> */}
 
             <div>
               <select className='bg-[#F2F2F2] text-gray-700 focus:outline-hidden border-[1px] border-gray-300 w-[100%] mx-auto sm:w-[180px] py-[10px]'>
