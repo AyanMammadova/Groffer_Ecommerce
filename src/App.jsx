@@ -25,6 +25,7 @@ import LoginPage from './components/login/LoginPage'
 import { jwtDecode } from 'jwt-decode'
 import apiInstance from './services/axiosInstance'
 import { Toaster } from 'react-hot-toast'
+import CheckoutForm from './components/main/Checkoutform'
 
 
 function App() {
@@ -96,6 +97,7 @@ function App() {
           <Route path='/checkout' element={<CheckOut />} />
           <Route path='/order-tracking' element={<OrderTracking />} />
           <Route path='/my-account' element={<MyAccount />} />
+          
 
         </Route>
 
@@ -108,6 +110,7 @@ function App() {
         <Route path='/submit' element={<SubmitPgae />} />
         <Route path='/loginpage' element={<LoginPage />} />
         <Route path="/notfound" element={<NotFound />} />
+        <Route path='/payment' element={<CheckoutForm />} />
       </Routes>
     </>
   )
