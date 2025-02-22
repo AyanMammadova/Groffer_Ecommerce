@@ -16,23 +16,18 @@ function LoginElement({ type }) {
     const [focusedField, setFocusedField] = useState(null)
     const [expire,setExpire]=useState('')
     const [eye, setEye] = useState(false)
-    // console.log(expire + 'expiree')
     useEffect(() => {
         if (token) {
             const decodedToken=jwtDecode(token)
             setExpire(decodedToken.exp)
-            localStorage.setItem("userName",decodedToken.name)
-            // console.log('decodedname : ' + decodedToken.name)
-            // console.log('exp date' + expire)
             const rol=(decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]);
             localStorage.setItem("role",rol)
-            // console.log('refresh: ' + refreshtoken)
-            // console.log('acces: ' + token)
             localStorage.setItem('loginfinished',true)
         }
     }, [token]);
     function submit(values, action) {
         const formData = new FormData();
+        localStorage.setItem('userName',values.emailorusername)
         formData.append('emailorusername', values.emailorusername);
         formData.append('password', values.password);
         apiInstance.post(

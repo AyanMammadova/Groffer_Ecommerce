@@ -4,7 +4,7 @@ import apiInstance from '../../services/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 
 function SubmitPgae() {
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     const [token, setToken] = useState(null)
     const [timerKey, setTimerKey] = useState(Date.now());
     const isRegistered = localStorage.getItem("registerstatus")
@@ -14,7 +14,8 @@ function SubmitPgae() {
     const [code, setCode] = useState("");
     const [resend, setResend] = useState(false)
     const [timeover, setTimeover] = useState(false)
-    console.log('tokenimiz' + token)
+    const [isTimerActive, setIsTimerActive] = useState(true);
+
 
 
     const handleConfirm = () => {
@@ -35,7 +36,7 @@ function SubmitPgae() {
                 localStorage.setItem("confirmeduser", true)
                 console.log('Success: ', res);
                 console.log('Success.data: ', res.data);
-                navigate('/loginpage')
+                navigate('/my-account')
                 setToken(res.data);
 
             })
@@ -57,6 +58,9 @@ function SubmitPgae() {
             .then(res => {
                 console.log('Success:', res);
                 setToken(res.data);
+                setTimeover(false);
+                setIsTimerActive(true);
+                setTimerKey(Date.now());
             })
             .catch(err => {
                 console.error('Error:', err.response ? err.response.data : err.message);
@@ -64,11 +68,11 @@ function SubmitPgae() {
     };
 
     const handleTimerEnd = () => {
-        // alert('time is overr')
         setCode("");
-        setTimeover(true)
-        setTimerKey(Date.now());
+        setTimeover(true);
+        setIsTimerActive(false);
     };
+
     const renderer = ({ minutes, seconds }) => {
         return (
             <span className="text-red-500 font-semibold">
@@ -97,9 +101,11 @@ function SubmitPgae() {
                         className="border p-2 w-full rounded-md text-center text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Kod daxil edin"
                     />
-                    <p className={`${timeover ? 'hidden' : 'block'} pt-[10px] text-red-500 font-semibold mb-2`}>
-                        Qalan vaxtınız: <Countdown key={timerKey} date={Date.now() + 180000} onComplete={handleTimerEnd} renderer={renderer} />
-                    </p>
+                    {isTimerActive && (
+                        <p className="pt-[10px] text-red-500 font-semibold mb-2">
+                            Qalan vaxtınız: <Countdown key={timerKey} date={Date.now() + 180000} onComplete={handleTimerEnd} renderer={renderer} />
+                        </p>
+                    )}
                     <p className={`${timeover ? 'block' : 'hidden'}  font-semibold mb-2`}>
                         <button
                             type='button'

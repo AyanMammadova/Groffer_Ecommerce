@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import BreadCrumps from '../main/BreadCrumps'
-
 import LoginElement from './LoginElement'
 import RegisterElement from './RegisterElement'
 import ForgotPasswordElement from './ForgotPasswordElement'
 import apiInstance from '../../services/axiosInstance'
+
 function MyAccount() {
-  const userData = JSON.parse(localStorage.getItem("userData"));
-  console.log(userData);
   const [fullName,setFullName]=useState('')
+  const registeredEmail=localStorage.getItem("registeredemail")
+  console.log(registeredEmail + 'regemail')
   const userName = localStorage.getItem("userName");
   const role = localStorage.getItem('role')
-  console.log('rolum: ' + role)
   const loginfinished = localStorage.getItem('loginfinished')
   const [forgot, setForgot] = useState(false)
   const handleLogout = () => {
@@ -39,9 +38,7 @@ function MyAccount() {
       const userData = JSON.parse(storedUserData);
       userData ? setFullName(userData?.firstname + userData?.lastname) : setFullName(userName)
       console.log(userData); 
-    } else {
-      console.log("No user data found");
-    }
+    } 
   }, [])
   return (
     <>
@@ -53,10 +50,10 @@ function MyAccount() {
       ]} />
       <p className='p-[10px] sm:px-[40px] text-[2em] font-[500] border-b-[1px] border-gray-200'>My Account</p>
       {
-        role ? <p className='text-[1.4em] p-[25px]'>
-          Hello {role=='Admin' ? 'Admin ' : fullName }
+        role ? <p className='text-[1.4em] capitalize p-[25px]'>
+          Hello {role=='Admin' ? 'Admin ' : userName } ,not you? 
           <button
-            className='underline text-red-500 cursor-pointer'
+            className='underline text-red-500 px-[10px] cursor-pointer'
             onClick={handleLogout}>
             Logout
           </button>
@@ -78,9 +75,9 @@ function MyAccount() {
                 <p onClick={() => { setForgot(true) }} className='text-[1.3em] txtgreen mx-[5%] pb-[20px] cursor-pointer'>Lost Your Password?</p>
               </div>
             </div>
-            <div className='w-[100%] md:w-[45%]'>
+            <div className={`w-[100%] md:w-[45%] ${registeredEmail ? 'hidden' : 'block'}`}>
               <p className='text-center font-[500] pb-[20px] text-[2em]'>Register</p>
-              <div className='w-[100%] border-[1px] border-gray-200'>
+              <div className={` w-[100%] border-[1px] border-gray-200`}>
                 <RegisterElement type={'page'} />
               </div>
             </div>
