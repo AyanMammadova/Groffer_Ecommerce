@@ -8,7 +8,7 @@ import { FaMinus, FaPlus } from 'react-icons/fa'
 import { LiaShippingFastSolid } from 'react-icons/lia'
 
 function Bag() {
-    const { basketData } = useContext(BASKET)
+    const { basketData,removeFromBasket,totalAmount } = useContext(BASKET)
     return (
         <>
             <BreadCrumps page={[
@@ -34,21 +34,26 @@ function Bag() {
                         return <div key={i} className='w-[96%] my-[30px] shadow-[0_0px_20px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.08)] p-[10px] mx-auto flex justify-between'>
                             <div className='hidden md:flex w-[100%] justify-between'>
                                 <div className='flex justify-center gap-[20px] items-center'>
-                                    <IoClose className='text-[3.5em] text-[#136450]' />
-                                    <img className='hidden lg:block h-[100px]' src={item.img} alt="" />
-                                    <p className=' text-gray-800 text-[1.1em] font-[500]'>{item.name}</p>
+                                    <IoClose onClick={(e)=>{removeFromBasket(item?.product?.id),e.preventDefault()}} className='text-[3.5em] text-[#136450]' />
+                                    {
+                                        item?.product?.primaryImageUrl ? <img
+                                            className={`scale-100 w-[100px]  h-[100px] block  object-cover object-center  }`}
+                                            src={`https://supermarket777.blob.core.windows.net/product/${item?.product?.primaryImageUrl}`} alt={item?.product?.slug} />
+                                            : ''
+                                    }
+                                    <p className=' text-gray-800 text-[1.1em] font-[500]'>{item?.product?.Bagname}</p>
                                 </div>
                                 <div className='flex justify-center gap-[30px] items-center'>
-                                    <p className=' text-gray-800 text-[1.1em] '>{item.price}/piece</p>
+                                    <p className=' text-gray-800 text-[1.1em] '>{item?.product?.price.toFixed(2)} /     piece</p>
                                     <p className=' text-gray-800 bg-[#EFEFEF] rounded-md text-[1.1em] px-[10px] flex items-center'>
                                         <FaMinus className='h-[40px] w-[10px]' />
                                         <input
-                                            placeholder={item.count}
+                                            value={item?.quantity}
                                             type='text'
                                             className=' h-[40px]  w-[30px] text-center' />
                                         <FaPlus className=' h-[40px] w-[10px]' />
                                     </p>
-                                    <p className=' text-gray-800 text-[1.1em] '>$ {(item.count * item.price).toFixed(2)} in total</p>
+                                    <p className=' text-gray-800 text-[1.1em] '>$ {(item?.quantity * item?.product?.price).toFixed(2)} in total</p>
                                 </div>
                             </div>
 
@@ -57,18 +62,18 @@ function Bag() {
                                 <IoClose className='text-[3.5em] text-[#136450]' />
                                 <div className='flex w-[100%] py-[10px] justify-between'>
                                     <p>Product:</p>
-                                    <p className='truncate max-w-[70%]'>{item.name}</p>
+                                    <p className='truncate max-w-[70%]'>{item?.product?.name}</p>
                                 </div>
                                 <div className='flex w-[100%] py-[10px] justify-between'>
                                     <p>Price:</p>
-                                    <p>{item.price}<span className='font-[400] text-gray-600'>/piece</span></p>
+                                    <p>{item?.product?.price}<span className='font-[400] text-gray-600'>/piece</span></p>
                                 </div>
                                 <div className='flex w-[100%] py-[10px] justify-between'>
                                     <p>Quantity:</p>
                                     <p className=' text-gray-800 bg-[#EFEFEF] rounded-md text-[1.1em] px-[10px] flex items-center'>
                                         <FaMinus className='h-[40px] w-[10px]' />
                                         <input
-                                            placeholder={item.count}
+                                            placeholder={item?.quantity}
                                             type='text'
                                             className=' h-[40px]  w-[30px] text-center' />
                                         <FaPlus className=' h-[40px] w-[10px]' />
@@ -76,7 +81,7 @@ function Bag() {
                                 </div>
                                 <div className='flex w-[100%] py-[5px] justify-between'>
                                     <p>Subtotal:</p>
-                                    <p className=' text-gray-800 text-[1.1em] '>$ {(item.count * item.price).toFixed(2)} <span className='font-[400] text-gray-600'>in total</span></p>                                </div>
+                                    <p className=' text-gray-800 text-[1.1em] '>$ {(item?.quantity * item?.product?.price).toFixed(2)} <span className='font-[400] text-gray-600'>in total</span></p>                                </div>
 
                             </div>
                         </div>
@@ -101,19 +106,18 @@ function Bag() {
             <div className={`${basketData ? 'block' : 'hidden'} text-[1.1em] font-[500]  my-[30px] w-[100%] px-[10px] `}>
                 <div className='bg-white border-[1px] p-[10px] border-gray-200 w-[100%] flex justify-between'>
                     <p>Subtotal</p>
-                    <p>$ 223.00</p>
+                    <p>{totalAmount.toFixed(2)}</p>
                 </div>
                 <div className='bg-[#F9F9F9] border-[1px] p-[10px] border-gray-200 w-[100%] flex justify-between'>
                     <p>Subtotal</p>
                     <div>
-                        <p>Flat rate: €100.00</p>
                         <p>Shipping to Azerbaijan.</p>
                         <p className='flex items-center gap-[20px]'>Change Adress <LiaShippingFastSolid /></p>
                     </div>
                 </div>
                 <div className='bg-white border-[1px] p-[10px] border-gray-200 w-[100%] flex justify-between'>
                     <p>Total</p>
-                    <p>$ 230.00</p>
+                    <p>{totalAmount.toFixed(2)}</p>
                 </div>
             </div>
             <div className='p-[10px] flex justify-between w-[100%] mb-[30px] pt-[20px] md:px-[40px]'>

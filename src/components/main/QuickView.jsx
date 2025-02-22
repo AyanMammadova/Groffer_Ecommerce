@@ -22,22 +22,23 @@ function QuickView({ type, proid }) {
   const [count, setCount] = useState(1)
 
   useEffect(() => {
-    console.log(quickId)
+    console.log(singleProduct)
     if (proid) {
       getProductById(proid).then(res => {
         setSingleProduct(res.data)
-        setIsFavorite(favoriteData.some(item => item.id == res.data.id));
+        setIsFavorite(favoriteData.some(item => item.id == res?.data.id));
+        setIsInBasket(basketData?.some(item => item.product?.id == res?.data?.id));
       })
     } else if (quickId) {
       getProductById(quickId).then(res => {
         setSingleProduct(res.data);
-        setIsFavorite(favoriteData.some(item => item.id == res.data.id));
+        setIsFavorite(favoriteData?.some(item => item.id == res?.data.id));
+        setIsInBasket(basketData?.some(item => item.product?.id == res?.data?.id));
       })
     }
-  }, [proid, quickId, favoriteData, proid])
-
-
-  
+    console.log(isInBasket)
+  }, [proid, quickId, favoriteData, basketData])
+  console.log(isInBasket)
   function toggleWishlist() {
     token ? handleWishlist(singleProduct.id, isFavorite)
       : toast.error('Sign in to use Wishlist!')
@@ -47,9 +48,14 @@ function QuickView({ type, proid }) {
     if (!token) {
       toast.error('Sign in to use Cart!');
       return;
+    }else if(isInBasket){
+      toast.error('Produt is already in basket')
     }
-    await addToBasket(singleProduct.id, count);
+    else{
+      setCount(1)
+      await addToBasket(singleProduct.id, count);
     toast.success('Product added to basket successfully!');
+    }
   };
   return (
     <>
@@ -118,8 +124,10 @@ function QuickView({ type, proid }) {
             </div>
             <div
               onClick={() => { handleAddToBasket() }}
-              className='bg-[#136450] cursor-pointer text-white hover:bg-white border-2 border-[#136450] duration-200 transition-all hover:text-[#136450] text-[1.1em] font-[500] px-[20px] py-[10px] rounded-lg '>
-              Add to Cart
+              className={`${isInBasket ? 'bg-gray-500' : 'bg-[#136450] border-[#136450] hover:text-[#136450] hover:bg-white'} cursor-pointer text-white  border-2  duration-200 transition-all  text-[1.1em] font-[500] px-[20px] py-[10px] rounded-lg `}>
+              {
+                isInBasket ? 'Already in basket' : 'Add to Cart'
+              }
             </div>
             <div
               onClick={() => {

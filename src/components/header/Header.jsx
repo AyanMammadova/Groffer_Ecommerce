@@ -19,12 +19,13 @@ import apiInstance from '../../services/axiosInstance'
 function Header() {
     const userName = localStorage.getItem("userName")
     const loginfinished = localStorage.getItem('loginfinished')
-    const { basketData } = useContext(BASKET)
+    const { basketData,removeFromBasket,totalAmount } = useContext(BASKET)
     const pathname = useLocation().pathname
     const { showQuick, setShowQuick, menuData } = useContext(DATA)
     const [showMobileMenu, setShowMobileMenu] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
     const loginisover = localStorage.getItem("loginisover")
+
     const handleLogout = () => {
         apiInstance.post(
             'Auth/logout',
@@ -108,7 +109,7 @@ function Header() {
                             <div className={`absolute ${userName ? 'block' : 'hidden'} w-[150px] top-[20px] bg-white  -right-[20px] z-20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300  rounded-md shadow-xl`}>
                                 <Link className='hover:bg-gray-200 w-[100%] px-[20px] block py-[10px] text-start capitalize' to={'/my-account'}> {userName} </Link>
                                 <button
-                                onClick={()=>{handleLogout()}}
+                                    onClick={() => { handleLogout() }}
                                     className='hover:bg-gray-200 w-[100%] px-[20px] py-[10px] text-start' >
                                     Log out
                                 </button>
@@ -124,7 +125,7 @@ function Header() {
                                 <path d="M17.8473 12.2482C16.9105 12.2482 16.1482 13.0106 16.1482 13.9474C16.1482 14.8842 16.9105 15.6465 17.8473 15.6465C18.7841 15.6465 19.5465 14.8842 19.5465 13.9474C19.5465 13.0106 18.7841 12.2482 17.8473 12.2482ZM17.8473 14.5137C17.5358 14.5137 17.2809 14.2588 17.2809 13.9473C17.2809 13.6358 17.5358 13.3809 17.8473 13.3809C18.1589 13.3809 18.4137 13.6358 18.4137 13.9473C18.4137 14.2588 18.1589 14.5137 17.8473 14.5137Z" fill="#000" />
                             </svg>
                             <div className='absolute -top-[7px] -right-[7px] h-[20px] w-[20px] flex items-center justify-center text-white text-[.7em] rounded-full bg-[#136450] '>
-                                <p>0</p>
+                                <p>{ basketData?.length}</p>
                             </div>
                         </div>
                         <div>
@@ -134,32 +135,38 @@ function Header() {
                         <div className='bg-white border-[1px] border-gray-200  shadow-md w-[300px] py-[20px] right-0 flex flex-col justify-center items-center -z-10 top-[100px] opacity-0  absolute transition-all duration-400 group-hover:opacity-100  group-hover:top-[42px]   group-hover:z-50'>
                             {
                                 basketData && basketData.map((item, i) => {
-                                    return <Link key={i} to={'/details'} className='w-[100%] bg-green-300 group relative'>
+                                    return <Link key={i} to={`/details/${item?.product?.id}`} className='w-[100%]  group relative'>
                                         <div className=' border-b-[1px] py-[10px] border-gray-200  px-[10px] flex gap-[10px] justify-between w-[100%]'>
                                             <div className='flex '>
                                                 <div className='h-[100px] relative'>
                                                     <div className='absolute group-hover:flex top-0 right-0 h-[100%] w-[100%] bg-white/20 hidden items-center justify-center'><ImEye /></div>
-                                                    <img className='h-[100px] object-cover' src={item.img} alt="" />
+                                                  
+                                                    {
+                                                        item?.product?.primaryImageUrl ? <img
+                                                            className={`scale-100 w-[100%]  h-[100%] object-cover object-center  ease-in duration-500 block }`}
+                                                            src={`https://supermarket777.blob.core.windows.net/product/${item?.product?.primaryImageUrl}`} alt={item?.product?.slug} />
+                                                            : ''
+                                                    }
                                                 </div>
                                                 <div className='flex flex-col'>
-                                                    <p className=' text-black text-[1.1em]  hover:text-[#136450]'>{item.name}</p>
-                                                    <p className=' text-black '>{item.count}x{item.price.toFixed(2)} $</p>
+                                                    <p className=' text-black text-[1.1em]  hover:text-[#136450]'>{item.product?.name}</p>
+                                                    <p className=' text-black '>{item?.quantity}x{item.product?.price?.toFixed(2)} $</p>
                                                 </div>
                                             </div>
-                                            <IoCloseSharp className='text-[1.5em]' />
+                                            <IoCloseSharp onClick={(e)=>{removeFromBasket(item?.product?.id),e.preventDefault()}} className='text-[1.5em]' />
                                         </div>
 
                                     </Link>
                                 })
                             }
-                            <p className='text-center font-[500] py-[10px]'>SUBTOTAL : 135.00 $</p>
+                            <p className='text-center font-[500] py-[10px]'>SUBTOTAL : {totalAmount.toFixed(2)} $</p>
                             <Link
                                 to={'/cart'}
                                 className='bg-[#136450] px-[100px] py-[10px]  font-bold  rounded-sm   border-2 border-[#136450] hover:scale-105 hover:text-[#136450] text-white transition-all duration-200 hover:bg-white'>
                                 Go to Bag
                             </Link>
                             <Link
-                                to={'/cart'}
+                                to={'/checkout'}
                                 className='bg-[#136450] mt-[20px] px-[100px] py-[10px]  font-bold  rounded-sm   border-2 border-[#136450] hover:scale-105 hover:text-[#136450] text-white transition-all duration-200 hover:bg-white'>
                                 Checkout
                             </Link>
