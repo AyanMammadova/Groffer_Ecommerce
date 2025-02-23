@@ -20,7 +20,7 @@ function Product() {
     Math.floor(Math.random() * 200) + 1
   );
 
-
+console.log(selectedCat)
   function generateSKU() {
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const numbers = "0123456789";
@@ -59,19 +59,18 @@ function Product() {
 
   function handleSubmit(e) {
     e.preventDefault();
-
+    generateSKU()
     const formData = new FormData();
     const title = e.target.title.value;
     const description = e.target.description.value;
     const price = e.target.price.value;
     const discount = e.target.discount.value;
     const category = selectedCat;
-    const subcategory = selectedSub;
+    const subcategory = selectedSub; 
     const tags = selectedTags;
     const images = imageFiles;
     console.log(randomNumber)
 
-    // Create a plain object with all form data
     const formValues = {
       title,
       description,
@@ -108,10 +107,15 @@ function Product() {
         apiInstance.post('Products', formData)
           .then(res => {
             setShowForm(false);
-            console.log('Product added:');
+            e.target.reset(); 
             setSelectedTags([]);
+            setSelectedCat('default')
+            setSelectedSub('default')
             setImageFiles([]);
+            setDescription('')
             setErrors({});
+            setSku('')
+            getAllProducts().then(res => setallProducts(res.data))
           })
           .catch(err => {
             console.error('Error:', err);
@@ -129,13 +133,13 @@ function Product() {
     getAllProducts().then(res => setallProducts(res.data))
   }
 
-  // console.log(allProducts)
 
   function handleDelete(id) {
+    
     apiInstance
       .delete(`Products/${id}`)
       .then(() => {
-        getAllProducts().then(res => setallProducts(res))
+        getAllProducts().then(res => setallProducts(res.data))
       })
       .catch((err) => {
         console.error('Error deleting product:', err);
@@ -365,10 +369,10 @@ function Product() {
                 <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.discountedPrice.toFixed(2)}€</td>
                 <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.discount} %</td>
                 <td className='py-[10px] border-2 text-center border-white font-[500]'>
-                  <button
+                  {/* <button
                     className='mx-[10px] bg-green-500 py-[4px] rounded-md border-2 cursor-pointer border-green-400 px-[10px]'>
                     Edit
-                  </button>
+                  </button> */}
                   <button
                     onClick={() => { handleDelete(item.id) }}
                     className='mx-[10px] bg-red-600 py-[4px] rounded-md border-2 cursor-pointer border-red-600 px-[10px]'>

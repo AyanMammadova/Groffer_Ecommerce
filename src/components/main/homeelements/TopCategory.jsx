@@ -23,6 +23,7 @@ function TopCategory() {
                     </div>
 
                     <div className=' pt-[20px] mx-auto gap-[10px] sm:gap-[30px] grid grid-cols-2  lg:grid-cols-4'>
+                      
                         {
                             allProducts && allProducts.map((item, i) => {
                                 return <ProductCard key={i} id={item?.id} />
