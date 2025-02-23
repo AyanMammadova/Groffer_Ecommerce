@@ -23,6 +23,8 @@ import NotFound from './NotFound'
 import LoginPage from './components/login/LoginPage'
 import { jwtDecode } from 'jwt-decode'
 import { Toaster } from 'react-hot-toast'
+import Success from './components/main/Success'
+import PaymentPage from './components/main/PaymentPage'
 
 
 function App() {
@@ -94,6 +96,7 @@ function App() {
           <Route path='/checkout' element={<CheckOut />} />
           <Route path='/order-tracking' element={<OrderTracking />} />
           <Route path='/my-account' element={<MyAccount />} />
+          <Route path='/paymentsucceed' element={<Success />} />
           
 
         </Route>
@@ -107,6 +110,7 @@ function App() {
         <Route path='/submit' element={<SubmitPgae />} />
         <Route path='/loginpage' element={<LoginPage />} />
         <Route path="/notfound" element={<NotFound />} />
+        <Route path='/payment' element={<PaymentPage />} />
       </Routes>
     </>
   )
