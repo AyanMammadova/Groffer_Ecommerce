@@ -1,11 +1,13 @@
 import { Formik, useFormik } from 'formik';
-import React from 'react'
+import React, { useState } from 'react'
 import { ContactFormSchemas } from '../../schemas/ContactFormSchemas';
 import apiInstance from '../../services/axiosInstance';
 import toast from 'react-hot-toast';
+import { FaTruckMedical } from 'react-icons/fa6';
 
 function ContactForm() {
-    const { values, errors, handleSubmit,actions,resetForm, touched, handleChange, handleBlur } = useFormik({
+    const [loading, setLoading] = useState(false)
+    const { values, errors, handleSubmit, actions, resetForm, touched, handleChange, handleBlur } = useFormik({
         initialValues: {
             fullName: '',
             email: '',
@@ -18,8 +20,10 @@ function ContactForm() {
         validationSchema: ContactFormSchemas,
         onSubmit: submit
     });
+    
     function submit(values, actions) {
         console.log(values)
+        setLoading(FaTruckMedical)
         apiInstance.post(
             'Contact',
             {
@@ -41,9 +45,11 @@ function ContactForm() {
                 toast.success('Your message sent!')
             })
             .catch(err =>
-                console.error('Errorum:', err),
-
-            );
+                console.error('Errorum:', err)
+            )
+            .finally(() => {
+            setTimeout(() => setLoading(false), 400)
+        })
     }
     return (
         <>
@@ -127,8 +133,10 @@ function ContactForm() {
                         touched.message && errors.message ? <p className='text-red-500 text-[.8em]'>{errors.message}</p> : ''
                     }
                 </div>
-                <button type='submit' className='bg-[#136450] text-white p-[10px] rounded-md cursor-pointer px-[20px]'>
-                    Submit
+                <button type='submit' className='bg-[#136450] text-white p-[10px] rounded-md cursor-pointer w-[150px]'>
+                    {
+                        loading ? <p>Submitting...</p> : <p>Submit</p>
+                    }
                 </button>
             </form>
         </>
