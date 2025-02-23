@@ -52,11 +52,7 @@ function Header() {
         setShowLogin(false)
         setShowMobileMenu(false)
     }, [pathname])
-    const [searchedValue, setSearchedValue] = useState('')
-    function handleSearch(value) {
-        const trimmedInput = value.replace(/ /g, "")
-        setSearchedValue(trimmedInput)
-    }
+    
     return (
         <>
             <div
