@@ -49,15 +49,6 @@ function CheckOut() {
             <Link to={'/payment'} className=' p-[10px] bg-[#136450] text-white rounded-xl my-[30px]'>
                 Proceed to Payment
             </Link>
-            <Link to={'/payment'} className=' p-[10px] bg-[#136450] text-white rounded-xl my-[30px]'>
-                    NESE
-            </Link>
-            <Link to={'/payment'} className=' p-[10px] bg-[#136450] text-white rounded-xl my-[30px]'>
-                NESE
-            </Link>
-            <Link to={'/payment'} className=' p-[10px] bg-[#136450] text-white rounded-xl my-[30px]'>
-               NESE
-            </Link>
         </>
     )
 }
