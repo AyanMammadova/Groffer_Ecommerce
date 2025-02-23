@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { getAllCategories, getAllProducts, getAllSubCategories, getFavorites } from '../services/api'
+import { getAllCategories, getAllCatsWithSubs, getAllProducts, getAllSubCategories, getFavorites } from '../services/api'
 import apiInstance from '../services/axiosInstance'
 export const DATA = createContext('')
 function DataContext({ children }) {
@@ -14,8 +14,10 @@ function DataContext({ children }) {
     const [favoriteData, setFavoriteData] = useState([])
     const [loadingHeart,setLoadingHeart]=useState(false)
     const [shopType, setShopType] = useState('all')
+    const [catsWithSubs,setCatsWithSubs]=useState(null)
 
     useEffect(() => {
+        getAllCatsWithSubs().then(res=>setCatsWithSubs(res.data.categories))
         getFavorites().then(res => { setFavoriteData(res.data),setLoadingWislist(false) })
         getAllProducts().then(res => setAllProducts(res.data))
         getAllCategories().then(res => setCategoryData(res.data))
@@ -60,7 +62,6 @@ function DataContext({ children }) {
             
     }
 
-
     const menuData = [
         {
             catname: 'Home',
@@ -74,7 +75,7 @@ function DataContext({ children }) {
             catname: 'Shop',
             slug: 'shop',
             Subcategory: [
-                { name: 'Main Shop', slug: 'shop' },
+                { name: 'Main Shop', slug: 'shop?searched=all' },
                 { name: 'My Account', slug: 'my-account' },
                 { name: 'My Basket', slug: 'cart' },
                 { name: 'Checkout', slug: 'checkout' },
@@ -146,7 +147,8 @@ function DataContext({ children }) {
                 setLoadingHeart,
                 loadingWishlist, 
                 setLoadingWislist,
-                quickId,setQuickId
+                quickId,setQuickId,
+                catsWithSubs
             }}
         >
             {children}

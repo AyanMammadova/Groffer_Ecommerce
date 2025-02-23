@@ -20,9 +20,10 @@ function QuickView({ type, proid }) {
   const [isFavorite, setIsFavorite] = useState(false)
   const [isInBasket, setIsInBasket] = useState(false)
   const [count, setCount] = useState(1)
+  console.log(singleProduct)
 
   useEffect(() => {
-    console.log(singleProduct)
+    
     if (proid) {
       getProductById(proid).then(res => {
         setSingleProduct(res.data)
@@ -94,7 +95,7 @@ function QuickView({ type, proid }) {
           <div className='flex flex-wrap'>
             Tags:{
               singleProduct.tagNames?.map((item, i) => {
-                return <Link to={`/${item}`} key={i} className='hover:underline mx-[5px] cursor-pointer'>#{item}</Link>
+                return <Link to={`/shop?tag=${item}-${singleProduct.tagIds[i]}`} key={i} className='hover:underline mx-[5px] cursor-pointer'>#{item}</Link>
               })
             }
           </div>

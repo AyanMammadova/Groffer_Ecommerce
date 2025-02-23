@@ -15,11 +15,12 @@ import { BASKET } from '../../context/BasketContext'
 import { ImEye } from 'react-icons/im'
 import SearchElement from './SearchElement'
 import apiInstance from '../../services/axiosInstance'
+import Categories from './Categories'
 
 function Header() {
     const userName = localStorage.getItem("userName")
     const loginfinished = localStorage.getItem('loginfinished')
-    const { basketData,removeFromBasket,totalAmount } = useContext(BASKET)
+    const { basketData, removeFromBasket, totalAmount } = useContext(BASKET)
     const pathname = useLocation().pathname
     const { showQuick, setShowQuick, menuData } = useContext(DATA)
     const [showMobileMenu, setShowMobileMenu] = useState(false)
@@ -52,7 +53,7 @@ function Header() {
         setShowLogin(false)
         setShowMobileMenu(false)
     }, [pathname])
-    
+
     return (
         <>
             <div
@@ -121,7 +122,7 @@ function Header() {
                                 <path d="M17.8473 12.2482C16.9105 12.2482 16.1482 13.0106 16.1482 13.9474C16.1482 14.8842 16.9105 15.6465 17.8473 15.6465C18.7841 15.6465 19.5465 14.8842 19.5465 13.9474C19.5465 13.0106 18.7841 12.2482 17.8473 12.2482ZM17.8473 14.5137C17.5358 14.5137 17.2809 14.2588 17.2809 13.9473C17.2809 13.6358 17.5358 13.3809 17.8473 13.3809C18.1589 13.3809 18.4137 13.6358 18.4137 13.9473C18.4137 14.2588 18.1589 14.5137 17.8473 14.5137Z" fill="#000" />
                             </svg>
                             <div className='absolute -top-[7px] -right-[7px] h-[20px] w-[20px] flex items-center justify-center text-white text-[.7em] rounded-full bg-[#136450] '>
-                                <p>{ basketData?.length}</p>
+                                <p>{basketData?.length}</p>
                             </div>
                         </div>
                         <div>
@@ -136,7 +137,7 @@ function Header() {
                                             <div className='flex '>
                                                 <div className='h-[100px] relative'>
                                                     <div className='absolute group-hover:flex top-0 right-0 h-[100%] w-[100%] bg-white/20 hidden items-center justify-center'><ImEye /></div>
-                                                  
+
                                                     {
                                                         item?.product?.primaryImageUrl ? <img
                                                             className={`scale-100 w-[100%]  h-[100%] object-cover object-center  ease-in duration-500 block }`}
@@ -149,23 +150,27 @@ function Header() {
                                                     <p className=' text-black '>{item?.quantity}x{item.product?.price?.toFixed(2)} $</p>
                                                 </div>
                                             </div>
-                                            <IoCloseSharp onClick={(e)=>{removeFromBasket(item?.product?.id),e.preventDefault()}} className='text-[1.5em]' />
+                                            <IoCloseSharp onClick={(e) => { removeFromBasket(item?.product?.id), e.preventDefault() }} className='text-[1.5em]' />
                                         </div>
 
                                     </Link>
                                 })
                             }
-                            <p className='text-center font-[500] py-[10px]'>SUBTOTAL : {totalAmount.toFixed(2)} $</p>
-                            <Link
-                                to={'/cart'}
-                                className='bg-[#136450] px-[100px] py-[10px]  font-bold  rounded-sm   border-2 border-[#136450] hover:scale-105 hover:text-[#136450] text-white transition-all duration-200 hover:bg-white'>
-                                Go to Bag
-                            </Link>
-                            <Link
-                                to={'/checkout'}
-                                className='bg-[#136450] mt-[20px] px-[100px] py-[10px]  font-bold  rounded-sm   border-2 border-[#136450] hover:scale-105 hover:text-[#136450] text-white transition-all duration-200 hover:bg-white'>
-                                Checkout
-                            </Link>
+                            {
+                                basketData?.length>0 ? <div>
+                                    <p className='text-center font-[500] py-[10px]'>SUBTOTAL : {totalAmount.toFixed(2)} $</p>
+                                <Link
+                                    to={'/cart'}
+                                    className='bg-[#136450] px-[100px] py-[10px]  font-bold  rounded-sm   border-2 border-[#136450] hover:scale-105 hover:text-[#136450] text-white transition-all duration-200 hover:bg-white'>
+                                    Go to Bag
+                                </Link>
+                                <Link
+                                    to={'/checkout'}
+                                    className='bg-[#136450] mt-[20px] px-[100px] py-[10px]  font-bold  rounded-sm   border-2 border-[#136450] hover:scale-105 hover:text-[#136450] text-white transition-all duration-200 hover:bg-white'>
+                                    Checkout
+                                </Link>
+                                </div> : 'Nothing in basket'
+                            }
                         </div>
                     </div>
                     <div
@@ -184,11 +189,13 @@ function Header() {
             <div className='h-[1px] bg-gray-200  w-[100%]'></div>
             <div className='lg:flex hidden  font-space-grotesk justify-between h-[80px] p-[10px] md:px-[40px] items-center'>
                 <div className='flex gap-[20px] items-center'>
-                    <div className='group relative items-center hidden xl:flex  py-[10px] gap-[5px] cursor-pointer '>
-                        <TfiMenu className='text-[#136450]' />
-                        <p className='text-[1.4em] font-[500]'>Shop by Categories</p>
-                        <IoIosArrowDown className='text-[.8em]' />
-                        {/* <Categories/> */}
+                    <div className='group relative items-center w-[300px] justify-center gap-[20px] hidden xl:flex  py-[10px]  cursor-pointer '>
+                        <TfiMenu className='text-[#136450] text-[1.5em]' />
+                        <div className='flex gap-[10px] items-center'>
+                            <p className='text-[1.4em] font-[500]'>Shop by Categories</p>
+                            <IoIosArrowDown className='text-[1.5em]' />
+                        </div>
+                        <Categories />
                     </div>
                     <div className='h-[20px] hidden xl:block w-[1px] bg-gray-300'></div>
 

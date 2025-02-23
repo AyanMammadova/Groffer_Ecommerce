@@ -13,6 +13,18 @@ async function getProductById(id) {
     const res = await apiInstance.get(`Products/single-product/${id}`)
     return res;
 }
+async function getProductsByCategory(catid) {
+    const res = await apiInstance.get(`Products/Category/${catid}`)
+    return res;
+}
+async function getProductsBySubCategory(subcatid) {
+    const res = await apiInstance.get(`Products/SubCategory/${subcatid}`)
+    return res;
+}
+async function getProductsByTag(tagid) {
+    const res = await apiInstance.get(`Products/TagIds?tagIds=${tagid}`)
+    return res;
+}
 async function getCartData() {
     const res = await apiInstance.get(`Cart/cart`)
     return res;
@@ -44,5 +56,8 @@ export{
     getAllProducts,
     getAllSubCategories,
     getAllCatsWithSubs,
-    getCartData
+    getCartData,
+    getProductsByCategory,
+    getProductsBySubCategory,
+    getProductsByTag
 }
