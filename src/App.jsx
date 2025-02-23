@@ -26,6 +26,7 @@ import { jwtDecode } from 'jwt-decode'
 import apiInstance from './services/axiosInstance'
 import { Toaster } from 'react-hot-toast'
 import CheckoutForm from './components/main/Checkoutform'
+import Success from './components/main/Success'
 
 
 function App() {
@@ -97,6 +98,7 @@ function App() {
           <Route path='/checkout' element={<CheckOut />} />
           <Route path='/order-tracking' element={<OrderTracking />} />
           <Route path='/my-account' element={<MyAccount />} />
+          <Route path='/paymentsucceed' element={<Success />} />
           
 
         </Route>

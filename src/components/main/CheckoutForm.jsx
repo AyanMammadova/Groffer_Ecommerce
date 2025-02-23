@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement } from '@stripe/react-stripe-js';
+import apiInstance from '../../services/axiosInstance';
+import { useNavigate } from 'react-router-dom';
 
 // Load Stripe with your publishable key
 const stripePromise = loadStripe('pk_test_51QpV3YEF0ekL8IavNeEklhMO3ADIE7N4Sdv0Dwm3USfUMtQSyGrOZbhGXylweVcmGlcvdPEQBPAnwdeJrfaynjBk00ISOMMs5k'); // Replace with your key
@@ -12,6 +14,7 @@ const CheckoutForm = () => {
     const [cardImage, setCardImage] = useState('');
     const stripe = useStripe();
     const elements = useElements();
+    const navigate=useNavigate()
     const handleCardNumberChange = (event) => {
         if (event.complete) {
             const cardType = event.brand;
@@ -26,45 +29,78 @@ const CheckoutForm = () => {
         event.preventDefault();
 
         if (!stripe || !elements) return;
-
         const cardNumber = elements.getElement(CardNumberElement);
         const cardExpiry = elements.getElement(CardExpiryElement);
         const cardCvc = elements.getElement(CardCvcElement);
-
-
         const { token, error } = await stripe.createToken(cardNumber);
-
+        console.log('tokenid : ' + token.id)
         if (error) {
             setError(error.message);
         } else {
-            try {
-                const response = await fetch('https://hikmat059-001-site1.ptempurl.com/api/Payment/payment', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer <your_bearer_token>',
-                    },
-                    body: JSON.stringify({
-                        token: token.id,
-                        amount: 10,
-                        country,
-                        zip,
-                    }),
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    console.log('Payment succeeded');
-                } else {
-                    console.log('Payment failed');
+            const data = {
+                paymentDto: {
+                    token: token.id.trim(),
+                    amount: 100
                 }
-            } catch (err) {
-                console.error('Error:', err);
-            }
+            };
+            apiInstance.post('Payment/payment', data, {
+                headers: {
+                    'accept': '*/*',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    navigate('/paymentsucceed')
+                    console.log('Success:', response.data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
     };
 
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+
+    //     if (!stripe || !elements) return;
+
+    //     const cardNumber = elements.getElement(CardNumberElement);
+
+    //     const { token, error: stripeError } = await stripe.createToken(cardNumber);
+
+    //     if (stripeError) {
+    //         setError(stripeError.message);
+    //         return;
+    //     }
+
+    //     const data = {
+    //         token: token.id,
+    //         amount: 1000, // Replace with the actual amount in cents
+    //     };
+
+    //     try {
+    //         const response = await apiInstance.post('Payment/payment', data, {
+    //             headers: {
+    //                 'accept': '*/*',
+    //                 'Content-Type': 'application/json',
+    //             },
+    //         });
+    //         console.log('Success:', response.data);
+    //         console.log('dskvjbsdkj'+token.id)
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //         if (error.response) {
+    //             // Server responded with a status code outside the 2xx range
+    //             setError(`Payment failed: ${error.response.data.Message || 'Please try again later.'}`);
+    //         } else if (error.request) {
+    //             // The request was made but no response was received
+    //             setError('No response from the server. Please check your connection.');
+    //         } else {
+    //             // Something happened in setting up the request
+    //             setError('An unexpected error occurred. Please try again.');
+    //         }
+    //     }
+    // };
     return (
         <form onSubmit={handleSubmit} className="max-w-sm my-[20px] mx-auto p-6 border border-gray-300 rounded-lg bg-gray-50 shadow-lg">
             <h2 className="text-center text-xl font-semibold mb-6">Payment</h2>
