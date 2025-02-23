@@ -27,6 +27,7 @@ import apiInstance from './services/axiosInstance'
 import { Toaster } from 'react-hot-toast'
 import CheckoutForm from './components/main/Checkoutform'
 import Success from './components/main/Success'
+import PaymentPage from './components/main/Checkoutform'
 
 
 function App() {
@@ -112,7 +113,7 @@ function App() {
         <Route path='/submit' element={<SubmitPgae />} />
         <Route path='/loginpage' element={<LoginPage />} />
         <Route path="/notfound" element={<NotFound />} />
-        <Route path='/payment' element={<CheckoutForm />} />
+        <Route path='/payment' element={<PaymentPage />} />
       </Routes>
     </>
   )
