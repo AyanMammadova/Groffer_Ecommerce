@@ -4,7 +4,6 @@ import { Elements, useStripe, useElements, CardNumberElement, CardExpiryElement,
 import apiInstance from '../../services/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 
-// Load Stripe with your publishable key
 const stripePromise = loadStripe('pk_test_51QpV3YEF0ekL8IavNeEklhMO3ADIE7N4Sdv0Dwm3USfUMtQSyGrOZbhGXylweVcmGlcvdPEQBPAnwdeJrfaynjBk00ISOMMs5k'); // Replace with your key
 
 const CheckoutForm = () => {
@@ -187,6 +186,7 @@ const CheckoutForm = () => {
         </form>
     );
 };
+    
 
 const PaymentPage = () => (
     <Elements stripe={stripePromise}>

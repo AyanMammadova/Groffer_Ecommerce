@@ -24,7 +24,7 @@ import LoginPage from './components/login/LoginPage'
 import { jwtDecode } from 'jwt-decode'
 import { Toaster } from 'react-hot-toast'
 import Success from './components/main/Success'
-import PaymentPage from './components/main/Checkoutform'
+import PaymentPage from './components/main/PaymentPage'
 
 
 function App() {
