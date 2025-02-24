@@ -24,7 +24,7 @@ function Bag() {
                         <p className=' text-gray-800 text-[1.1em] '>Your cart is currently empty</p>
                     </div>
                     <div className='p-[10px] mb-[30px] pt-[20px] md:px-[40px]'>
-                        <Link to={'/shop'} className='w-[200px] p-[5px] mt-[40px] font-[500] text-[1.4em] text-center py-[10px]  rounded-md border-2 transition-all duration-200 bg-[#136450] text-white border-[#136450] mx-auto hover:text-[#136450] cursor-pointer hover:bg-white'>
+                        <Link to={'/shop?searched=all'} className='w-[200px] p-[5px] mt-[40px] font-[500] text-[1.4em] text-center py-[10px]  rounded-md border-2 transition-all duration-200 bg-[#136450] text-white border-[#136450] mx-auto hover:text-[#136450] cursor-pointer hover:bg-white'>
                             Return to Shop
                         </Link>
                     </div>
@@ -120,7 +120,7 @@ function Bag() {
                     <p>{totalAmount.toFixed(2)}</p>
                 </div>
             </div>
-            <div className='p-[10px] flex justify-between w-[100%] mb-[30px] pt-[20px] md:px-[40px]'>
+            <div className={`p-[10px] flex justify-between w-[100%] mb-[30px] pt-[20px] md:px-[40px] ${basketData?.length>0 ? 'flex' : 'hidden'}`}>
                 <div></div>
                 <Link to={'/checkout'} className='w-[100%] sm:w-[300px] p-[5px] mt-[40px] font-[500] text-[1.4em] text-center py-[10px]  rounded-md border-2 transition-all duration-200 bg-[#136450] text-white border-[#136450]  hover:text-[#136450] cursor-pointer hover:bg-white'>
                     Proceed to checkout

@@ -5,32 +5,68 @@ import { Link, useLocation, useParams } from 'react-router-dom'
 import { FaRegStar } from 'react-icons/fa'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
 import { TiHeart } from 'react-icons/ti'
+import { IoCloseSharp } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
+
+
 import { DATA } from '../../context/DataContext'
 import { getProductsByCategory, getProductsBySubCategory, getProductsByTag } from '../../services/api'
 
 function Products() {
+  const navigate = useNavigate();
 
-  const { shopType, allProducts } = useContext(DATA)
+  const { shopType, allProducts, allTags } = useContext(DATA)
   const [currentData, setCurrentData] = useState([])
   const [isRows, setIsRows] = useState(false)
+  const [tagArr, setTagArr] = useState([])
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const searchedValue = queryParams.get('searched');
-  const tag = queryParams.get('tag');
+  const tagParam = queryParams.get('tag');
+  const tag = tagParam?.split('-').at(0)
   const category = queryParams.get('category')
   const subcategory = queryParams.get('subcategory')
   function handleSearch(value) {
 
   }
+
+  function removefromTagArr(id) {
+    const newTagArr = tagArr.filter(item => item.id !== id);
+    setTagArr(newTagArr)
+    getProductsByTag(newTagArr).then(res => setCurrentData(res.data))
+  }
+  function addTag(tag, id) {
+    const tagExists = tagArr.some(existingTag => existingTag.id === id);
+    if (!tagExists) {
+      const newTagArr = [...tagArr, { tag, id }];
+      setTagArr(newTagArr)
+      getProductsByTag(newTagArr).then(res => setCurrentData(res.data))
+    }
+    
+
+  }
+ 
   useEffect(() => {
+    if (tagParam) {
+      addTag(tagParam?.split('-').at(0), Number(tagParam?.split('-').at(1)))
+    }
+  }, [])
+  useEffect(() => {
+    // console.log(tagArr)
     if (searchedValue && searchedValue != 'all') {
       setCurrentData(
         allProducts?.filter((item, i) => {
           return item?.name?.toLowerCase().replace(/ /g, "").includes(searchedValue)
         })
       )
-    } else if (searchedValue == 'all') {
+    }
+    
+    else if (tagArr?.length > 0) {
+      console.log(tagArr)
+      getProductsByTag(tagArr).then(res => setCurrentData(res.data))
+    }
+     else if (searchedValue == 'all') {
       setCurrentData(allProducts)
     }
     else if (category) {
@@ -39,11 +75,9 @@ function Products() {
     else if (subcategory) {
       getProductsBySubCategory(subcategory?.split('-').at(1)).then(res => setCurrentData(res.data))
     }
-    else if (tag) {
-      getProductsByTag(tag?.split('-').at(1)).then(res => setCurrentData(res.data))
-    }
-
-  }, [searchedValue, tag, category, subcategory, allProducts])
+    
+    console.log(currentData)
+  }, [searchedValue, tag, category, subcategory, allProducts, tagArr])
   return (
     <>
       <BreadCrumps page={[
@@ -52,29 +86,28 @@ function Products() {
           slug: 'shop?searched=all'
         }
       ]} />
-      <p className={` text-[2em] font-[600] px-[10px] md:px-[40px]`}>
+      <p className={`${tagArr?.length > 0 ? 'hidden' : 'block'} text-[2em] font-[600] px-[10px] md:px-[40px]`}>
         Search results: “{
-          tag ? tag.split('-').at(0)
-            : category ? category.split('-').at(0)
-              : subcategory ? subcategory.split('-').at(0)
-                : searchedValue ? searchedValue.split('-').at(0) : ''
+          category ? category?.split('-').at(0)
+            : subcategory ? subcategory?.split('-').at(0)
+              : searchedValue ? searchedValue : ''
         }”
       </p>
+      <div className='flex p-[10px] md:px-[40px] flex-wrap gap-[10px]'>
+        {
+          tagArr?.length > 0 && tagArr.map((item, i) => {
+            return <p
+              className=' border-[1px] flex justify-between items-center  text-[1em] font-[500] p-[5px]  rounded-md bg-[#ddf8f2] hover:bg-[#b6e9de] border-[#136450] max-w-[100%]  mx-[5px] capitalize' >
+              {item.tag}
+              <IoCloseSharp onClick={() => { removefromTagArr(item.id) }} className={`cursor-pointer ${tagArr?.length == 1 ? 'hidden' : ''}`} />
+            </p>
+          })
+        }
+      </div>
       <div className='h-[1px] w-[100%] my-[20px] bg-gray-200'></div>
 
-      <div className=' px-[10px] gap-[20px] md:p-[40px]'>
-        <div className='block lg:w-[50%] w-[100%] '>
-          <div className='border-[1px] border-gray-300 mx-auto w-[100%] relative  flex items-center rounded-sm'>
-            <input
-              onChange={(e) => { handleSearch(e.target.value) }}
-              type="text"
-              placeholder='Search products...'
-              className='focus:outline-none rounded-sm py-[10px] pl-[15px] p-[5px] mx-auto w-[100%]' />
+      <div className='md:flex px-[10px] gap-[20px] md:p-[40px]'>
 
-
-          </div>
-
-        </div>
         <div className='w-[100%]'>
           <div className='text-[1.2em] mb-[20px] sm:flex justify-between'>
             {/* <div className='flex mb-[20px] rounded-md'>
@@ -200,6 +233,29 @@ function Products() {
               <FaMagnifyingGlass className='absolute top-[70px] right-[10px]' />
             </Link>
           </div> */}
+        </div>
+        <div className='block order-4 md:-order-1 md:w-[30%] w-[100%] '>
+          {/* <div className='border-[1px] border-gray-300 mx-auto w-[100%] relative  flex items-center rounded-sm'>
+            <input
+              onChange={(e) => { handleSearch(e.target.value) }}
+              type="text"
+              placeholder='Search products...'
+              className='focus:outline-none rounded-sm py-[10px] pl-[15px] p-[5px] mx-auto w-[100%]' />
+          </div> */}
+          <p className='text-[1.5em] font-[500]'>Popular tags</p>
+          <div className='pt-[20px] flex gap-[5px] flex-wrap w-[100%]'>
+            {
+              allTags && allTags.map((item, i) => {
+                return <p
+                  onClick={() => { addTag(item.name, item.id) }}
+                  className={`${tagArr.some(exist => exist.id == item.id) ? 'bg-[#c3c3c3]  border-[#242424]' : 'bg-[#ddf8f2] hover:bg-[#b6e9de] cursor-pointer border-[#136450]'} border-[1px] text-[.8em] font-[500] p-[5px]  rounded-md  max-w-[100%]  mx-[5px] capitalize`}>
+                  {item.name}
+                </p>
+              })
+            }
+          </div>
+
+
         </div>
       </div>
     </>

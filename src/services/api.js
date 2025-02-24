@@ -9,6 +9,7 @@ async function getAllProducts() {
     const res = await apiInstance.get('Products/all-products')
     return res;
 }
+
 async function getProductById(id) {
     const res = await apiInstance.get(`Products/single-product/${id}`)
     return res;
@@ -21,10 +22,13 @@ async function getProductsBySubCategory(subcatid) {
     const res = await apiInstance.get(`Products/SubCategory/${subcatid}`)
     return res;
 }
-async function getProductsByTag(tagid) {
-    const res = await apiInstance.get(`Products/TagIds?tagIds=${tagid}`)
+async function getProductsByTag(tagids) {
+    const queryString = tagids.map(item => `tagIds=${item.id}`).join("&");
+    // console.log(queryString)
+    const res = await apiInstance.get(`Products/TagIds?${queryString}`);
     return res;
 }
+
 async function getCartData() {
     const res = await apiInstance.get(`Cart/cart`)
     return res;
@@ -48,7 +52,7 @@ async function getFavorites() {
 }
 
 
-export{
+export {
     getAllCategories,
     getProductById,
     getFavorites,

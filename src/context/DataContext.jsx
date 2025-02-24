@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { getAllCategories, getAllCatsWithSubs, getAllProducts, getAllSubCategories, getFavorites } from '../services/api'
+import { getAllCategories, getAllCatsWithSubs, getAllProducts, getAllSubCategories, getAllTags, getFavorites } from '../services/api'
 import apiInstance from '../services/axiosInstance'
 export const DATA = createContext('')
 function DataContext({ children }) {
@@ -8,6 +8,7 @@ function DataContext({ children }) {
     const [categoryData, setCategoryData] = useState(null)
     const [subCategoryData, setSubCategoryData] = useState(null)
     const [allProducts, setAllProducts] = useState(null)
+    const [allTags,setAllTags]=useState(null)
     const [loadingWishlist, setLoadingWislist] = useState(true)
     const [showQuick, setShowQuick] = useState(false)
     const [quickId,setQuickId]=useState(null)
@@ -17,6 +18,7 @@ function DataContext({ children }) {
     const [catsWithSubs,setCatsWithSubs]=useState(null)
 
     useEffect(() => {
+        getAllTags().then(res=>setAllTags(res.data))
         getAllCatsWithSubs().then(res=>setCatsWithSubs(res.data.categories))
         getFavorites().then(res => { setFavoriteData(res.data),setLoadingWislist(false) })
         getAllProducts().then(res => setAllProducts(res.data))
@@ -148,7 +150,8 @@ function DataContext({ children }) {
                 loadingWishlist, 
                 setLoadingWislist,
                 quickId,setQuickId,
-                catsWithSubs
+                catsWithSubs,
+                allTags
             }}
         >
             {children}
