@@ -22,9 +22,6 @@ function ReviewForm() {
             .then(res => {
 
             })
-        // .catch(err =>
-
-        // );
     }
     return (
         <>

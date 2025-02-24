@@ -5,23 +5,28 @@ import ProductCard from './ProductCard'
 import 'react-medium-image-zoom/dist/styles.css'
 import QuickView from './QuickView'
 import { Link, useParams } from 'react-router-dom'
-import { getProductById } from '../../services/api'
-import { FaRegStar } from 'react-icons/fa'
+import { getProductById, getProductsByCategory } from '../../services/api'
 import { DATA } from '../../context/DataContext'
-import { IoHeartOutline } from 'react-icons/io5'
-import { FaMagnifyingGlass } from 'react-icons/fa6'
 import ReviewForm from './ReviewForm'
 
 function Details() {
   const { allProducts } = useContext(DATA)
   const { proid } = useParams()
-  // console.log(proid)
+  const [currentCat,setCurrentCat]=useState(null)
   const [singleProduct, setSinglePorduct] = useState('')
   const [isDesc, setIsDesc] = useState(true)
   const [isRew, setIsRew] = useState(false)
+  const [relatedProducts,setRelatedProducts]=useState(null)
   useEffect(() => {
-    getProductById(proid).then(res => setSinglePorduct(res.data))
+    getProductById(proid).then(res => {
+      setSinglePorduct(res.data)
+      getProductsByCategory(res?.data?.categoryId).then(res=>setRelatedProducts(res.data))
+      setCurrentCat(res?.data?.categoryId)
+    })
+
+
   }, [proid])
+  
 
   return (
     <>
@@ -41,7 +46,7 @@ function Details() {
       ]} />
 
       <QuickView proid={proid} type={'details'} />
-      <div className='border-2 rounded-2xl border-gray-300  mt-[80px] md:mt-[50px] relative flex flex-col items-center justify-center w-[90%] mx-auto py-[50px]'>
+      {/* <div className='border-2 rounded-2xl border-gray-300  mt-[80px] md:mt-[50px] relative flex flex-col items-center justify-center w-[90%] mx-auto py-[50px]'>
         <div className='absolute -top-[80px] md:-top-[30px]  bg-[#F1F3F6] text-center rounded-lg md:flex justify-between mx-[auto] w-[80%]'>
           <p
             onClick={() => { setIsDesc(true), setIsRew(false) }}
@@ -72,13 +77,13 @@ function Details() {
           </div >
         </div >
 
-      </div >
+      </div > */}
 
       <div>
-        <p className='text-[2em] font-[500] text-center'>Related Products</p>
+        <p className='text-[2em] font-[500] text-center py-[20px]'>Related Products</p>
         <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-[10px] md:gap-[40px] mx-[10px] md:mx-[40px]'>
           {
-            allProducts && allProducts.map((item, i) => {
+            relatedProducts && relatedProducts.map((item, i) => {
               return <ProductCard key={i} id={item?.id}/>
             })
           }
