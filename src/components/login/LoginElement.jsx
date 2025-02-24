@@ -44,6 +44,7 @@ function LoginElement({ type }) {
                 localStorage.setItem("refreshToken",res.data.refreshToken)
                 localStorage.setItem("accessToken",res.data.accessToken)
                 localStorage.setItem("loginisover",true)
+                localStorage.setItem("password",values.password)
                 setMainError('')
                 window.location.reload();
             })

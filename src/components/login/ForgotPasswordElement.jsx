@@ -1,15 +1,34 @@
 import React from 'react'
-
 import { useFormik } from 'formik';
 import { ForgotPasswordFormSchemas } from '../../schemas/ForgotPasswordSchemas';
+import apiInstance from '../../services/axiosInstance';
+import toast from 'react-hot-toast';
 
 function ForgotPasswordElement({ type }) {
-    function submit(values, action) {
-        setTimeout(() => {
-            action.resetForm()
-        }, 1000);
+    function submit(values,actions) {
+        const formData = new FormData();
+        formData.append('Email', values.email);
+
+        apiInstance.post(
+            'Auth/forgot-password',
+            formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            }
+        )
+        .then(response => {
+            toast.success('If you were rgistered,reset link sent to you email succesfully')
+            console.log('Success:', response.data);
+            actions.resetForm();
+        })
+        .catch(error => {
+            toast.error('Failed to sedn your reset link')
+            console.error('Error:', error);
+        });
     }
-    const { values, errors, handleSubmit, handleChange } = useFormik({
+    const { values, errors, handleSubmit, handleChange,actions } = useFormik({
         initialValues: {
             email: ''
         },
