@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import BreadCrumps from './BreadCrumps'
 import { Link } from 'react-router-dom'
 import 'react-medium-image-zoom/dist/styles.css'
@@ -11,9 +11,16 @@ import toast from 'react-hot-toast'
 
 function Bag() {
     const [currentCoupon, setCurrentCoupon] = useState('')
-    const [loading,setLoading]=useState(false)
-    const discountedTotal=localStorage.getItem('DiscountedTotal')
+    const [loading, setLoading] = useState(false)
+    const [updatingBasket,setUpdatingBakset]=useState(null)
+    const [currentBasketData,setcurrentBasketData]=useState(null)
+    const discountedTotal = Number(localStorage.getItem('DiscountedTotal')).toFixed(2)
     const { basketData, removeFromBasket, totalAmount } = useContext(BASKET)
+    // useEffect(()=>{
+    //     setcurrentBasketData([...(basketData || [])]);
+
+    //     console.log(currentBasketData)
+    // },[basketData])
     function handleCoupon() {
         setLoading(true)
         apiInstance.post(
@@ -30,20 +37,27 @@ function Bag() {
         )
             .then(res => {
                 toast.success('Discount applied!')
-                localStorage.setItem('DiscountedTotal',res.data.finalAmount)
+                localStorage.setItem('DiscountedTotal', res.data.finalAmount)
             })
             .catch(err =>
-                err.status==404 ? toast.error('Coupon doesnt exist!') : ''
-                // console.error('Errorum:', err.status)
+                err.status == 404 ? toast.error('Coupon doesnt exist!') : ''
 
-                // if(err.status==404){
-
-                // }
             )
             .finally(() => {
                 setTimeout(() => setLoading(false), 400)
             })
     }
+    function handleCount(id, count) { 
+        // const UpdatingBasket
+        const newBasket = basketData.map(item => 
+            item.product?.id === id 
+                ? { ...item, quantity: item.quantity + count } 
+                : item
+        );
+    
+        console.log(newBasket);
+    }
+    
     return (
         <>
             <BreadCrumps page={[
@@ -65,7 +79,7 @@ function Bag() {
                     </div>
                 </>
 
-                    : basketData.map((item, i) => {
+                    :  basketData.map((item, i) => {
                         return <div key={i} className='w-[96%] my-[30px] shadow-[0_0px_20px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.08)] p-[10px] mx-auto flex justify-between'>
                             <div className='hidden md:flex w-[100%] justify-between'>
                                 <div className='flex justify-center gap-[20px] items-center'>
@@ -81,12 +95,22 @@ function Bag() {
                                 <div className='flex justify-center gap-[30px] items-center'>
                                     <p className=' text-gray-800 text-[1.1em] '>{item?.product?.price.toFixed(2)} /     piece</p>
                                     <p className=' text-gray-800 bg-[#EFEFEF] rounded-md text-[1.1em] px-[10px] flex items-center'>
-                                        <FaMinus className='h-[40px] w-[10px]' />
+                                        {/* <FaMinus
+                                            onClick={(e) => {
+                                                handleCount(item?.product?.id, -1)
+                                                e.preventDefault()
+                                            }}
+                                            className='h-[40px] w-[10px]' /> */}
                                         <input
                                             value={item?.quantity}
                                             type='text'
                                             className=' h-[40px]  w-[30px] text-center' />
-                                        <FaPlus className=' h-[40px] w-[10px]' />
+                                        {/* <FaPlus
+                                            onClick={(e) => {
+                                                handleCount(item?.product?.id, +1)
+                                                e.preventDefault()
+                                            }}
+                                            className=' h-[40px] w-[10px]' /> */}
                                     </p>
                                     <p className=' text-gray-800 text-[1.1em] '>$ {(item?.quantity * item?.product?.price).toFixed(2)} in total</p>
                                 </div>
@@ -139,22 +163,22 @@ function Bag() {
                         Apply Coupon
                     </div>
                 </div>
-                <div className='w-[100%] md:w-[200px]  p-[5px]  font-[500] text-[1.4em] text-center py-[10px]  rounded-md border-2 transition-all duration-200 cursor-not-allowed bg-[#89b1a7] text-white border-[#89b1a7]  '>
+                {/* <div className='w-[100%] md:w-[200px]  p-[5px]  font-[500] text-[1.4em] text-center py-[10px]  rounded-md border-2 transition-all duration-200 cursor-not-allowed bg-[#89b1a7] text-white border-[#89b1a7]  '>
                     Update Cart
-                </div>
+                </div> */}
             </div>
             <div className={`${basketData ? 'block' : 'hidden'} text-[1.1em] font-[500]  my-[30px] w-[100%] px-[10px] `}>
                 <div className='bg-white border-[1px] p-[10px] border-gray-200 w-[100%] flex justify-between'>
                     <p>Subtotal</p>
                     <p>{totalAmount.toFixed(2)}</p>
                 </div>
-                <div className='bg-[#F9F9F9] border-[1px] p-[10px] border-gray-200 w-[100%] flex justify-between'>
+                {/* <div className='bg-[#F9F9F9] border-[1px] p-[10px] border-gray-200 w-[100%] flex justify-between'>
                     <p>Subtotal</p>
                     <div>
                         <p>Shipping to Azerbaijan.</p>
                         <p className='flex items-center gap-[20px]'>Change Adress <LiaShippingFastSolid /></p>
                     </div>
-                </div>
+                </div> */}
                 <div className='bg-white border-[1px] p-[10px] border-gray-200 w-[100%] flex justify-between'>
                     <p>Total</p>
                     <p>{discountedTotal ? discountedTotal : totalAmount.toFixed(2)}</p>

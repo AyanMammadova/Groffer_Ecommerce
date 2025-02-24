@@ -127,7 +127,7 @@ function Header() {
                         </div>
                         <div>
                             <p className='font-bold'>My Cart</p>
-                            <p>€0.00</p>
+                            <p>€{totalAmount.toFixed(2)}</p>
                         </div>
                         <div className='bg-white border-[1px] border-gray-200   shadow-md w-[300px] py-[20px] right-0 flex flex-col justify-center items-center -z-10 top-[100px] opacity-0  absolute transition-all duration-400 group-hover:opacity-100  group-hover:top-[42px]   group-hover:z-50'>
                             <div className='max-h-[300px] overflow-y-scroll'>

@@ -7,7 +7,7 @@ import AddressForm from './AddressForm'
 
 function CheckOut() {
     const { basketData, totalAmount } = useContext(BASKET)
-    const discountedTotal=localStorage.getItem('DiscountedTotal')
+    const discountedTotal=Number(localStorage.getItem('DiscountedTotal')).toFixed(2)
     return (
         <>
             <BreadCrumps page={[
@@ -38,7 +38,7 @@ function CheckOut() {
                         }
                         <tr>
                             <td className='border-[2px] p-[10px] font-[500] text-end border-gray-200'>Subtotal</td>
-                            <td className='border-[2px] p-[10px]  border-gray-200'>{discountedTotal ? discountedTotal : totalAmount.toFixed(2)}$</td>
+                            <td className='border-[2px] p-[10px]  border-gray-200'>{ totalAmount.toFixed(2)}$</td>
                         </tr>
                         <tr>
                             <td className='border-[2px] p-[10px] font-[500] text-end border-gray-200'>Total</td>

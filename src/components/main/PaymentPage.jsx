@@ -9,17 +9,17 @@ import toast from 'react-hot-toast';
 const stripePromise = loadStripe('pk_test_51QpV3YEF0ekL8IavNeEklhMO3ADIE7N4Sdv0Dwm3USfUMtQSyGrOZbhGXylweVcmGlcvdPEQBPAnwdeJrfaynjBk00ISOMMs5k'); // Replace with your key
 
 const CheckoutForm = () => {
-    const { totalAmount } = useContext(BASKET)
+    const { totalAmount,basketData } = useContext(BASKET)
+    // console.log(basketData) 
     const storedBillingDetails = JSON.parse(localStorage.getItem("billingDetails"));
     const [loading, setLoading] = useState(false)
     const discountedTotal=useState(localStorage.getItem('DiscountedTotal') && totalAmount)
-
     const [error, setError] = useState(null);
     const [country, setCountry] = useState('');
     const [zip, setZip] = useState('');
     const [cardImage, setCardImage] = useState('');
-    const stripe = useStripe();
-    const elements = useElements();
+    const stripe = useStripe()
+    const elements = useElements()
     const navigate = useNavigate()
     const handleCardNumberChange = (event) => {
         if (event.complete) {
@@ -91,23 +91,54 @@ const CheckoutForm = () => {
                     if (result.error) {
                         console.error('Payment failed:', result.error.message);
                         alert('Payment failed: ' + result.error.message);
-                    } else {
-                        setLoading(false)
-                        toast.success('Payment Succesfull!')
-                        navigate('/paymentsucceed')
+                    } 
+                    else {
+                        setLoading(false);
+                        toast.success('Payment Successful!');
+                        navigate('/paymentsucceed');
+                    
+                        basketData.forEach(item => {
+                            console.log(item?.product.id);
+                        
+                            // Create FormData for the request
+                            const formData = new FormData();
+                            formData.append('productId', item?.product.id);
+                        
+                            apiInstance.post(
+                                `Products/decrease-stock?quantity=${item?.quantity}`,
+                                formData,  
+                                {
+                                    headers: {
+                                        'accept': '*/*',
+                                        'Content-Type': 'multipart/form-data', // Set correct content type
+                                    }
+                                }
+                            )
+                            .then(response => {
+                                console.log(`Decreased stock for product ${item.product.name}:`, response.data);
+                            })
+                            .catch(error => {
+                                console.error(`Error decreasing stock for product ${item.product.name}:`, error);
+                            });
+                        });
+                        
+                    
+                        // After decreasing stock, clear the basket
                         apiInstance.delete('Cart/clear-cart', {
                             headers: {
                                 'accept': '*/*',
-                                'Content-Type': 'application/json'
+                                'Content-Type': 'application/json',
                             }
                         })
-                            .then(response => {
-                                console.log('Basket cleared:', response.data);
-                            })
-                            .catch(error => {
-                                console.error('Error clearing basket:', error);
-                            });
+                        .then(response => {
+                            console.log('Basket cleared:', response.data);
+                        })
+                        .catch(error => {
+                            console.error('Error clearing basket:', error);
+                        });
                     }
+                    return
+                    
                 })
                 .catch(error => {
                     console.error('Error:', error);

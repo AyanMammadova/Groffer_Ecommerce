@@ -17,7 +17,7 @@ function Product() {
   const [imageFiles, setImageFiles] = useState([]);
   const [errors, setErrors] = useState([])
   const [randomNumber, setRandomNumber] = useState(
-    Math.floor(Math.random() * 200) + 1
+    Math.floor(Math.random() * (200 - 50 + 1)) + 50
   );
 
 console.log(selectedCat)
@@ -69,7 +69,6 @@ console.log(selectedCat)
     const subcategory = selectedSub; 
     const tags = selectedTags;
     const images = imageFiles;
-    console.log(randomNumber)
 
     const formValues = {
       title,
@@ -339,6 +338,7 @@ console.log(selectedCat)
         className='ml-[30px] cursor-pointer hover:bg-white hover:text-black transition-all border-white duration-300 border-2  p-[5px]  rounded-md text-[1.2em] font-[500]'>
         Add new Product
       </button>
+      
       <table className='w-[96%]  mx-auto border-2 border-black mt-[30px]'>
         <thead>
           <tr>
@@ -347,6 +347,7 @@ console.log(selectedCat)
             <th className='py-[10px] border-2 border-white'>Category</th>
             <th className='py-[10px] border-2 border-white'>SubCategory</th>
             <th className='py-[10px] border-2 border-white'>Tags</th>
+            <th className='py-[10px] border-2 border-white'>Stock</th>
             <th className='py-[10px] border-2 border-white'>Price</th>
             <th className='py-[10px] border-2 border-white'>Discount</th>
             <th className='py-[10px] border-2 border-white'>Action</th></tr>
@@ -366,6 +367,7 @@ console.log(selectedCat)
                     })
                   }
                 </td>
+                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.stockQuantity}</td>
                 <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.discountedPrice.toFixed(2)}€</td>
                 <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item.discount} %</td>
                 <td className='py-[10px] border-2 text-center border-white font-[500]'>
