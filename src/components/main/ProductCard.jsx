@@ -77,7 +77,7 @@ function ProductCard({ id }) {
                                 €{singlePro.discountedPrice}
                             </p>
                     }
-                    <p className='px-[10px] '>per Kilogram</p>
+                    {/* <p className='px-[10px] '>per Kilogram</p> */}
                 </div>
                 <div className='absolute group bg-[#ffba41] pl-[15px] transition-all duration-200 pb-[8px] p-[5px] rounded-bl-2xl top-0 right-0 hover:bg-[#136450] text-white'>
                     {

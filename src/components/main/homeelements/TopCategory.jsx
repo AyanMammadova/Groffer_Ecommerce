@@ -45,7 +45,7 @@ function TopCategory() {
             <div className='md:flex gap-[30px]'>
                     <div className='w-[90%] sm:w-[80%] pt-[20px] mx-auto min-w-[200px] md:w-[200px] '>
                         <div className="relative bg-[url('https://images.pexels.com/photos/10749578/pexels-photo-10749578.jpeg?auto=compress&cs=tinysrgb&w=600')] gap-[6px]  rounded-tl-3xl rounded-br-3xl bg-cover w-[100%] h-[400px] flex items-center justify-center text-white flex-col">
-                            <div className='bg-black/70 h-[100%] z-10 w-[100%] absolute inset-0'></div>
+                            <div className='bg-black/70 h-[100%] z-10 w-[100%] rounded-tl-3xl rounded-br-3xl absolute inset-0'></div>
                             <p className='text-[2em] z-20 font-[500]'>Meat</p>
                             <p className='z-20'>{meatData && meatData.length} products</p>
                             <div className='w-[55%] z-20 rounded-lg text-[.9em] py-[10px] flex flex-col items-center justify-center border-[1px] border-white'>
