@@ -59,7 +59,7 @@ function SearchElement() {
 
                                     <p className='text-[.9em] max-w-[100%] '>{item?.name}</p>
                                 </Link>
-                            }) : searchedProducts && searchedProducts?.length == 0 ? <p className='max-w-[100%] py-[20px] break-words'>No product found for “{searchedValue}”</p> : ''
+                            }) : searchedProducts && searchedProducts?.length == 0 ? <p className='max-w-[100%] px-[10px] py-[20px] break-words'>No product found for “{searchedValue}”</p> : ''
                         }
                     </div>
                 </div>

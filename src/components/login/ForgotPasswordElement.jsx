@@ -3,8 +3,10 @@ import { useFormik } from 'formik';
 import { ForgotPasswordFormSchemas } from '../../schemas/ForgotPasswordSchemas';
 import apiInstance from '../../services/axiosInstance';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 function ForgotPasswordElement({ type }) {
+    const navigate=useNavigate()
     function submit(values,actions) {
         const formData = new FormData();
         formData.append('Email', values.email);
@@ -22,6 +24,7 @@ function ForgotPasswordElement({ type }) {
             toast.success('If you were rgistered,reset link sent to you email succesfully')
             console.log('Success:', response.data);
             actions.resetForm();
+            navigate('/resetpassword')
         })
         .catch(error => {
             toast.error('Failed to sedn your reset link')

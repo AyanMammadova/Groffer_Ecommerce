@@ -25,6 +25,7 @@ import { jwtDecode } from 'jwt-decode'
 import { Toaster } from 'react-hot-toast'
 import Success from './components/main/Success'
 import PaymentPage from './components/main/PaymentPage'
+import ResetPassword from './components/login/ResetPassword'
 
 
 function App() {
@@ -97,6 +98,8 @@ function App() {
           <Route path='/order-tracking' element={<OrderTracking />} />
           <Route path='/my-account' element={<MyAccount />} />
           <Route path='/paymentsucceed' element={<Success />} />
+          <Route path='/resetpassword' element={<ResetPassword />} />
+          
           
 
         </Route>

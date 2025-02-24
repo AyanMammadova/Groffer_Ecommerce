@@ -129,46 +129,48 @@ function Header() {
                             <p className='font-bold'>My Cart</p>
                             <p>€0.00</p>
                         </div>
-                        <div className='bg-white border-[1px] border-gray-200  shadow-md w-[300px] py-[20px] right-0 flex flex-col justify-center items-center -z-10 top-[100px] opacity-0  absolute transition-all duration-400 group-hover:opacity-100  group-hover:top-[42px]   group-hover:z-50'>
-                            {
-                                basketData && basketData.map((item, i) => {
-                                    return <Link key={i} to={`/details/${item?.product?.id}`} className='w-[100%]  group relative'>
-                                        <div className=' border-b-[1px] py-[10px] border-gray-200  px-[10px] flex gap-[10px] justify-between w-[100%]'>
-                                            <div className='flex '>
-                                                <div className='h-[100px] relative'>
-                                                    <div className='absolute group-hover:flex top-0 right-0 h-[100%] w-[100%] bg-white/20 hidden items-center justify-center'><ImEye /></div>
+                        <div className='bg-white border-[1px] border-gray-200   shadow-md w-[300px] py-[20px] right-0 flex flex-col justify-center items-center -z-10 top-[100px] opacity-0  absolute transition-all duration-400 group-hover:opacity-100  group-hover:top-[42px]   group-hover:z-50'>
+                            <div className='max-h-[300px] overflow-y-scroll'>
+                                {
+                                    basketData && basketData.map((item, i) => {
+                                        return <Link key={i} to={`/details/${item?.product?.id}`} className='w-[100%]  group relative'>
+                                            <div className=' border-b-[1px] py-[10px] border-gray-200  px-[10px] flex gap-[10px] justify-between w-[100%]'>
+                                                <div className='flex gap-[10px] w-[100%]'>
+                                                    <div className='h-[100px] w-[35%] relative'>
+                                                        {/* <div className='absolute group-hover:flex top-0 right-0 h-[100%] w-[100px] bg-white/20 hidden items-center justify-center'><ImEye /></div> */}
 
-                                                    {
-                                                        item?.product?.primaryImageUrl ? <img
-                                                            className={`scale-100 w-[100%]  h-[100%] object-cover object-center  ease-in duration-500 block }`}
-                                                            src={`https://supermarket777.blob.core.windows.net/product/${item?.product?.primaryImageUrl}`} alt={item?.product?.slug} />
-                                                            : ''
-                                                    }
+                                                        {
+                                                            item?.product?.primaryImageUrl ? <img
+                                                                className={`scale-100 w-[100%]  h-[100%] object-cover object-center  ease-in duration-500 block }`}
+                                                                src={`https://supermarket777.blob.core.windows.net/product/${item?.product?.primaryImageUrl}`} alt={item?.product?.slug} />
+                                                                : ''
+                                                        }
+                                                    </div>
+                                                    <div className='flex flex-col w-[65%]'>
+                                                        <p className=' text-black text-[1.1em]  hover:text-[#136450]'>{item.product?.name}</p>
+                                                        <p className=' text-black '>{item?.quantity}x{item.product?.price?.toFixed(2)} $</p>
+                                                    </div>
                                                 </div>
-                                                <div className='flex flex-col'>
-                                                    <p className=' text-black text-[1.1em]  hover:text-[#136450]'>{item.product?.name}</p>
-                                                    <p className=' text-black '>{item?.quantity}x{item.product?.price?.toFixed(2)} $</p>
-                                                </div>
+                                                <IoCloseSharp onClick={(e) => { removeFromBasket(item?.product?.id), e.preventDefault() }} className='text-[1.5em]' />
                                             </div>
-                                            <IoCloseSharp onClick={(e) => { removeFromBasket(item?.product?.id), e.preventDefault() }} className='text-[1.5em]' />
-                                        </div>
 
-                                    </Link>
-                                })
-                            }
+                                        </Link>
+                                    })
+                                }
+                            </div>
                             {
-                                basketData?.length>0 ? <div className='w-[100%]'>
+                                basketData?.length > 0 ? <div className='w-[100%]'>
                                     <p className='text-center font-[500] py-[10px]'>SUBTOTAL : {totalAmount.toFixed(2)} $</p>
-                                <Link
-                                    to={'/cart'}
-                                    className='bg-[#136450]  block text-center mx-auto py-[10px] w-[90%] font-bold  rounded-sm   border-2 border-[#136450] hover:scale-105 hover:text-[#136450] text-white transition-all duration-200 hover:bg-white'>
-                                    Go to Bag
-                                </Link>
-                                <Link
-                                    to={'/checkout'}
-                                    className='bg-[#136450] block text-center mx-auto  mt-[20px] w-[90%] py-[10px]  font-bold  rounded-sm   border-2 border-[#136450] hover:scale-105 hover:text-[#136450] text-white transition-all duration-200 hover:bg-white'>
-                                    Checkout
-                                </Link>
+                                    <Link
+                                        to={'/cart'}
+                                        className='bg-[#136450]  block text-center mx-auto py-[10px] w-[90%] font-bold  rounded-sm   border-2 border-[#136450] hover:scale-105 hover:text-[#136450] text-white transition-all duration-200 hover:bg-white'>
+                                        Go to Bag
+                                    </Link>
+                                    <Link
+                                        to={'/checkout'}
+                                        className='bg-[#136450] block text-center mx-auto  mt-[20px] w-[90%] py-[10px]  font-bold  rounded-sm   border-2 border-[#136450] hover:scale-105 hover:text-[#136450] text-white transition-all duration-200 hover:bg-white'>
+                                        Checkout
+                                    </Link>
                                 </div> : 'Nothing in basket'
                             }
                         </div>

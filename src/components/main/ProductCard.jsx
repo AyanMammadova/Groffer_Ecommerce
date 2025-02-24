@@ -12,7 +12,7 @@ function ProductCard({ id }) {
 
     const { favoriteData, handleWishlist, loadingHeart, token, quickId, setQuickId } = useContext(DATA)
     const [singlePro, setSinglePro] = useState('')
-    const { addToBasket, basketData,removeFromBasket } = useContext(BASKET)
+    const { addToBasket, basketData, removeFromBasket } = useContext(BASKET)
     const [isFav, setIsFav] = useState(false)
     const [isInBasket, setIsInBasket] = useState(false)
     useEffect(() => {
@@ -46,7 +46,7 @@ function ProductCard({ id }) {
         <>
             <Link
                 to={`/details/${singlePro.id}`}
-                className='w-[100%] group relative transition-all duration-200 border-[1px] border-white hover:border-[#ffba41]  h-[400px]  rounded-tl-3xl rounded-br-3xl shadow-[0_0px_20px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.08)]'>
+                className='w-[200px] min-w-[200px] group relative transition-all duration-200 border-[1px] border-white hover:border-[#ffba41]  h-[400px]  rounded-tl-3xl rounded-br-3xl shadow-[0_0px_20px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.08)]'>
                 {
                     singlePro ? <div className='h-[50%] group relative '>
                         <img className='h-[100%] w-[200px] group-hover:hidden mt-[20px] mx-auto object-cover px-[7px] sm:px-[15px]'
@@ -62,7 +62,10 @@ function ProductCard({ id }) {
                     <div className='flex p-[10px] '>
                         <FaRegStar /><FaRegStar /><FaRegStar /><FaRegStar /><FaRegStar />
                     </div>
-                    <p className='px-[10px] text-[1.1em] font-bold'>{singlePro.name}</p>
+                    <p className='px-[10px] text-[1.1em] font-bold line-clamp-2 overflow-hidden text-ellipsis'>
+                        {singlePro.name}
+                    </p>
+
                     <p className='text-[#216D5A] px-[10px] font-bold pt-[20px]'>€{singlePro.discountedPrice}</p>
                     <p className='px-[10px] '>per Kilogram</p>
                 </div>

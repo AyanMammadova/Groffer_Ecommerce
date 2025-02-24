@@ -52,7 +52,7 @@ function LoginElement({ type }) {
                 console.error('Errorum:', err),
                 setTimeout(() => {
                     setMainError('Username or password is wrong');
-                }, 300)
+                }, 800)
             );
     }
     const { values, errors, handleSubmit, handleChange } = useFormik({

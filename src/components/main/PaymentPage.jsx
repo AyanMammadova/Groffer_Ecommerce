@@ -1,19 +1,25 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement } from '@stripe/react-stripe-js';
 import apiInstance from '../../services/axiosInstance';
 import { useNavigate } from 'react-router-dom';
+import { BASKET } from '../../context/BasketContext';
+import toast from 'react-hot-toast';
 
 const stripePromise = loadStripe('pk_test_51QpV3YEF0ekL8IavNeEklhMO3ADIE7N4Sdv0Dwm3USfUMtQSyGrOZbhGXylweVcmGlcvdPEQBPAnwdeJrfaynjBk00ISOMMs5k'); // Replace with your key
 
 const CheckoutForm = () => {
+    const { totalAmount } = useContext(BASKET)
+    const storedBillingDetails = JSON.parse(localStorage.getItem("billingDetails"));
+    const [loading, setLoading] = useState(false)
+
     const [error, setError] = useState(null);
     const [country, setCountry] = useState('');
     const [zip, setZip] = useState('');
     const [cardImage, setCardImage] = useState('');
     const stripe = useStripe();
     const elements = useElements();
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     const handleCardNumberChange = (event) => {
         if (event.complete) {
             const cardType = event.brand;
@@ -25,6 +31,7 @@ const CheckoutForm = () => {
     };
 
     const handleSubmit = async (event) => {
+        setLoading(true)
         event.preventDefault();
 
         if (!stripe || !elements) return;
@@ -37,11 +44,21 @@ const CheckoutForm = () => {
             setError(error.message);
         } else {
             const data = {
-                paymentDto: {
-                    token: token.id.trim(),
-                    amount: 100
+                token: token.id,
+                amount: totalAmount,
+                billingName: storedBillingDetails?.billingName,
+                billingEmail: storedBillingDetails?.billingEmail,
+                billingPhone: storedBillingDetails?.billingPhone,
+                billingAddress: {
+                    line1: storedBillingDetails?.billingAddress?.line1,
+                    line2: storedBillingDetails?.billingAddress?.line2,
+                    city: storedBillingDetails?.billingAddress?.city,
+                    state: storedBillingDetails?.billingAddress?.state,
+                    postalCode: storedBillingDetails?.billingAddress?.postalCode,
+                    country: storedBillingDetails?.billingAddress?.country
                 }
             };
+            console.log(data)
             apiInstance.post('Payment/payment', data, {
                 headers: {
                     'accept': '*/*',
@@ -49,8 +66,47 @@ const CheckoutForm = () => {
                 }
             })
                 .then(response => {
-                    navigate('/paymentsucceed')
-                    console.log('Success:', response.data);
+                    console.log('Success:', response.data.clientSecret);
+                    const clientSecret = response.data.clientSecret;
+
+                    const result = stripe.confirmCardPayment(clientSecret, {
+                        payment_method: {
+                            card: cardNumber,
+                            billing_details: {
+                                name: storedBillingDetails?.billingName,
+                                email: storedBillingDetails?.billingEmail,
+                                phone: storedBillingDetails?.billingPhone,
+                                address: {
+                                    line1: storedBillingDetails?.billingAddress?.line1,
+                                    city: storedBillingDetails?.billingAddress?.city,
+                                    state: storedBillingDetails?.billingAddress?.state,
+                                    postal_code: storedBillingDetails?.billingAddress?.postalCode,
+                                    country: storedBillingDetails?.billingAddress?.country
+                                }
+                            }
+                        }
+                    });
+
+                    if (result.error) {
+                        console.error('Payment failed:', result.error.message);
+                        alert('Payment failed: ' + result.error.message);
+                    } else {
+                        setLoading(false)
+                        toast.success('Payment Succesfull!')
+                        navigate('/paymentsucceed')
+                        apiInstance.delete('Cart/clear-cart', {
+                            headers: {
+                                'accept': '*/*',
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                            .then(response => {
+                                console.log('Basket cleared:', response.data);
+                            })
+                            .catch(error => {
+                                console.error('Error clearing basket:', error);
+                            });
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -112,8 +168,6 @@ const CheckoutForm = () => {
                 <img className='absolute top-[30px] right-[60px] h-[20px]' src="../img/card3.png" alt="" />
 
             </div>
-
-
 
             <div className="grid grid-cols-2 gap-4 mb-4">
                 <div>
@@ -181,12 +235,12 @@ const CheckoutForm = () => {
                 disabled={!stripe}
                 className={`w-full py-3 bg-green-500 text-white font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-green-300 ${!stripe ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-600'}`}
             >
-                Pay
+                {loading ? 'Paying...' : ' Pay'}
             </button>
         </form>
     );
 };
-    
+
 
 const PaymentPage = () => (
     <Elements stripe={stripePromise}>

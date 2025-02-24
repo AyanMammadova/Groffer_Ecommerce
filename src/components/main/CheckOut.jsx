@@ -3,6 +3,7 @@ import BreadCrumps from './BreadCrumps'
 import { FaTableColumns } from 'react-icons/fa6'
 import { BASKET } from '../../context/BasketContext'
 import { Link } from 'react-router-dom'
+import AddressForm from './AddressForm'
 
 function CheckOut() {
     const { basketData, totalAmount } = useContext(BASKET)
@@ -15,9 +16,9 @@ function CheckOut() {
                 }
             ]} />
             <p className='p-[10px] md:px-[40px] border-b-[1px] border-gray-200 font-[500] text-[2em] '>Checkout</p>
-            <div className='w-[95%] mb-[20px] bg-gray-100 mx-auto border-t-[4px] px-[5px] border-[#136450]  py-[20px] mt-[20px]'>
+            {/* <div className='w-[95%] mb-[20px] bg-gray-100 mx-auto border-t-[4px] px-[5px] border-[#136450]  py-[20px] mt-[20px]'>
                 <p className=' text-[1.1em] flex gap-[20px] items-center  text-[#136450]'> <FaTableColumns />Have a coupon? Click here to enter your code</p>
-            </div>
+            </div> */}
             <div>
 
             </div>
@@ -46,9 +47,8 @@ function CheckOut() {
                 </table>
 
             </div>
-            <Link to={'/payment'} className=' p-[10px] bg-[#136450] text-white rounded-xl my-[30px]'>
-                Proceed to Payment
-            </Link>
+            <AddressForm/>
+            
         </>
     )
 }

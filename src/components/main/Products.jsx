@@ -128,12 +128,15 @@ function Products() {
               </select>
             </div> */}
           </div>
-          <div className={`${isRows ? 'hidden' : 'block'} gap-[10px] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4`}>
+          <div className={`${isRows ? 'hidden' : 'block'} gap-[10px] flex justify-around flex-wrap `}>
             {
               currentData && currentData.map((item, i) => {
                 return <ProductCard id={item?.id} />
               })
             }
+            <div className={`${currentData.length ==0 ? 'block' : 'hidden'} text-[1.4em]`}>
+              No pro found
+            </div>
           </div>
           {/* <div className={`${isRows ? 'block' : 'hidden'} gap-[10px] grid grid-cols-1`}>
             <Link

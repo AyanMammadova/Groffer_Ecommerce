@@ -23,9 +23,8 @@ async function getProductsBySubCategory(subcatid) {
     return res;
 }
 async function getProductsByTag(tagids) {
-    const queryString = tagids.map(item => `tagIds=${item.id}`).join("&");
-    // console.log(queryString)
-    const res = await apiInstance.get(`Products/TagIds?${queryString}`);
+    const queryString = tagids.map(item => `tagIds=${item.id}`).join("&")
+    const res = await apiInstance.get(`Products/TagIds?${queryString}`)
     return res;
 }
 
