@@ -157,7 +157,7 @@ const CheckoutForm = () => {
     //     }
     // };
     return (
-        <form onSubmit={handleSubmit} className="max-w-sm my-[20px] mx-auto p-6 border border-gray-300 rounded-lg bg-gray-50 shadow-lg">
+        <form onSubmit={handleSubmit} className="max-w-sm  my-[120px] mx-auto p-6 border border-gray-300 rounded-lg bg-gray-50 shadow-lg">
             <h2 className="text-center text-xl font-semibold mb-6">Payment</h2>
 
             <div className="mb-4 relative">
@@ -182,7 +182,7 @@ const CheckoutForm = () => {
                 </div>
             </div>
 
-            <div className="mb-4">
+            {/* <div className="mb-4">
                 <label htmlFor="country" className="block text-sm font-medium text-gray-700">Country</label>
                 <select
                     id="country"
@@ -226,7 +226,7 @@ const CheckoutForm = () => {
                     onChange={(e) => setZip(e.target.value)}
                     className="p-3 border border-gray-300 rounded-md shadow-sm w-full"
                 />
-            </div>
+            </div> */}
 
             {error && <div className="text-red-500 text-sm text-center mb-4">{error}</div>}
 

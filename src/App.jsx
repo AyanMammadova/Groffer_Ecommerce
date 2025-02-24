@@ -26,6 +26,7 @@ import { Toaster } from 'react-hot-toast'
 import Success from './components/main/Success'
 import PaymentPage from './components/main/PaymentPage'
 import ResetPassword from './components/login/ResetPassword'
+import Coupon from './Admin/Coupon'
 
 
 function App() {
@@ -109,6 +110,7 @@ function App() {
           <Route path='/admin/category' element={<Category />} />
           <Route path='/admin/subcategory' element={<SubCategory />} />
           <Route path='/admin/tag' element={<Tag />} />
+          <Route path='/admin/coupon' element={<Coupon/>} />
         </Route>
         <Route path='/submit' element={<SubmitPgae />} />
         <Route path='/loginpage' element={<LoginPage />} />

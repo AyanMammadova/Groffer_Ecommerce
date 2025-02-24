@@ -5,6 +5,19 @@ export const CategorySchemas = yup.object().shape({
         required('Category is required')
         .matches(/^[a-zA-Z0-9\s]*$/, 'Symbols are not allowed')
 })
+export const CouponSchemas = yup.object().shape({
+    coupon: yup
+        .string()
+        .matches(/^[A-Za-z]{2,}[0-9]{1,2}$/, 'Coupon must be at least 2 letters followed by 1 or 2 numbers')
+        .required('Coupon is required'),
+    days: yup
+        .number()
+        .positive('Days must be a positive number')
+        .integer('Days must be an integer')
+        .min(1, 'Days must be at least 1')
+        .max(100, 'Days must be at most 100')
+        .required('Days is required'),
+});
 export const TagSchemas = yup.object().shape({
     tag: yup.string().
         required('Tag is required')
@@ -27,7 +40,7 @@ export const ProductSchemas = yup.object().shape({
         .string()
         .required('Description cannot be empty')
         .min(10, 'Description must be at least 10 characters long')
-        .max(300, 'Description must be shorter') 
+        .max(300, 'Description must be shorter')
         .matches(/^[a-zA-Z0-9,. ]*$/, 'Description can only contain letters, numbers, commas, and periods'),
     price: yup
         .number()

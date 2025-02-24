@@ -18,6 +18,12 @@ function Header() {
                     className={` border-2 border-white mx-[10px] hover:bg-white hover:text-black transition-all duration-200 active:bg-red-500 font-[500] text-[1.2em] rounded-md p-[10px] ${active == 'product' ? 'bg-black text-white' : ''}`}>
                     Product
                 </NavLink>
+                <NavLink
+                    onClick={() => { setActive('coupon') }}
+                    to={'coupon'}
+                    className={`border-2 border-white mx-[10px] hover:bg-white hover:text-black transition-all duration-200 active:bg-red-500  font-[500] text-[1.2em] rounded-md p-[10px] ${active == 'coupon' ? 'bg-black text-white' : ''}`}>
+                    Coupon
+                </NavLink>
 
                 <NavLink
                     onClick={() => { setActive('category') }}

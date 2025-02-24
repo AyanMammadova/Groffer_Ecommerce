@@ -9,6 +9,10 @@ async function getAllProducts() {
     const res = await apiInstance.get('Products/all-products')
     return res;
 }
+async function getAllCoupons() {
+    const res = await apiInstance.get('Coupon/get-all')
+    return res;
+}
 
 async function getProductById(id) {
     const res = await apiInstance.get(`Products/single-product/${id}`)
@@ -62,5 +66,6 @@ export {
     getCartData,
     getProductsByCategory,
     getProductsBySubCategory,
-    getProductsByTag
+    getProductsByTag,
+    getAllCoupons
 }
