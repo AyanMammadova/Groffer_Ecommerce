@@ -53,7 +53,6 @@ function Products() {
     }
   }, [])
   useEffect(() => {
-    // console.log(tagArr)
     if (searchedValue && searchedValue != 'all') {
       setCurrentData(
         allProducts?.filter((item, i) => {
