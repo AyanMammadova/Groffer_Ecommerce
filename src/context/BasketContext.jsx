@@ -13,11 +13,9 @@ function BasketContext({ children }) {
       setTotalAmount(res?.data.reduce((total, item) => {
         return total + (item.product?.price * item.quantity); // Multiply price by quantity and accumulate the total
       }, 0));
-
-
     })
 
-  }, [])
+  }, [basketData])
 
   function removeFromBasket(id) {
     setLoading(true)

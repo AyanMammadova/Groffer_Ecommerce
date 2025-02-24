@@ -157,16 +157,16 @@ function Header() {
                                 })
                             }
                             {
-                                basketData?.length>0 ? <div>
+                                basketData?.length>0 ? <div className='w-[100%]'>
                                     <p className='text-center font-[500] py-[10px]'>SUBTOTAL : {totalAmount.toFixed(2)} $</p>
                                 <Link
                                     to={'/cart'}
-                                    className='bg-[#136450] px-[100px] py-[10px]  font-bold  rounded-sm   border-2 border-[#136450] hover:scale-105 hover:text-[#136450] text-white transition-all duration-200 hover:bg-white'>
+                                    className='bg-[#136450]  block text-center mx-auto py-[10px] w-[90%] font-bold  rounded-sm   border-2 border-[#136450] hover:scale-105 hover:text-[#136450] text-white transition-all duration-200 hover:bg-white'>
                                     Go to Bag
                                 </Link>
                                 <Link
                                     to={'/checkout'}
-                                    className='bg-[#136450] mt-[20px] px-[100px] py-[10px]  font-bold  rounded-sm   border-2 border-[#136450] hover:scale-105 hover:text-[#136450] text-white transition-all duration-200 hover:bg-white'>
+                                    className='bg-[#136450] block text-center mx-auto  mt-[20px] w-[90%] py-[10px]  font-bold  rounded-sm   border-2 border-[#136450] hover:scale-105 hover:text-[#136450] text-white transition-all duration-200 hover:bg-white'>
                                     Checkout
                                 </Link>
                                 </div> : 'Nothing in basket'

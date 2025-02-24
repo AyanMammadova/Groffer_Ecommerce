@@ -12,7 +12,6 @@ function Footer() {
           <ul className='sm:flex flex-col sm:flex-row text-[1.3em] gap-[20px]'>
             <Link to={'/my-account'}>My Account</Link>
             <Link to={'/cart'}>Bag</Link>
-            <Link to={'/my-account'}>Personal info</Link>
             <Link to={'/wishlist'}>Wishlist</Link>
           </ul>
           <ul className='flex gap-[10px]'>
@@ -35,7 +34,7 @@ function Footer() {
             <ul className='text-gray-600 flex flex-col'>
               <Link to={'/about'}>Our Services</Link>
               <Link to={'/about'}>About Company</Link>
-              <Link to={'/blog'}>Latest News</Link>
+              <Link >Latest News</Link>
               <Link to={'/about'}>Meet The Team</Link>
               <Link to={'/shop'}>Our Products</Link>
             </ul>

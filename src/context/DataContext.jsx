@@ -78,7 +78,7 @@ function DataContext({ children }) {
         },
         {
             catname: 'Shop',
-            slug: 'shop',
+            slug: 'shop?searched=all',
             Subcategory: [
                 { name: 'Main Shop', slug: 'shop?searched=all' },
                 { name: 'My Account', slug: 'my-account' },

@@ -36,9 +36,7 @@ function QuickView({ type, proid }) {
         setIsInBasket(basketData?.some(item => item.product?.id == res?.data?.id));
       })
     }
-    console.log(isInBasket)
   }, [proid, quickId, favoriteData, basketData])
-  console.log(isInBasket)
   function toggleWishlist() {
     token ? handleWishlist(singleProduct.id, isFavorite)
       : toast.error('Sign in to use Wishlist!')
@@ -53,8 +51,7 @@ function QuickView({ type, proid }) {
     }
     else{
       setCount(1)
-      await addToBasket(singleProduct.id, count);
-    toast.success('Product added to basket successfully!');
+      await addToBasket(singleProduct.id, count)
     }
   };
   return (

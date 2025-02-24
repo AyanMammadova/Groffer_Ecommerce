@@ -34,7 +34,7 @@ function Bag() {
                         return <div key={i} className='w-[96%] my-[30px] shadow-[0_0px_20px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.08)] p-[10px] mx-auto flex justify-between'>
                             <div className='hidden md:flex w-[100%] justify-between'>
                                 <div className='flex justify-center gap-[20px] items-center'>
-                                    <IoClose onClick={(e)=>{removeFromBasket(item?.product?.id),e.preventDefault()}} className='text-[3.5em] text-[#136450]' />
+                                    <IoClose onClick={(e)=>{removeFromBasket(item?.product?.id),e.preventDefault()}} className='cursor-pointer text-[3.5em] text-[#136450]' />
                                     {
                                         item?.product?.primaryImageUrl ? <img
                                             className={`scale-100 w-[100px]  h-[100px] block  object-cover object-center  }`}

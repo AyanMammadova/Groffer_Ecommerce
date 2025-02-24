@@ -16,7 +16,6 @@ import { Link } from 'react-router-dom'
 
 function Categories() {
     const { catsWithSubs } = useContext(DATA)
-    console.log(catsWithSubs)
     const iconsData = [
         <IoFishOutline className='text-[1.9em]' />,
         <MdOutlineBakeryDining className='text-[1.9em]' />,
@@ -25,7 +24,6 @@ function Categories() {
         <LuEggFried className='text-[1.9em]' />,
         <GiCannedFish className='text-[1.9em]' />
     ]
-    console.log(catsWithSubs?.[0].subcategories[0].subCategoryName)
     return (
         <>
             <div className='absolute group-hover:max-h-[100vh] -z-50 group-hover:opacity-100 max-h-0 opacity-0 top-[50px] bg-white group-hover:z-50 w-[100%]'>
