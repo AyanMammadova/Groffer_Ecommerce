@@ -42,6 +42,7 @@ function ProductCard({ id }) {
             await addToBasket(singlePro.id, 1);
         }
     };
+    // console.log(singlePro)
     return (
         <>
             <Link
@@ -66,7 +67,16 @@ function ProductCard({ id }) {
                         {singlePro.name}
                     </p>
 
-                    <p className='text-[#216D5A] px-[10px] font-bold pt-[20px]'>€{singlePro.discountedPrice}</p>
+                   
+                    {
+                        singlePro?.discount > 0
+                            ? <p className='text-[#216D5A] px-[10px] font-bold pt-[20px]'>
+                                 <del className='text-gray-900'>€{singlePro.price}</del> €{singlePro.discountedPrice}
+                            </p>
+                            : <p className='text-[#216D5A] px-[10px] font-bold pt-[20px]'>
+                                €{singlePro.discountedPrice}
+                            </p>
+                    }
                     <p className='px-[10px] '>per Kilogram</p>
                 </div>
                 <div className='absolute group bg-[#ffba41] pl-[15px] transition-all duration-200 pb-[8px] p-[5px] rounded-bl-2xl top-0 right-0 hover:bg-[#136450] text-white'>

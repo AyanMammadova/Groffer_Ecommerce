@@ -3,12 +3,14 @@ import { IoIosClose } from 'react-icons/io'
 import apiInstance from '../services/axiosInstance';
 import { useFormik } from 'formik';
 import { TagSchemas } from '../schemas/AdminSchemas';
+import toast from 'react-hot-toast';
 function Tag() {
   const [actionId, setActionId] = useState(null)
   const [editingTag, setEditingTag] = useState('')
   const [action, setAction] = useState('')
   const [tagData, setTagData] = useState(null)
   const [showForm, setShowForm] = useState(false);
+  const [mainErr,setMainErr]=useState(null)
   function getAllTag() {
     apiInstance.get('Tags')
       .then(res => setTagData(res.data))
@@ -52,7 +54,10 @@ function Tag() {
             setShowForm(false);
             formik.resetForm();
           })
-          .catch(err => console.error('Error:', err));
+          .catch(err =>{ 
+            console.error('Error:', err)
+            toast.error('Tag already exist !')
+          });
       } else if (action === 'put') {
         apiInstance.put(`Tags/${actionId}`, formData)
           .then(res => {
@@ -72,7 +77,10 @@ function Tag() {
         setShowForm(false);
         getAllTag()
       })
-      .catch(err => console.error('Error:', err));
+      .catch(err => 
+        
+        console.error('Error:', err)
+      );
   }
 
 

@@ -33,7 +33,7 @@ function Bag() {
                 localStorage.setItem('DiscountedTotal',res.data.finalAmount)
             })
             .catch(err =>
-                err.status==404 ? toast.err('Coupon doesnt exist!') : ''
+                err.status==404 ? toast.error('Coupon doesnt exist!') : ''
                 // console.error('Errorum:', err.status)
 
                 // if(err.status==404){
@@ -146,7 +146,7 @@ function Bag() {
             <div className={`${basketData ? 'block' : 'hidden'} text-[1.1em] font-[500]  my-[30px] w-[100%] px-[10px] `}>
                 <div className='bg-white border-[1px] p-[10px] border-gray-200 w-[100%] flex justify-between'>
                     <p>Subtotal</p>
-                    <p>{discountedTotal ? discountedTotal : totalAmount.toFixed(2)}</p>
+                    <p>{totalAmount.toFixed(2)}</p>
                 </div>
                 <div className='bg-[#F9F9F9] border-[1px] p-[10px] border-gray-200 w-[100%] flex justify-between'>
                     <p>Subtotal</p>

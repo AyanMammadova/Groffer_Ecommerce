@@ -41,78 +41,78 @@ const CheckoutForm = () => {
         const cardCvc = elements.getElement(CardCvcElement);
         const { token, error } = await stripe.createToken(cardNumber);
         console.log('tokenid : ' + token.id)
-        // if (error) {
-        //     setError(error.message);
-        // } else {
-        //     const data = {
-        //         token: token.id,
-        //         amount: totalAmount,
-        //         billingName: storedBillingDetails?.billingName,
-        //         billingEmail: storedBillingDetails?.billingEmail,
-        //         billingPhone: storedBillingDetails?.billingPhone,
-        //         billingAddress: {
-        //             line1: storedBillingDetails?.billingAddress?.line1,
-        //             line2: storedBillingDetails?.billingAddress?.line2,
-        //             city: storedBillingDetails?.billingAddress?.city,
-        //             state: storedBillingDetails?.billingAddress?.state,
-        //             postalCode: storedBillingDetails?.billingAddress?.postalCode,
-        //             country: storedBillingDetails?.billingAddress?.country
-        //         }
-        //     };
-        //     console.log(data)
-        //     apiInstance.post('Payment/payment', data, {
-        //         headers: {
-        //             'accept': '*/*',
-        //             'Content-Type': 'application/json'
-        //         }
-        //     })
-        //         .then(response => {
-        //             console.log('Success:', response.data.clientSecret);
-        //             const clientSecret = response.data.clientSecret;
+        if (error) {
+            setError(error.message);
+        } else {
+            const data = {
+                token: token.id,
+                amount: totalAmount,
+                billingName: storedBillingDetails?.billingName,
+                billingEmail: storedBillingDetails?.billingEmail,
+                billingPhone: storedBillingDetails?.billingPhone,
+                billingAddress: {
+                    line1: storedBillingDetails?.billingAddress?.line1,
+                    line2: storedBillingDetails?.billingAddress?.line2,
+                    city: storedBillingDetails?.billingAddress?.city,
+                    state: storedBillingDetails?.billingAddress?.state,
+                    postalCode: storedBillingDetails?.billingAddress?.postalCode,
+                    country: storedBillingDetails?.billingAddress?.country
+                }
+            };
+            console.log(data)
+            apiInstance.post('Payment/payment', data, {
+                headers: {
+                    'accept': '*/*',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    console.log('Success:', response.data.clientSecret);
+                    const clientSecret = response.data.clientSecret;
 
-        //             const result = stripe.confirmCardPayment(clientSecret, {
-        //                 payment_method: {
-        //                     card: cardNumber,
-        //                     billing_details: {
-        //                         name: storedBillingDetails?.billingName,
-        //                         email: storedBillingDetails?.billingEmail,
-        //                         phone: storedBillingDetails?.billingPhone,
-        //                         address: {
-        //                             line1: storedBillingDetails?.billingAddress?.line1,
-        //                             city: storedBillingDetails?.billingAddress?.city,
-        //                             state: storedBillingDetails?.billingAddress?.state,
-        //                             postal_code: storedBillingDetails?.billingAddress?.postalCode,
-        //                             country: storedBillingDetails?.billingAddress?.country
-        //                         }
-        //                     }
-        //                 }
-        //             });
+                    const result = stripe.confirmCardPayment(clientSecret, {
+                        payment_method: {
+                            card: cardNumber,
+                            billing_details: {
+                                name: storedBillingDetails?.billingName,
+                                email: storedBillingDetails?.billingEmail,
+                                phone: storedBillingDetails?.billingPhone,
+                                address: {
+                                    line1: storedBillingDetails?.billingAddress?.line1,
+                                    city: storedBillingDetails?.billingAddress?.city,
+                                    state: storedBillingDetails?.billingAddress?.state,
+                                    postal_code: storedBillingDetails?.billingAddress?.postalCode,
+                                    country: storedBillingDetails?.billingAddress?.country
+                                }
+                            }
+                        }
+                    });
 
-        //             if (result.error) {
-        //                 console.error('Payment failed:', result.error.message);
-        //                 alert('Payment failed: ' + result.error.message);
-        //             } else {
-        //                 setLoading(false)
-        //                 toast.success('Payment Succesfull!')
-        //                 navigate('/paymentsucceed')
-        //                 apiInstance.delete('Cart/clear-cart', {
-        //                     headers: {
-        //                         'accept': '*/*',
-        //                         'Content-Type': 'application/json'
-        //                     }
-        //                 })
-        //                     .then(response => {
-        //                         console.log('Basket cleared:', response.data);
-        //                     })
-        //                     .catch(error => {
-        //                         console.error('Error clearing basket:', error);
-        //                     });
-        //             }
-        //         })
-        //         .catch(error => {
-        //             console.error('Error:', error);
-        //         });
-        // }
+                    if (result.error) {
+                        console.error('Payment failed:', result.error.message);
+                        alert('Payment failed: ' + result.error.message);
+                    } else {
+                        setLoading(false)
+                        toast.success('Payment Succesfull!')
+                        navigate('/paymentsucceed')
+                        apiInstance.delete('Cart/clear-cart', {
+                            headers: {
+                                'accept': '*/*',
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                            .then(response => {
+                                console.log('Basket cleared:', response.data);
+                            })
+                            .catch(error => {
+                                console.error('Error clearing basket:', error);
+                            });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
     };
 
     // const handleSubmit = async (event) => {

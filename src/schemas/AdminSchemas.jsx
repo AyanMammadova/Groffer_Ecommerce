@@ -8,7 +8,7 @@ export const CategorySchemas = yup.object().shape({
 export const CouponSchemas = yup.object().shape({
     coupon: yup
         .string()
-        .matches(/^[A-Za-z]{2,}[0-9]{1,2}$/, 'Coupon must be at least 2 letters followed by 1 or 2 numbers')
+        .matches(/^[A-Z]{2,}[0-9]{1,2}$/, 'Coupon must be at least 2 uppercase letters followed by 1 or 2 numbers')
         .required('Coupon is required'),
     days: yup
         .number()

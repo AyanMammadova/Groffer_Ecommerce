@@ -14,6 +14,11 @@ async function getAllCoupons() {
     return res;
 }
 
+async function getCouponByCode(code) {
+    const res = await apiInstance.get(`Coupon/get/${code}`)
+    return res;
+}
+
 async function getProductById(id) {
     const res = await apiInstance.get(`Products/single-product/${id}`)
     return res;
@@ -67,5 +72,6 @@ export {
     getProductsByCategory,
     getProductsBySubCategory,
     getProductsByTag,
-    getAllCoupons
+    getAllCoupons,
+    getCouponByCode
 }

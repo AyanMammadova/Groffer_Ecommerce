@@ -22,7 +22,7 @@ function QuickView({ type, proid }) {
   const [count, setCount] = useState(1)
 
   useEffect(() => {
-    
+
     if (proid) {
       getProductById(proid).then(res => {
         setSingleProduct(res.data)
@@ -46,10 +46,10 @@ function QuickView({ type, proid }) {
     if (!token) {
       toast.error('Sign in to use Cart!');
       return;
-    }else if(isInBasket){
+    } else if (isInBasket) {
       toast.error('Produt is already in basket')
     }
-    else{
+    else {
       setCount(1)
       await addToBasket(singleProduct.id, count)
     }
@@ -86,7 +86,15 @@ function QuickView({ type, proid }) {
         </div>
         <div className={`${type == 'quick' ? 'w-[100%] gap-[8px]' : 'lg:w-[50%] md:w-[60%] gap-[15px]'} flex flex-col p-[10px] md:p-[40px]`}>
           <p className='text-[2.5em] font-bold'>{singleProduct?.name}</p>
-          <p className='txtgreen text-[2em] font-[500]'>€{singleProduct?.discountedPrice?.toFixed(2)}</p>
+          {
+            singleProduct?.discount > 0
+              ? <p className='text-[#216D5A] px-[10px] font-bold  text-[1.4em] '>
+                <del className='text-gray-900'>€{singleProduct.price}</del> €{singleProduct.discountedPrice}
+              </p>
+              : <p className='text-[#216D5A] px-[10px] font-bold text-[1.4em] ]'>
+                €{singleProduct.discountedPrice}
+              </p>
+          }
           <p className='text-gray-500 text-[1.2em]'>{singleProduct?.description}</p>
           <div className='flex flex-wrap'>
             Tags:{
