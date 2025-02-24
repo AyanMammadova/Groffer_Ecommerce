@@ -67,7 +67,7 @@ const CheckoutForm = () => {
                 }
             })
                 .then(response => {
-                    console.log('Success:', response.data.clientSecret);
+                    // console.log('Success:', response.data.clientSecret);
                     const clientSecret = response.data.clientSecret;
 
                     const result = stripe.confirmCardPayment(clientSecret, {

@@ -2,9 +2,14 @@ import React from 'react'
 
 function Success() {
   const storedBillingDetails = JSON.parse(localStorage.getItem("billingDetails"));
-  console.log(storedBillingDetails)
+  // console.log(storedBillingDetails)
   return (
-    <div className='h-[500px] text-center mb-[100px] py-[50px]'>
+    <div className=' text-center mb-[100px] py-[50px]'>
+      <img 
+  src="../img/success.png" 
+  className="h-[100px] mx-auto rounded-full border-[5px] border-[#6DD176] my-[20px] shadow-[0_0_20px_10px_rgba(34,197,94,0.5)]"
+/>
+
       <p className='font-[500] text-[1.6em] px-[10px]'>
         Thank you for your order! Your payment was successfully processed. We will begin preparing your items and notify you once they are on their way. If you have any questions, feel free to contact us. Have a great day!</p>
         <p className='text-[1.3em] pt-[30px] text-start font-[500] px-[30px]'>Your Billing Information</p>

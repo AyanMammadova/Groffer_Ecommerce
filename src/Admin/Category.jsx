@@ -67,7 +67,9 @@ function Category() {
         setShowForm(false)
         getAllCategories().then(res=>setCategoryData(res.data))
       })
-      .catch(err => console.error('Error:', err));
+      .catch(err => 
+        console.error('Error:', err)
+      );
       
   }
 
