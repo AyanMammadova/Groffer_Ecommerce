@@ -20,7 +20,6 @@ function QuickView({ type, proid }) {
   const [isFavorite, setIsFavorite] = useState(false)
   const [isInBasket, setIsInBasket] = useState(false)
   const [count, setCount] = useState(1)
-  console.log(singleProduct)
 
   useEffect(() => {
     

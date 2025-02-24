@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { getAllCategories, getAllCatsWithSubs, getAllProducts, getAllSubCategories, getAllTags, getFavorites } from '../services/api'
 import apiInstance from '../services/axiosInstance'
+import toast from 'react-hot-toast'
 export const DATA = createContext('')
 function DataContext({ children }) {
     const [role, setRole] = useState('')
@@ -40,6 +41,7 @@ function DataContext({ children }) {
             )
                 .then(() => {
                     getFavorites().then(res => setFavoriteData(res.data))
+                    toast.success('Product removed from wishlist successfully!')
                 })
                 .catch(error => console.error('Error:', error))
                 .finally(() => {
@@ -56,6 +58,7 @@ function DataContext({ children }) {
                 )
             .then(() => {
                 getFavorites().then(res => setFavoriteData(res.data))
+                toast.success('Product added to wishlist successfully!')
             })
             .catch(error => console.error('Error:', error))
             .finally(() => {
@@ -83,14 +86,14 @@ function DataContext({ children }) {
                 { name: 'Checkout', slug: 'checkout' },
             ],
         },
-        {
-            catname: 'Blog',
-            slug: '',
-            Subcategory: [
-                { name: 'Blog Default', slug: 'blog' },
-                { name: 'Single Article', slug: 'blog' },
-            ],
-        },
+        // {
+        //     catname: 'Blog',
+        //     slug: '',
+        //     Subcategory: [
+        //         { name: 'Blog Default', slug: 'blog' },
+        //         { name: 'Single Article', slug: 'blog' },
+        //     ],
+        // },
         {
             catname: 'Media',
             slug: 'media/3-columns',

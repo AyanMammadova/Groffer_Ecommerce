@@ -6,6 +6,7 @@ export const BASKET = createContext('')
 function BasketContext({ children }) {
   const [basketData, setBasketData] = useState(null)
   const [totalAmount, setTotalAmount] = useState(0)
+  const [loading,setLoading]=useState(false)
   useEffect(() => {
     getCartData().then(res => {
       setBasketData(res.data)
@@ -19,7 +20,7 @@ function BasketContext({ children }) {
   }, [])
 
   function removeFromBasket(id) {
-    
+    setLoading(true)
     apiInstance.delete(`Cart/remove-from-cart/${id}`, {
       headers: {
         'Accept': '*/*',
@@ -34,11 +35,15 @@ function BasketContext({ children }) {
       })
       .catch(error => {
         console.error('Error removing prod cart:', error);
-      });
+      })
+      .finally(() => {
+        setTimeout(() => setLoading(false), 700)
+      })
     toast.success('{Product removed from basket}')
   }
 
-  function addToBasket(id, count) {
+  function addToBasket(id, count=1) {
+    setLoading(true)
     const formData = new FormData();
     formData.append('quantity', count);
     apiInstance.post(`Cart/add-to-cart/${id}`, formData, {
@@ -49,10 +54,15 @@ function BasketContext({ children }) {
       .then(response => {
         getCartData().then(res => setBasketData(res.data))
         console.log('Product added to cart:', response.data);
+        toast.success('Product added to basket')
       })
       .catch(error => {
         console.error('Error adding product to cart:', error);
-      });
+      })
+      .finally(() => {
+        setTimeout(() => setLoading(false), 700)
+      })
+      
 
   }
 
@@ -61,7 +71,8 @@ function BasketContext({ children }) {
       basketData,
       addToBasket,
       removeFromBasket,
-      totalAmount
+      totalAmount,
+      loading
     }}>
       {children}
     </BASKET.Provider>

@@ -81,7 +81,7 @@ function Details() {
 
       <div>
         <p className='text-[2em] font-[500] text-center py-[20px]'>Related Products</p>
-        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-[10px] md:gap-[40px] mx-[10px] md:mx-[40px]'>
+        <div className='grid grid-cols-2 py-[20px] sm:grid-cols-3 md:grid-cols-4 gap-[10px] md:gap-[40px] mx-[10px] md:mx-[40px]'>
           {
             relatedProducts && relatedProducts.map((item, i) => {
               return <ProductCard key={i} id={item?.id}/>
