@@ -38,31 +38,27 @@ const AddressForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-    
+
         const { billingPhone, billingAddress } = billingDetails;
         const { postalCode } = billingAddress;
-    
-        // Regex validation
+
         const phoneRegex = /^\+994\d{9}$/;
         const postalCodeRegex = /^[A-Z]{2}\d{4}$/;
-    
-        // Check phone number format
+
         if (!phoneRegex.test(billingPhone)) {
             alert("Phone number must be in format: +994XXXXXXXXX");
             return;
         }
-    
-        // Check postal code format
+
         if (!postalCodeRegex.test(postalCode)) {
             alert("Postal code must be in format: XX0000 (e.g., AZ1000)");
             return;
         }
-    
-        // Save to localStorage and navigate if valid
+        localStorage.removeItem("billingDetails");
         localStorage.setItem("billingDetails", JSON.stringify(billingDetails));
         navigate('/payment');
     };
-    
+
 
 
     return (

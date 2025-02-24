@@ -6,9 +6,44 @@ import { BASKET } from '../../context/BasketContext'
 import { IoClose } from 'react-icons/io5'
 import { FaMinus, FaPlus } from 'react-icons/fa'
 import { LiaShippingFastSolid } from 'react-icons/lia'
+import apiInstance from '../../services/axiosInstance'
+import toast from 'react-hot-toast'
 
 function Bag() {
-    const { basketData,removeFromBasket,totalAmount } = useContext(BASKET)
+    const [currentCoupon, setCurrentCoupon] = useState('')
+    const [loading,setLoading]=useState(false)
+    const discountedTotal=localStorage.getItem('DiscountedTotal')
+    const { basketData, removeFromBasket, totalAmount } = useContext(BASKET)
+    function handleCoupon() {
+        setLoading(true)
+        apiInstance.post(
+            'Coupon/apply',
+            {
+                "couponCode": currentCoupon,
+                "totalAmount": totalAmount
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        )
+            .then(res => {
+                toast.success('Discount applied!')
+                localStorage.setItem('DiscountedTotal',res.data.finalAmount)
+            })
+            .catch(err =>
+                err.status==404 ? toast.err('Coupon doesnt exist!') : ''
+                // console.error('Errorum:', err.status)
+
+                // if(err.status==404){
+
+                // }
+            )
+            .finally(() => {
+                setTimeout(() => setLoading(false), 400)
+            })
+    }
     return (
         <>
             <BreadCrumps page={[
@@ -34,7 +69,7 @@ function Bag() {
                         return <div key={i} className='w-[96%] my-[30px] shadow-[0_0px_20px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.08)] p-[10px] mx-auto flex justify-between'>
                             <div className='hidden md:flex w-[100%] justify-between'>
                                 <div className='flex justify-center gap-[20px] items-center'>
-                                    <IoClose onClick={(e)=>{removeFromBasket(item?.product?.id),e.preventDefault()}} className='cursor-pointer text-[3.5em] text-[#136450]' />
+                                    <IoClose onClick={(e) => { removeFromBasket(item?.product?.id), e.preventDefault() }} className='cursor-pointer text-[3.5em] text-[#136450]' />
                                     {
                                         item?.product?.primaryImageUrl ? <img
                                             className={`scale-100 w-[100px]  h-[100px] block  object-cover object-center  }`}
@@ -93,9 +128,14 @@ function Bag() {
                     <input
                         type="text"
                         className='w-[100%]  my-[10px] md:w-[200px] border-[1px] border-gray-200 p-[5px] font-[500] text-[1.4em]  py-[10px]  rounded-md '
-                        placeholder='Coupon code...' />
+                        placeholder='Coupon code...'
+                        value={currentCoupon}
+                        onChange={(e) => { setCurrentCoupon(e.target.value) }}
+                    />
 
-                    <div className=' p-[5px] md:w-[200px]  font-[500] text-[1.4em] text-center py-[10px]  rounded-md border-2 transition-all duration-200 bg-[#136450] text-white border-[#136450] mx-auto hover:text-[#136450] cursor-pointer hover:bg-white'>
+                    <div
+                        onClick={() => { handleCoupon() }}
+                        className=' p-[5px] md:w-[200px]  font-[500] text-[1.4em] text-center py-[10px]  rounded-md border-2 transition-all duration-200 bg-[#136450] text-white border-[#136450] mx-auto hover:text-[#136450] cursor-pointer hover:bg-white'>
                         Apply Coupon
                     </div>
                 </div>
@@ -106,7 +146,7 @@ function Bag() {
             <div className={`${basketData ? 'block' : 'hidden'} text-[1.1em] font-[500]  my-[30px] w-[100%] px-[10px] `}>
                 <div className='bg-white border-[1px] p-[10px] border-gray-200 w-[100%] flex justify-between'>
                     <p>Subtotal</p>
-                    <p>{totalAmount.toFixed(2)}</p>
+                    <p>{discountedTotal ? discountedTotal : totalAmount.toFixed(2)}</p>
                 </div>
                 <div className='bg-[#F9F9F9] border-[1px] p-[10px] border-gray-200 w-[100%] flex justify-between'>
                     <p>Subtotal</p>
@@ -117,10 +157,10 @@ function Bag() {
                 </div>
                 <div className='bg-white border-[1px] p-[10px] border-gray-200 w-[100%] flex justify-between'>
                     <p>Total</p>
-                    <p>{totalAmount.toFixed(2)}</p>
+                    <p>{discountedTotal ? discountedTotal : totalAmount.toFixed(2)}</p>
                 </div>
             </div>
-            <div className={`p-[10px] flex justify-between w-[100%] mb-[30px] pt-[20px] md:px-[40px] ${basketData?.length>0 ? 'flex' : 'hidden'}`}>
+            <div className={`p-[10px] flex justify-between w-[100%] mb-[30px] pt-[20px] md:px-[40px] ${basketData?.length > 0 ? 'flex' : 'hidden'}`}>
                 <div></div>
                 <Link to={'/checkout'} className='w-[100%] sm:w-[300px] p-[5px] mt-[40px] font-[500] text-[1.4em] text-center py-[10px]  rounded-md border-2 transition-all duration-200 bg-[#136450] text-white border-[#136450]  hover:text-[#136450] cursor-pointer hover:bg-white'>
                     Proceed to checkout

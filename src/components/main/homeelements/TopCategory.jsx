@@ -20,7 +20,7 @@ function TopCategory() {
                 <p className='text-center font-bold text-[2.4em] pb-[30px]'>Top Categories</p>
 
                 <div className='md:flex gap-[30px]'>
-                    <div className='w-[90%] sm:w-[80%] pt-[20px] mx-auto md:w-[350px] '>
+                    <div className='w-[90%] sm:w-[80%] pt-[20px] mx-auto min-w-[200px] md:w-[200px] '>
                         <div className="bg-[url('https://groffer.modeltheme.com/wp-content/uploads/2023/02/Groffer-bann_categ1.jpg')] gap-[6px] rounded-tl-3xl rounded-br-3xl bg-cover w-[100%] h-[400px] flex items-center justify-center text-white flex-col">
                             <p className='text-[2em] font-[500]'>Drinks</p>
                             <p>{drinkData && drinkData.length} products</p>
@@ -43,7 +43,7 @@ function TopCategory() {
 
             <div className='p-[30px]'>
             <div className='md:flex gap-[30px]'>
-                    <div className='w-[90%] sm:w-[80%] pt-[20px] mx-auto md:w-[200px] '>
+                    <div className='w-[90%] sm:w-[80%] pt-[20px] mx-auto min-w-[200px] md:w-[200px] '>
                         <div className="relative bg-[url('https://images.pexels.com/photos/10749578/pexels-photo-10749578.jpeg?auto=compress&cs=tinysrgb&w=600')] gap-[6px]  rounded-tl-3xl rounded-br-3xl bg-cover w-[100%] h-[400px] flex items-center justify-center text-white flex-col">
                             <div className='bg-black/70 h-[100%] z-10 w-[100%] absolute inset-0'></div>
                             <p className='text-[2em] z-20 font-[500]'>Meat</p>

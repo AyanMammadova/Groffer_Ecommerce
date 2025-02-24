@@ -147,7 +147,7 @@ function Coupon() {
                     <tr>
                         <th className='py-[10px] border-2 border-white'>#</th>
                         <th className='py-[10px] border-2 border-white'>Coupon</th>
-                        <th className='py-[10px] border-2 border-white'>Percentage</th>
+                        <th className='py-[10px] border-2 border-white'>Discount</th>
                         <th className='py-[10px] border-2 border-white'>Expiry date</th>
                         <th className='py-[10px] border-2 border-white'>Action</th>
                     </tr>
@@ -157,9 +157,9 @@ function Coupon() {
                         couponData && couponData.map((item, i) => {
                             return <tr key={i}>
                                 <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{i + 1}</td>
-                                <td className='py-[10px] border-2 px-[10px] border-white font-[500] capitalize'>{item.name}</td>
-                                <td className='py-[10px] border-2 px-[10px] border-white font-[500] '>{item.slug}</td>
-                                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>Berries,Blues</td>
+                                <td className='py-[10px] border-2 px-[10px] border-white font-[500] capitalize'>{item.code}</td>
+                                <td className='py-[10px] border-2 px-[10px] border-white font-[500] '>{item.discountAmount}{item.isPercentage ? '%' : ''}</td>
+                                <td className='py-[10px] border-2 px-[10px] border-white font-[500]'>{item?.expiryDate}</td>
                                 <td className='py-[10px] border-2 text-center border-white font-[500]'>
                                     <button
                                         type='button'

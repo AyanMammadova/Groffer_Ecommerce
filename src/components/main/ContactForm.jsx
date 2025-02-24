@@ -23,7 +23,7 @@ function ContactForm() {
     
     function submit(values, actions) {
         console.log(values)
-        setLoading(FaTruckMedical)
+        setLoading(true)
         apiInstance.post(
             'Contact',
             {
